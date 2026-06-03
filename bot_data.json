@@ -173,6 +173,26 @@
       "final_multiplier": 9.18,
       "manual": false,
       "timestamp": "2026-06-03T14:13:12.406452+00:00"
+    },
+    {
+      "mcap": 135572.0,
+      "liquidity": 27839.3,
+      "volume_h1": 476423.04,
+      "volume_m5": 69183.97,
+      "age_seconds": 3748.5417939453123,
+      "price_change_5m": 12.68,
+      "price_change_1h": 248.0,
+      "hour_of_day": 14,
+      "buys_m5": 526,
+      "sells_m5": 317,
+      "buys_h1": 4374,
+      "sells_h1": 2599,
+      "symbol": "SPIKE",
+      "name": "SPIKE",
+      "address": "GCefMYf4X5UXfbHkZQcT7PEQCvRKjjC9fkVfJUfZpump",
+      "final_multiplier": 4.4,
+      "manual": false,
+      "timestamp": "2026-06-03T14:39:59.541960+00:00"
     }
   ],
   "dump_patterns": [
@@ -782,6 +802,44 @@
       "final_multiplier": 0,
       "manual": false,
       "timestamp": "2026-06-03T14:13:52.203267+00:00"
+    },
+    {
+      "mcap": 3086.0,
+      "liquidity": 4153.59,
+      "volume_h1": 396535.72,
+      "volume_m5": 375.4,
+      "age_seconds": 3751.6593671875,
+      "price_change_5m": 33.61,
+      "price_change_1h": -96.83,
+      "hour_of_day": 14,
+      "buys_m5": 19,
+      "sells_m5": 9,
+      "buys_h1": 13018,
+      "sells_h1": 2584,
+      "symbol": "DOGE",
+      "address": "H71QvxBZVuD2yjgBF1QiZdpTc1pNddFxXNbaJu8apump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-03T14:20:40.659725+00:00"
+    },
+    {
+      "mcap": 46113.0,
+      "liquidity": 15987.28,
+      "volume_h1": 129909.29,
+      "volume_m5": 4832.45,
+      "age_seconds": 4233.062061035156,
+      "price_change_5m": 86.56,
+      "price_change_1h": -19.99,
+      "hour_of_day": 14,
+      "buys_m5": 77,
+      "sells_m5": 66,
+      "buys_h1": 2129,
+      "sells_h1": 1644,
+      "symbol": "Openverse",
+      "address": "78B31QV1rtyoe2EYvVNjBVjeowyrtcH5FPTE4tCypump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-03T14:37:14.062214+00:00"
     }
   ],
   "trained_addresses": [
@@ -821,7 +879,10 @@
     "3e85d7171805216bbaaf47aa37892943",
     "48d38c4014fe32b16269b089bbdfbdb3",
     "f0582c3f2b23a875c9f5cad373051023",
-    "48dcdecc40f9fcfb0ffb9028c140172a"
+    "48dcdecc40f9fcfb0ffb9028c140172a",
+    "3c0bd77f69e9f04e51db57552f5da85e",
+    "354d2b874133041cf6bdafcbf8388a1e",
+    "5473b6cc820e57736c53c9a527e660db"
   ],
   "signals": [
     {
@@ -903,11 +964,31 @@
       "timestamp": "2026-06-03T11:40:21.156417+00:00",
       "result_multiplier": null,
       "result_checked": false
+    },
+    {
+      "address": "78B31QV1rtyoe2EYvVNjBVjeowyrtcH5FPTE4tCypump",
+      "symbol": "Openverse",
+      "score": 0.9,
+      "price_at_signal": 2.238e-05,
+      "mcap_at_signal": 22381.0,
+      "timestamp": "2026-06-03T14:23:31.826165+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "GCefMYf4X5UXfbHkZQcT7PEQCvRKjjC9fkVfJUfZpump",
+      "symbol": "SPIKE",
+      "score": 0.9,
+      "price_at_signal": 0.0001121,
+      "mcap_at_signal": 112173.0,
+      "timestamp": "2026-06-03T14:23:37.302607+00:00",
+      "result_multiplier": null,
+      "result_checked": false
     }
   ],
   "model": {
-    "avg_pump_mcap": 168372.0,
-    "avg_pump_liquidity": 31960.3375,
+    "avg_pump_mcap": 164727.55555555556,
+    "avg_pump_liquidity": 31502.444444444445,
     "avg_pump_volume": 2222831.7485714285,
     "avg_pump_age": 34472.72461223493,
     "best_hours": {
@@ -916,16 +997,16 @@
       "7": 1,
       "8": 1,
       "11": 1,
-      "14": 1
+      "14": 2
     },
-    "total_signals": 8,
+    "total_signals": 10,
     "correct_signals": 0,
     "accuracy": 0.0,
-    "threshold": 0.5499999999999999,
-    "avg_pump_volume_h1": 91342.2525,
-    "avg_pump_buys_h1": 1077.625,
-    "avg_pump_price_change_5m": 39.03875,
-    "avg_pump_age_at_signal": 30636.05979144287,
+    "threshold": 0.6,
+    "avg_pump_volume_h1": 134129.00666666668,
+    "avg_pump_buys_h1": 1443.888888888889,
+    "avg_pump_price_change_5m": 36.11,
+    "avg_pump_age_at_signal": 27648.55779172092,
     "signal_age_min": 1645.9136904296874,
     "signal_age_max": 3600
   }
