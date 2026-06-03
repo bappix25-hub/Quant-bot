@@ -109,6 +109,28 @@
       "final_multiplier": 3.34,
       "manual": false,
       "timestamp": "2026-06-03T07:57:06.069990+00:00"
+    },
+    {
+      "mcap": 315530.0,
+      "liquidity": 59016.27,
+      "volume_h24": 431955.74,
+      "volume_h1": 113120.5,
+      "volume_m5": 7288.74,
+      "age_seconds": 19390.782373046874,
+      "price_change_5m": 9.31,
+      "price_change_1h": 0.2,
+      "price_change_6h": 287.0,
+      "hour_of_day": 8,
+      "buys_m5": 34,
+      "sells_m5": 15,
+      "buys_h1": 839,
+      "sells_h1": 503,
+      "symbol": "NEAN",
+      "name": "NEANDERTHAL",
+      "address": "9gnq7qkXgKAsTwFCLrX76PvtYtRtrNaBYEVBBP7gjupx",
+      "final_multiplier": 3.87,
+      "manual": false,
+      "timestamp": "2026-06-03T08:58:22.782535+00:00"
     }
   ],
   "dump_patterns": [
@@ -405,6 +427,48 @@
       "final_multiplier": 0,
       "manual": false,
       "timestamp": "2026-06-03T07:54:50.561637+00:00"
+    },
+    {
+      "mcap": 27447.0,
+      "liquidity": 12201.43,
+      "volume_h24": 138608.16,
+      "volume_h1": 8541.59,
+      "volume_m5": 221.54,
+      "age_seconds": 11847.056437988282,
+      "price_change_5m": 1.78,
+      "price_change_1h": -15.3,
+      "price_change_6h": -13.4,
+      "hour_of_day": 8,
+      "buys_m5": 8,
+      "sells_m5": 3,
+      "buys_h1": 144,
+      "sells_h1": 116,
+      "symbol": "spaceX",
+      "address": "7DkifRBYGVdbrkse2wmexqu5vzUaw5cZHEgDQW1hpump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-03T08:58:32.056578+00:00"
+    },
+    {
+      "mcap": 25822.0,
+      "liquidity": 12072.5,
+      "volume_h24": 24717.6,
+      "volume_h1": 2668.59,
+      "volume_m5": 749.01,
+      "age_seconds": 47774.705951904296,
+      "price_change_5m": 20.62,
+      "price_change_1h": 48.13,
+      "price_change_6h": 38.53,
+      "hour_of_day": 8,
+      "buys_m5": 15,
+      "sells_m5": 1,
+      "buys_h1": 40,
+      "sells_h1": 11,
+      "symbol": "DOGEUS",
+      "address": "9C9WrDWEe7t65KQFqTXpnkCMAJqJyxMFVSfjLjPrdoge",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-03T08:59:18.706106+00:00"
     }
   ],
   "trained_addresses": [
@@ -426,7 +490,10 @@
     "6f944811a328c42acf3932890d4bb304",
     "eb89027389c0ee918e52a9c4536c1cb6",
     "79e7590ae6bfd0f006aed295e151e8f1",
-    "a2e6092cfbde63ffae9d9c367950f21b"
+    "a2e6092cfbde63ffae9d9c367950f21b",
+    "2e64cd0013a276491433299b6af7067e",
+    "877c9651e3740e79a366fb30942754d9",
+    "eeca5f3317ae110bbb00f0e26970d58c"
   ],
   "signals": [
     {
@@ -461,14 +528,15 @@
     }
   ],
   "model": {
-    "avg_pump_mcap": 163879.8,
-    "avg_pump_liquidity": 29942.78,
-    "avg_pump_volume": 2960587.13,
-    "avg_pump_age": 43037.490010742185,
+    "avg_pump_mcap": 189154.83333333334,
+    "avg_pump_liquidity": 34788.361666666664,
+    "avg_pump_volume": 2539148.565,
+    "avg_pump_age": 39096.3720711263,
     "best_hours": {
       "5": 3,
       "6": 1,
-      "7": 1
+      "7": 1,
+      "8": 1
     },
     "total_signals": 3,
     "correct_signals": 0,
