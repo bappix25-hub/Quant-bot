@@ -7,8 +7,11 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 from learner import score_coin, learn_pump, learn_dump, record_signal, update_signal_result, get_stats, get_daily_report, is_duplicate, get_signal_age_window, verify_pump, get_launch_age
 from github_sync import sync_to_github, restore_from_github
 
-BOT_TOKEN = "8799728887:AAEk1R_H7ApAotjaM1B_XvhUScVAyyHhjtU"
-CHAT_ID = "5461546008"
+import os
+from dotenv import load_dotenv
+load_dotenv()
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
 
 PUMP_MULTIPLIER = 3.0
 SCAN_INTERVAL = 120
