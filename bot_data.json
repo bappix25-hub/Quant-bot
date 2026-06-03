@@ -293,6 +293,26 @@
       "final_multiplier": 11.91,
       "manual": false,
       "timestamp": "2026-06-03T18:05:49.782039+00:00"
+    },
+    {
+      "mcap": 259436.0,
+      "liquidity": 37650.63,
+      "volume_h1": 366440.5,
+      "volume_m5": 26852.0,
+      "age_seconds": 3823.7159099121095,
+      "price_change_5m": -15.46,
+      "price_change_1h": 90.07,
+      "hour_of_day": 18,
+      "buys_m5": 211,
+      "sells_m5": 162,
+      "buys_h1": 2192,
+      "sells_h1": 1822,
+      "symbol": "TODE",
+      "name": "tode",
+      "address": "8RRojEU8nGWoCh5N11LLK2GJBNRUzPoH4rUz8ibCpump",
+      "final_multiplier": 8.57,
+      "manual": false,
+      "timestamp": "2026-06-03T18:05:57.716063+00:00"
     }
   ],
   "dump_patterns": [
@@ -1287,7 +1307,8 @@
     "b874537e8fbca87bb7bbb5269265943e",
     "55c48d651aa0d7d727581411c07557d9",
     "64a8a848fd4606f446b5234076b11902",
-    "ac95147315cf01e1ba87f2ae8e439d2f"
+    "ac95147315cf01e1ba87f2ae8e439d2f",
+    "84957c8752707ead6b67c76724add891"
   ],
   "signals": [
     {
@@ -1532,8 +1553,8 @@
     }
   ],
   "model": {
-    "avg_pump_mcap": 165307.07142857142,
-    "avg_pump_liquidity": 31310.417142857146,
+    "avg_pump_mcap": 171582.33333333334,
+    "avg_pump_liquidity": 31733.097999999998,
     "avg_pump_volume": 2222831.7485714285,
     "avg_pump_age": 34472.72461223493,
     "best_hours": {
@@ -1545,16 +1566,16 @@
       "14": 2,
       "16": 1,
       "17": 3,
-      "18": 1
+      "18": 2
     },
     "total_signals": 24,
     "correct_signals": 3,
     "accuracy": 12.5,
     "threshold": 0.7,
-    "avg_pump_volume_h1": 244194.23785714287,
-    "avg_pump_buys_h1": 2358.8571428571427,
-    "avg_pump_price_change_5m": 31.86285714285714,
-    "avg_pump_age_at_signal": 19132.106080827984,
+    "avg_pump_volume_h1": 252343.98866666667,
+    "avg_pump_buys_h1": 2347.733333333333,
+    "avg_pump_price_change_5m": 28.708000000000002,
+    "avg_pump_age_at_signal": 18111.546736100263,
     "signal_age_min": 1645.9136904296874,
     "signal_age_max": 3600
   }
