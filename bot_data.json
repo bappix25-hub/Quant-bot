@@ -21,6 +21,28 @@
       "final_multiplier": 8.65,
       "manual": true,
       "timestamp": "2026-06-03T05:55:28.111740+00:00"
+    },
+    {
+      "mcap": 245873.0,
+      "liquidity": 41984.68,
+      "volume_h24": 3367038.84,
+      "volume_h1": 15440.44,
+      "volume_m5": 808.81,
+      "age_seconds": 92949.58619091797,
+      "price_change_5m": 0.59,
+      "price_change_1h": -12.01,
+      "price_change_6h": -20.04,
+      "hour_of_day": 5,
+      "buys_m5": 2,
+      "sells_m5": 5,
+      "buys_h1": 118,
+      "sells_h1": 107,
+      "symbol": "DATBIHGAH",
+      "name": "The Official Dat Bih Gah",
+      "address": "DMU6LRnRBV7URLdpCYadHNKxXxyf4MRkdqSqC2tkpump",
+      "final_multiplier": 3.0,
+      "manual": true,
+      "timestamp": "2026-06-03T05:56:22.586269+00:00"
     }
   ],
   "dump_patterns": [
@@ -158,16 +180,17 @@
     "e9c2e83b042e423ea13a687445744521",
     "78d029329f9a93a37b3e812c12737a7d",
     "5fe0e26e019ebce62a3c98a4d9d3d014",
-    "9fd01494601a28fe968ef859c1bf2cab"
+    "9fd01494601a28fe968ef859c1bf2cab",
+    "7f5f6ea77391e11287381d8054abff8f"
   ],
   "signals": [],
   "model": {
-    "avg_pump_mcap": 283882.0,
-    "avg_pump_liquidity": 45683.24,
-    "avg_pump_volume": 3137682.42,
-    "avg_pump_age": 65188.11166894531,
+    "avg_pump_mcap": 264877.5,
+    "avg_pump_liquidity": 43833.96,
+    "avg_pump_volume": 3252360.63,
+    "avg_pump_age": 79068.84892993164,
     "best_hours": {
-      "5": 1
+      "5": 2
     },
     "total_signals": 0,
     "correct_signals": 0,
