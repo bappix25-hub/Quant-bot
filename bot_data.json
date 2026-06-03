@@ -43,6 +43,28 @@
       "final_multiplier": 3.0,
       "manual": true,
       "timestamp": "2026-06-03T05:56:22.586269+00:00"
+    },
+    {
+      "mcap": 3952.0,
+      "liquidity": 5849.52,
+      "volume_h24": 7697059.97,
+      "volume_h1": 81.62,
+      "volume_m5": 16.22,
+      "age_seconds": 43753.85494213867,
+      "price_change_5m": -0.46,
+      "price_change_1h": -2.74,
+      "price_change_6h": -34.44,
+      "hour_of_day": 5,
+      "buys_m5": 0,
+      "sells_m5": 1,
+      "buys_h1": 3,
+      "sells_h1": 13,
+      "symbol": "nyoro",
+      "name": "nyoro",
+      "address": "6gwoNDv86bDCmJWZPyvYyhor1en1YxS13sbBo6zdpump",
+      "final_multiplier": 3.0,
+      "manual": true,
+      "timestamp": "2026-06-03T05:56:52.854974+00:00"
     }
   ],
   "dump_patterns": [
@@ -181,16 +203,17 @@
     "78d029329f9a93a37b3e812c12737a7d",
     "5fe0e26e019ebce62a3c98a4d9d3d014",
     "9fd01494601a28fe968ef859c1bf2cab",
-    "7f5f6ea77391e11287381d8054abff8f"
+    "7f5f6ea77391e11287381d8054abff8f",
+    "63515cfe7017e0101cd7c6663bdb3fcc"
   ],
   "signals": [],
   "model": {
-    "avg_pump_mcap": 264877.5,
-    "avg_pump_liquidity": 43833.96,
-    "avg_pump_volume": 3252360.63,
-    "avg_pump_age": 79068.84892993164,
+    "avg_pump_mcap": 177902.33333333334,
+    "avg_pump_liquidity": 31172.48,
+    "avg_pump_volume": 4733927.076666667,
+    "avg_pump_age": 67297.18426733399,
     "best_hours": {
-      "5": 2
+      "5": 3
     },
     "total_signals": 0,
     "correct_signals": 0,
