@@ -333,6 +333,26 @@
       "final_multiplier": 4.01,
       "manual": false,
       "timestamp": "2026-06-03T18:18:15.139726+00:00"
+    },
+    {
+      "mcap": 159530.0,
+      "liquidity": 29161.26,
+      "volume_h1": 213957.8,
+      "volume_m5": 5555.02,
+      "age_seconds": 3641.7957719726564,
+      "price_change_5m": 1.46,
+      "price_change_1h": 126.0,
+      "hour_of_day": 18,
+      "buys_m5": 133,
+      "sells_m5": 35,
+      "buys_h1": 3312,
+      "sells_h1": 835,
+      "symbol": "TRUMPBIBI",
+      "name": "Trump vs Bibi",
+      "address": "5657kvM8UkSio2M9NqReGdtW2PQDb3LWAUnNswd8pump",
+      "final_multiplier": 3.61,
+      "manual": false,
+      "timestamp": "2026-06-03T18:40:55.796071+00:00"
     }
   ],
   "dump_patterns": [
@@ -1284,6 +1304,25 @@
       "final_multiplier": 0,
       "manual": false,
       "timestamp": "2026-06-03T18:18:35.797121+00:00"
+    },
+    {
+      "mcap": 37932.0,
+      "liquidity": 14171.41,
+      "volume_h1": 109531.67,
+      "volume_m5": 5483.89,
+      "age_seconds": 3827.570171142578,
+      "price_change_5m": -7.69,
+      "price_change_1h": 17.24,
+      "hour_of_day": 18,
+      "buys_m5": 113,
+      "sells_m5": 59,
+      "buys_h1": 2162,
+      "sells_h1": 1191,
+      "symbol": "Panini",
+      "address": "44VWThjQPf1j4BpVWXPZUute4fF4QqEQLmt4cKHrpump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-03T18:33:22.570450+00:00"
     }
   ],
   "trained_addresses": [
@@ -1349,7 +1388,9 @@
     "ac95147315cf01e1ba87f2ae8e439d2f",
     "84957c8752707ead6b67c76724add891",
     "f056666a2f200d2c9d66f0c0dffd13a5",
-    "28f34cdf06f4afdb60c63fff0862d70b"
+    "28f34cdf06f4afdb60c63fff0862d70b",
+    "3f6ede117494207b49d5608d3c2bff62",
+    "c67c686202670bc24ab727ea2b484847"
   ],
   "signals": [
     {
@@ -1601,11 +1642,31 @@
       "timestamp": "2026-06-03T18:08:42.025994+00:00",
       "result_multiplier": null,
       "result_checked": false
+    },
+    {
+      "address": "8VbA3EYY2vdX887GvfAJWYPdFt38inC9YLhq6Shdpump",
+      "symbol": "SOLARSYS",
+      "score": 0.85,
+      "price_at_signal": 0.0001554,
+      "mcap_at_signal": 155488.0,
+      "timestamp": "2026-06-03T18:21:17.552302+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "5657kvM8UkSio2M9NqReGdtW2PQDb3LWAUnNswd8pump",
+      "symbol": "TRUMPBIBI",
+      "score": 1.0,
+      "price_at_signal": 0.000148,
+      "mcap_at_signal": 148049.0,
+      "timestamp": "2026-06-03T18:28:50.395759+00:00",
+      "result_multiplier": null,
+      "result_checked": false
     }
   ],
   "model": {
-    "avg_pump_mcap": 168664.625,
-    "avg_pump_liquidity": 31361.003125,
+    "avg_pump_mcap": 168127.29411764705,
+    "avg_pump_liquidity": 31231.60647058823,
     "avg_pump_volume": 2222831.7485714285,
     "avg_pump_age": 34472.72461223493,
     "best_hours": {
@@ -1617,16 +1678,16 @@
       "14": 2,
       "16": 1,
       "17": 3,
-      "18": 3
+      "18": 4
     },
-    "total_signals": 25,
+    "total_signals": 27,
     "correct_signals": 3,
-    "accuracy": 12.0,
+    "accuracy": 11.1,
     "threshold": 0.7,
-    "avg_pump_volume_h1": 248343.036875,
-    "avg_pump_buys_h1": 2299.625,
-    "avg_pump_price_change_5m": 27.591875,
-    "avg_pump_age_at_signal": 17031.583791900634,
+    "avg_pump_volume_h1": 246320.37588235294,
+    "avg_pump_buys_h1": 2359.176470588235,
+    "avg_pump_price_change_5m": 26.05470588235294,
+    "avg_pump_age_at_signal": 16243.949202493108,
     "signal_age_min": 416.069814453125,
     "signal_age_max": 3600
   }
