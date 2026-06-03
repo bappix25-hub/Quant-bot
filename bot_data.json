@@ -253,6 +253,26 @@
       "final_multiplier": 11.16,
       "manual": false,
       "timestamp": "2026-06-03T17:25:29.910456+00:00"
+    },
+    {
+      "mcap": 116095.0,
+      "liquidity": 26285.4,
+      "volume_h1": 782049.95,
+      "volume_m5": 53724.82,
+      "age_seconds": 3688.0856479492186,
+      "price_change_5m": 31.38,
+      "price_change_1h": 542.0,
+      "hour_of_day": 17,
+      "buys_m5": 258,
+      "sells_m5": 259,
+      "buys_h1": 4772,
+      "sells_h1": 4063,
+      "symbol": "PEPENOSTRA",
+      "name": "PEPENOSTRA",
+      "address": "hEe6ABzYYcqFRWYVkPRx7LcogpRzo7obreLna1Npump",
+      "final_multiplier": 6.42,
+      "manual": false,
+      "timestamp": "2026-06-03T17:25:36.085825+00:00"
     }
   ],
   "dump_patterns": [
@@ -1185,7 +1205,8 @@
     "b88e636c9cb52605e1c0104baf5dd1cb",
     "b460d4faf85c821c5a5eb0f4a84d5d96",
     "fea28de66bb4ebb42a17e1a1b42821bb",
-    "82d8ce8a22eedaae336b4371cc4ff0fc"
+    "82d8ce8a22eedaae336b4371cc4ff0fc",
+    "87031856eb071f0eef5ad3bc1b8480fd"
   ],
   "signals": [
     {
@@ -1390,8 +1411,8 @@
     }
   ],
   "model": {
-    "avg_pump_mcap": 168354.08333333334,
-    "avg_pump_liquidity": 31783.314166666667,
+    "avg_pump_mcap": 164334.15384615384,
+    "avg_pump_liquidity": 31360.39769230769,
     "avg_pump_volume": 2222831.7485714285,
     "avg_pump_age": 34472.72461223493,
     "best_hours": {
@@ -1402,16 +1423,16 @@
       "11": 1,
       "14": 2,
       "16": 1,
-      "17": 2
+      "17": 3
     },
     "total_signals": 20,
     "correct_signals": 3,
     "accuracy": 15.0,
     "threshold": 0.7,
-    "avg_pump_volume_h1": 206096.44083333333,
-    "avg_pump_buys_h1": 2267.9166666666665,
-    "avg_pump_price_change_5m": 32.88916666666667,
-    "avg_pump_age_at_signal": 21693.7181502889,
+    "avg_pump_volume_h1": 250400.55692307692,
+    "avg_pump_buys_h1": 2460.5384615384614,
+    "avg_pump_price_change_5m": 32.77307692307692,
+    "avg_pump_age_at_signal": 20308.66949626277,
     "signal_age_min": 1645.9136904296874,
     "signal_age_max": 3600
   }
