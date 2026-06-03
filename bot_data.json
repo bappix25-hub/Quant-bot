@@ -233,6 +233,26 @@
       "final_multiplier": 30.89,
       "manual": false,
       "timestamp": "2026-06-03T17:09:19.033118+00:00"
+    },
+    {
+      "mcap": 321442.0,
+      "liquidity": 44389.4,
+      "volume_h1": 765356.11,
+      "volume_m5": 72400.29,
+      "age_seconds": 4081.9101201171875,
+      "price_change_5m": -3.08,
+      "price_change_1h": 600.0,
+      "hour_of_day": 17,
+      "buys_m5": 757,
+      "sells_m5": 493,
+      "buys_h1": 6839,
+      "sells_h1": 5787,
+      "symbol": "grug",
+      "name": "grug",
+      "address": "FUXKe7MFMjBgRU9P6zdNKowSuEwgHh2nC5jtfh43CB8q",
+      "final_multiplier": 11.16,
+      "manual": false,
+      "timestamp": "2026-06-03T17:25:29.910456+00:00"
     }
   ],
   "dump_patterns": [
@@ -1164,7 +1184,8 @@
     "84d78f9eb1d9d100ed979a3c435a1fd2",
     "b88e636c9cb52605e1c0104baf5dd1cb",
     "b460d4faf85c821c5a5eb0f4a84d5d96",
-    "fea28de66bb4ebb42a17e1a1b42821bb"
+    "fea28de66bb4ebb42a17e1a1b42821bb",
+    "82d8ce8a22eedaae336b4371cc4ff0fc"
   ],
   "signals": [
     {
@@ -1334,8 +1355,8 @@
       "price_at_signal": 1.871e-05,
       "mcap_at_signal": 18719.0,
       "timestamp": "2026-06-03T16:43:24.593986+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 2.92,
+      "result_checked": true
     },
     {
       "address": "FUXKe7MFMjBgRU9P6zdNKowSuEwgHh2nC5jtfh43CB8q",
@@ -1344,8 +1365,8 @@
       "price_at_signal": 6.537e-05,
       "mcap_at_signal": 65370.0,
       "timestamp": "2026-06-03T16:46:19.575364+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 4.39,
+      "result_checked": true
     },
     {
       "address": "hEe6ABzYYcqFRWYVkPRx7LcogpRzo7obreLna1Npump",
@@ -1369,8 +1390,8 @@
     }
   ],
   "model": {
-    "avg_pump_mcap": 154437.0,
-    "avg_pump_liquidity": 30637.306363636362,
+    "avg_pump_mcap": 168354.08333333334,
+    "avg_pump_liquidity": 31783.314166666667,
     "avg_pump_volume": 2222831.7485714285,
     "avg_pump_age": 34472.72461223493,
     "best_hours": {
@@ -1381,16 +1402,16 @@
       "11": 1,
       "14": 2,
       "16": 1,
-      "17": 1
+      "17": 2
     },
     "total_signals": 20,
-    "correct_signals": 1,
-    "accuracy": 5.0,
+    "correct_signals": 3,
+    "accuracy": 15.0,
     "threshold": 0.7,
-    "avg_pump_volume_h1": 155254.6527272727,
-    "avg_pump_buys_h1": 1852.3636363636363,
-    "avg_pump_price_change_5m": 36.15909090909091,
-    "avg_pump_age_at_signal": 23294.791607577237,
+    "avg_pump_volume_h1": 206096.44083333333,
+    "avg_pump_buys_h1": 2267.9166666666665,
+    "avg_pump_price_change_5m": 32.88916666666667,
+    "avg_pump_age_at_signal": 21693.7181502889,
     "signal_age_min": 1645.9136904296874,
     "signal_age_max": 3600
   }
