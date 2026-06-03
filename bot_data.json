@@ -213,6 +213,26 @@
       "final_multiplier": 4.83,
       "manual": false,
       "timestamp": "2026-06-03T16:29:41.655481+00:00"
+    },
+    {
+      "mcap": 68884.0,
+      "liquidity": 24872.2,
+      "volume_h1": 79930.6,
+      "volume_m5": 5060.25,
+      "age_seconds": 3741.0321970214845,
+      "price_change_5m": 47.5,
+      "price_change_1h": 2989.0,
+      "hour_of_day": 17,
+      "buys_m5": 36,
+      "sells_m5": 25,
+      "buys_h1": 1110,
+      "sells_h1": 615,
+      "symbol": "$RATS",
+      "name": "SOLANA INVESTORS ARE RATS",
+      "address": "uLU4vfj81yqHmK87p7Ab4pG8XTDTDRN1yppBtjgpump",
+      "final_multiplier": 30.89,
+      "manual": false,
+      "timestamp": "2026-06-03T17:09:19.033118+00:00"
     }
   ],
   "dump_patterns": [
@@ -1031,6 +1051,63 @@
       "final_multiplier": 0,
       "manual": false,
       "timestamp": "2026-06-03T16:16:47.265851+00:00"
+    },
+    {
+      "mcap": 18674.0,
+      "liquidity": 9835.39,
+      "volume_h1": 96438.13,
+      "volume_m5": 3219.19,
+      "age_seconds": 3756.354477783203,
+      "price_change_5m": -18.04,
+      "price_change_1h": -1.69,
+      "hour_of_day": 16,
+      "buys_m5": 40,
+      "sells_m5": 38,
+      "buys_h1": 1357,
+      "sells_h1": 1109,
+      "symbol": "\u30af\u30de",
+      "address": "DH6PFMRQdogN13rd9wrsVsBuf5yc84EgEgCS3eJNpump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-03T16:38:00.354641+00:00"
+    },
+    {
+      "mcap": 1326.0,
+      "liquidity": 2480.78,
+      "volume_h1": 30528.72,
+      "volume_m5": 7.17,
+      "age_seconds": 3688.76696484375,
+      "price_change_5m": 0.56,
+      "price_change_1h": -95.16,
+      "hour_of_day": 16,
+      "buys_m5": 1,
+      "sells_m5": 1,
+      "buys_h1": 301,
+      "sells_h1": 336,
+      "symbol": "GachaFI",
+      "address": "NRTJdXnZnRtHNWomhLsTK62a1yjEFY43QCBt4sGJNPY",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-03T16:56:17.767107+00:00"
+    },
+    {
+      "mcap": 24940.0,
+      "liquidity": 11349.83,
+      "volume_h1": 75840.79,
+      "volume_m5": 599.73,
+      "age_seconds": 3670.5028479003904,
+      "price_change_5m": -1.38,
+      "price_change_1h": -14.57,
+      "hour_of_day": 17,
+      "buys_m5": 16,
+      "sells_m5": 8,
+      "buys_h1": 1480,
+      "sells_h1": 1048,
+      "symbol": "FEARLESS",
+      "address": "GQVPgQ7YKHLa8CMsv1JV3Gv63ywkAj15ZoCRVv2dpump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-03T17:06:46.503023+00:00"
     }
   ],
   "trained_addresses": [
@@ -1083,7 +1160,11 @@
     "ce049e631414a5a7a7742e2a63e2c05a",
     "25819fbb6cebf3f78cc27b8f7d731cfa",
     "fa2bf718343ac1941ee83cd0eba57869",
-    "2d6fff53385857b8f014b5cf4bb66ff1"
+    "2d6fff53385857b8f014b5cf4bb66ff1",
+    "84d78f9eb1d9d100ed979a3c435a1fd2",
+    "b88e636c9cb52605e1c0104baf5dd1cb",
+    "b460d4faf85c821c5a5eb0f4a84d5d96",
+    "fea28de66bb4ebb42a17e1a1b42821bb"
   ],
   "signals": [
     {
@@ -1223,8 +1304,8 @@
       "price_at_signal": 8.656e-05,
       "mcap_at_signal": 86566.0,
       "timestamp": "2026-06-03T15:57:10.763670+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 1.74,
+      "result_checked": true
     },
     {
       "address": "DH6PFMRQdogN13rd9wrsVsBuf5yc84EgEgCS3eJNpump",
@@ -1233,13 +1314,63 @@
       "price_at_signal": 4.377e-05,
       "mcap_at_signal": 43774.0,
       "timestamp": "2026-06-03T16:11:08.158823+00:00",
+      "result_multiplier": 0.4,
+      "result_checked": true
+    },
+    {
+      "address": "GQVPgQ7YKHLa8CMsv1JV3Gv63ywkAj15ZoCRVv2dpump",
+      "symbol": "FEARLESS",
+      "score": 0.9,
+      "price_at_signal": 2.049e-05,
+      "mcap_at_signal": 20498.0,
+      "timestamp": "2026-06-03T16:35:26.161965+00:00",
+      "result_multiplier": 1.22,
+      "result_checked": true
+    },
+    {
+      "address": "uLU4vfj81yqHmK87p7Ab4pG8XTDTDRN1yppBtjgpump",
+      "symbol": "$RATS",
+      "score": 0.8,
+      "price_at_signal": 1.871e-05,
+      "mcap_at_signal": 18719.0,
+      "timestamp": "2026-06-03T16:43:24.593986+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "FUXKe7MFMjBgRU9P6zdNKowSuEwgHh2nC5jtfh43CB8q",
+      "symbol": "grug",
+      "score": 0.9,
+      "price_at_signal": 6.537e-05,
+      "mcap_at_signal": 65370.0,
+      "timestamp": "2026-06-03T16:46:19.575364+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "hEe6ABzYYcqFRWYVkPRx7LcogpRzo7obreLna1Npump",
+      "symbol": "PEPENOSTRA",
+      "score": 0.75,
+      "price_at_signal": 6.559e-05,
+      "mcap_at_signal": 65596.0,
+      "timestamp": "2026-06-03T16:53:56.861666+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "BU7LsjqUsn4AMfPGSP3rVazizK5RyLGi4dcJcR7dpump",
+      "symbol": "KOOLPILL",
+      "score": 0.9,
+      "price_at_signal": 2.799e-05,
+      "mcap_at_signal": 27995.0,
+      "timestamp": "2026-06-03T17:06:56.402392+00:00",
       "result_multiplier": null,
       "result_checked": false
     }
   ],
   "model": {
-    "avg_pump_mcap": 162992.3,
-    "avg_pump_liquidity": 31213.817,
+    "avg_pump_mcap": 154437.0,
+    "avg_pump_liquidity": 30637.306363636362,
     "avg_pump_volume": 2222831.7485714285,
     "avg_pump_age": 34472.72461223493,
     "best_hours": {
@@ -1249,16 +1380,17 @@
       "8": 1,
       "11": 1,
       "14": 2,
-      "16": 1
+      "16": 1,
+      "17": 1
     },
-    "total_signals": 15,
+    "total_signals": 20,
     "correct_signals": 1,
-    "accuracy": 6.7,
+    "accuracy": 5.0,
     "threshold": 0.7,
-    "avg_pump_volume_h1": 162787.05800000002,
-    "avg_pump_buys_h1": 1926.6,
-    "avg_pump_price_change_5m": 35.025,
-    "avg_pump_age_at_signal": 25250.16754863281,
+    "avg_pump_volume_h1": 155254.6527272727,
+    "avg_pump_buys_h1": 1852.3636363636363,
+    "avg_pump_price_change_5m": 36.15909090909091,
+    "avg_pump_age_at_signal": 23294.791607577237,
     "signal_age_min": 1645.9136904296874,
     "signal_age_max": 3600
   }
