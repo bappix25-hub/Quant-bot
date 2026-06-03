@@ -87,6 +87,28 @@
       "final_multiplier": 3.73,
       "manual": false,
       "timestamp": "2026-06-03T06:56:21.827521+00:00"
+    },
+    {
+      "mcap": 117240.0,
+      "liquidity": 25810.58,
+      "volume_h24": 384848.68,
+      "volume_h1": 197601.05,
+      "volume_m5": 15869.59,
+      "age_seconds": 10004.06987084961,
+      "price_change_5m": 10.76,
+      "price_change_1h": 37.49,
+      "price_change_6h": 234.0,
+      "hour_of_day": 7,
+      "buys_m5": 144,
+      "sells_m5": 56,
+      "buys_h1": 1635,
+      "sells_h1": 629,
+      "symbol": "PROPHECY",
+      "name": "Prophecy",
+      "address": "GFbmpE8dNDHmKjoZyTQXmjN74F1eoXE7M5smzU8ppump",
+      "final_multiplier": 3.34,
+      "manual": false,
+      "timestamp": "2026-06-03T07:57:06.069990+00:00"
     }
   ],
   "dump_patterns": [
@@ -341,6 +363,48 @@
       "final_multiplier": 0,
       "manual": false,
       "timestamp": "2026-06-03T06:55:27.452194+00:00"
+    },
+    {
+      "mcap": 117521.0,
+      "liquidity": 25547.1,
+      "volume_h24": 286687.8,
+      "volume_h1": 286687.8,
+      "volume_m5": 10783.87,
+      "age_seconds": 1839.1476799316406,
+      "price_change_5m": -23.65,
+      "price_change_1h": 252.0,
+      "price_change_6h": 252.0,
+      "hour_of_day": 7,
+      "buys_m5": 128,
+      "sells_m5": 87,
+      "buys_h1": 6246,
+      "sells_h1": 4958,
+      "symbol": "MEMEBUCKS",
+      "address": "9FYfgVRhVwTsY3MSsgBanyaejK7vH4V883tmZL7hpump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-03T07:19:42.147824+00:00"
+    },
+    {
+      "mcap": 33191.0,
+      "liquidity": 13311.89,
+      "volume_h24": 39523.5,
+      "volume_h1": 39523.5,
+      "volume_m5": 3035.7,
+      "age_seconds": 1901.5611340332032,
+      "price_change_5m": -3.51,
+      "price_change_1h": 9.96,
+      "price_change_6h": 9.96,
+      "hour_of_day": 7,
+      "buys_m5": 67,
+      "sells_m5": 40,
+      "buys_h1": 793,
+      "sells_h1": 533,
+      "symbol": "NEH",
+      "address": "2nxGATu6e2i1b76ya8X3odgFCiRuKDyiQmox8ng9pump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-03T07:54:50.561637+00:00"
     }
   ],
   "trained_addresses": [
@@ -359,7 +423,10 @@
     "abc42a7cf6d9afe543e81feaa9f5c293",
     "072edd83c1ae32b7ee9e2a65ef9bbd11",
     "73a8867fd88c21cd5ac6bb42ecd78ee9",
-    "6f944811a328c42acf3932890d4bb304"
+    "6f944811a328c42acf3932890d4bb304",
+    "eb89027389c0ee918e52a9c4536c1cb6",
+    "79e7590ae6bfd0f006aed295e151e8f1",
+    "a2e6092cfbde63ffae9d9c367950f21b"
   ],
   "signals": [
     {
@@ -379,20 +446,31 @@
       "price_at_signal": 6.331e-05,
       "mcap_at_signal": 63317.0,
       "timestamp": "2026-06-03T06:28:50.266269+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 0.97,
+      "result_checked": true
+    },
+    {
+      "address": "9FYfgVRhVwTsY3MSsgBanyaejK7vH4V883tmZL7hpump",
+      "symbol": "MEMEBUCKS",
+      "score": 0.7,
+      "price_at_signal": 0.0001144,
+      "mcap_at_signal": 114447.0,
+      "timestamp": "2026-06-03T07:07:37.056892+00:00",
+      "result_multiplier": 0.6,
+      "result_checked": true
     }
   ],
   "model": {
-    "avg_pump_mcap": 175539.75,
-    "avg_pump_liquidity": 30975.83,
-    "avg_pump_volume": 3604521.7424999997,
-    "avg_pump_age": 51295.84504571533,
+    "avg_pump_mcap": 163879.8,
+    "avg_pump_liquidity": 29942.78,
+    "avg_pump_volume": 2960587.13,
+    "avg_pump_age": 43037.490010742185,
     "best_hours": {
       "5": 3,
-      "6": 1
+      "6": 1,
+      "7": 1
     },
-    "total_signals": 2,
+    "total_signals": 3,
     "correct_signals": 0,
     "accuracy": 0.0,
     "threshold": 0.35
