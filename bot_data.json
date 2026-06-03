@@ -1,5 +1,28 @@
 {
-  "pump_patterns": [],
+  "pump_patterns": [
+    {
+      "mcap": 283882.0,
+      "liquidity": 45683.24,
+      "volume_h24": 3137682.42,
+      "volume_h1": 77897.23,
+      "volume_m5": 7705.65,
+      "age_seconds": 65188.11166894531,
+      "price_change_5m": -4.26,
+      "price_change_1h": 22.28,
+      "price_change_6h": 62.15,
+      "hour_of_day": 5,
+      "buys_m5": 62,
+      "sells_m5": 42,
+      "buys_h1": 604,
+      "sells_h1": 444,
+      "symbol": "WLM",
+      "name": "White Lives Matter",
+      "address": "9MTge3duPkUwN3x9ZPQaLzJnzf9cTZzpj98F4VJANPpr",
+      "final_multiplier": 8.65,
+      "manual": true,
+      "timestamp": "2026-06-03T05:55:28.111740+00:00"
+    }
+  ],
   "dump_patterns": [
     {
       "mcap": 16576.0,
@@ -134,15 +157,18 @@
     "a6f8c29e1078218e7a2c32ee56dd9091",
     "e9c2e83b042e423ea13a687445744521",
     "78d029329f9a93a37b3e812c12737a7d",
-    "5fe0e26e019ebce62a3c98a4d9d3d014"
+    "5fe0e26e019ebce62a3c98a4d9d3d014",
+    "9fd01494601a28fe968ef859c1bf2cab"
   ],
   "signals": [],
   "model": {
-    "avg_pump_mcap": 0,
-    "avg_pump_liquidity": 0,
-    "avg_pump_volume": 0,
-    "avg_pump_age": 0,
-    "best_hours": {},
+    "avg_pump_mcap": 283882.0,
+    "avg_pump_liquidity": 45683.24,
+    "avg_pump_volume": 3137682.42,
+    "avg_pump_age": 65188.11166894531,
+    "best_hours": {
+      "5": 1
+    },
     "total_signals": 0,
     "correct_signals": 0,
     "accuracy": 0.0,
