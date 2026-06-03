@@ -1640,8 +1640,8 @@
       "price_at_signal": 4.77e-05,
       "mcap_at_signal": 47673.0,
       "timestamp": "2026-06-03T18:08:42.025994+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 0.76,
+      "result_checked": true
     },
     {
       "address": "8VbA3EYY2vdX887GvfAJWYPdFt38inC9YLhq6Shdpump",
@@ -1650,8 +1650,8 @@
       "price_at_signal": 0.0001554,
       "mcap_at_signal": 155488.0,
       "timestamp": "2026-06-03T18:21:17.552302+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 1.67,
+      "result_checked": true
     },
     {
       "address": "5657kvM8UkSio2M9NqReGdtW2PQDb3LWAUnNswd8pump",
@@ -1660,6 +1660,26 @@
       "price_at_signal": 0.000148,
       "mcap_at_signal": 148049.0,
       "timestamp": "2026-06-03T18:28:50.395759+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "hMZnN3vvdWHiWbBsGaqVVRSxrXAPPXUr7VH8QB1pump",
+      "symbol": "Grug",
+      "score": 0.75,
+      "price_at_signal": 3.361e-05,
+      "mcap_at_signal": 33614.0,
+      "timestamp": "2026-06-03T18:50:35.431989+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "CxMgF4L2HkYG3MFQZWtu7sq3sKK82eRDYig2yn61pump",
+      "symbol": "WAHHHCAT",
+      "score": 0.75,
+      "price_at_signal": 2.54e-05,
+      "mcap_at_signal": 25401.0,
+      "timestamp": "2026-06-03T18:53:13.790534+00:00",
       "result_multiplier": null,
       "result_checked": false
     }
@@ -1680,9 +1700,9 @@
       "17": 3,
       "18": 4
     },
-    "total_signals": 27,
+    "total_signals": 29,
     "correct_signals": 3,
-    "accuracy": 11.1,
+    "accuracy": 10.3,
     "threshold": 0.7,
     "avg_pump_volume_h1": 246320.37588235294,
     "avg_pump_buys_h1": 2359.176470588235,
