@@ -273,6 +273,26 @@
       "final_multiplier": 6.42,
       "manual": false,
       "timestamp": "2026-06-03T17:25:36.085825+00:00"
+    },
+    {
+      "mcap": 177955.0,
+      "liquidity": 30660.67,
+      "volume_h1": 163512.09,
+      "volume_m5": 3085.18,
+      "age_seconds": 3836.7816801757813,
+      "price_change_5m": 20.03,
+      "price_change_1h": 1091.0,
+      "hour_of_day": 18,
+      "buys_m5": 40,
+      "sells_m5": 27,
+      "buys_h1": 1037,
+      "sells_h1": 983,
+      "symbol": "VSTR",
+      "name": "Vibesterz",
+      "address": "BnhsxDwWwDPVaURQo7KsTJxYogAAc2Pe2Eo2iJa3pump",
+      "final_multiplier": 11.91,
+      "manual": false,
+      "timestamp": "2026-06-03T18:05:49.782039+00:00"
     }
   ],
   "dump_patterns": [
@@ -1266,7 +1286,8 @@
     "87031856eb071f0eef5ad3bc1b8480fd",
     "b874537e8fbca87bb7bbb5269265943e",
     "55c48d651aa0d7d727581411c07557d9",
-    "64a8a848fd4606f446b5234076b11902"
+    "64a8a848fd4606f446b5234076b11902",
+    "ac95147315cf01e1ba87f2ae8e439d2f"
   ],
   "signals": [
     {
@@ -1511,8 +1532,8 @@
     }
   ],
   "model": {
-    "avg_pump_mcap": 164334.15384615384,
-    "avg_pump_liquidity": 31360.39769230769,
+    "avg_pump_mcap": 165307.07142857142,
+    "avg_pump_liquidity": 31310.417142857146,
     "avg_pump_volume": 2222831.7485714285,
     "avg_pump_age": 34472.72461223493,
     "best_hours": {
@@ -1523,16 +1544,17 @@
       "11": 1,
       "14": 2,
       "16": 1,
-      "17": 3
+      "17": 3,
+      "18": 1
     },
     "total_signals": 24,
     "correct_signals": 3,
     "accuracy": 12.5,
     "threshold": 0.7,
-    "avg_pump_volume_h1": 250400.55692307692,
-    "avg_pump_buys_h1": 2460.5384615384614,
-    "avg_pump_price_change_5m": 32.77307692307692,
-    "avg_pump_age_at_signal": 20308.66949626277,
+    "avg_pump_volume_h1": 244194.23785714287,
+    "avg_pump_buys_h1": 2358.8571428571427,
+    "avg_pump_price_change_5m": 31.86285714285714,
+    "avg_pump_age_at_signal": 19132.106080827984,
     "signal_age_min": 1645.9136904296874,
     "signal_age_max": 3600
   }
