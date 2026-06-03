@@ -121,7 +121,7 @@ def learn_dump(coin_info, pair, address=None, manual=False):
 
 def _update_model(data):
     pumps = data["pump_patterns"]
-    if len(pumps) < 3:
+    if len(pumps) < 1:
         return
     model = data["model"]
     model["avg_pump_mcap"] = sum(p["mcap"] for p in pumps) / len(pumps)
@@ -148,27 +148,48 @@ def score_coin(pair, coin_info):
     model = data["model"]
     pumps = data["pump_patterns"]
     dumps = data["dump_patterns"]
-    if len(pumps) < 3:
-        return 0.0, "⏳ শিখছি, এখনো ডেটা কম"
     pattern = extract_pattern(coin_info, pair)
     if not pattern:
         return 0.0, "ডেটা নেই"
+
+    # পাম্প প্যাটার্ন না থাকলে বেসিক স্কোরিং
+    if len(pumps) < 1:
+        score = 0.0
+        reasons = []
+        if pattern["price_change_5m"] > 5:
+            score += 0.3
+            reasons.append("৫m মোমেন্টাম ✅")
+        buys = pattern["buys_m5"]
+        sells = pattern["sells_m5"]
+        if buys + sells > 0 and buys / (buys + sells) > 0.6:
+            score += 0.3
+            reasons.append("Buy pressure ✅")
+        if pattern["volume_m5"] > 300:
+            score += 0.2
+            reasons.append("Volume spike ✅")
+        if pattern["liquidity"] > 5000:
+            score += 0.2
+            reasons.append("লিকুইডিটি ভালো ✅")
+        reason_text = " | ".join(reasons) if reasons else "বেসিক চেক"
+        return round(min(score, 1.0), 2), f"⏳ শিখছি | {reason_text}"
+
+    # AI স্কোরিং — পাম্প প্যাটার্ন আছে
     score = 0.0
     reasons = []
     avg_mcap = model["avg_pump_mcap"]
     if avg_mcap > 0:
         ratio = pattern["mcap"] / avg_mcap
-        if 0.15 <= ratio <= 4.0:
+        if 0.1 <= ratio <= 5.0:
             score += 0.25
-            reasons.append("MCap মিলেছে")
+            reasons.append("MCap মিলেছে ✅")
         else:
             score -= 0.1
     avg_liq = model["avg_pump_liquidity"]
     if avg_liq > 0:
         ratio = pattern["liquidity"] / avg_liq
-        if 0.15 <= ratio <= 4.0:
+        if 0.1 <= ratio <= 5.0:
             score += 0.2
-            reasons.append("লিকুইডিটি মিলেছে")
+            reasons.append("লিকুইডিটি মিলেছে ✅")
     if pattern["price_change_5m"] > 5:
         score += 0.15
         reasons.append("৫m মোমেন্টাম ✅")
@@ -176,9 +197,8 @@ def score_coin(pair, coin_info):
         score -= 0.15
     buys = pattern["buys_m5"]
     sells = pattern["sells_m5"]
-    total_txn = buys + sells
-    if total_txn > 0:
-        buy_ratio = buys / total_txn
+    if buys + sells > 0:
+        buy_ratio = buys / (buys + sells)
         if buy_ratio > 0.55:
             score += 0.15
             reasons.append("Buy pressure ✅")
