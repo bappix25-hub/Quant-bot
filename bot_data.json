@@ -193,6 +193,26 @@
       "final_multiplier": 4.4,
       "manual": false,
       "timestamp": "2026-06-03T14:39:59.541960+00:00"
+    },
+    {
+      "mcap": 147375.0,
+      "liquidity": 28616.17,
+      "volume_h1": 420709.52,
+      "volume_m5": 35024.02,
+      "age_seconds": 3664.6553608398435,
+      "price_change_5m": 25.26,
+      "price_change_1h": 382.0,
+      "hour_of_day": 16,
+      "buys_m5": 326,
+      "sells_m5": 267,
+      "buys_h1": 6271,
+      "sells_h1": 4465,
+      "symbol": "CWIF",
+      "name": "catwifpants",
+      "address": "GDvZy59hnVepx8WTBLPbSUWZWsL2AH5qaJfKn8bApump",
+      "final_multiplier": 4.83,
+      "manual": false,
+      "timestamp": "2026-06-03T16:29:41.655481+00:00"
     }
   ],
   "dump_patterns": [
@@ -1062,7 +1082,8 @@
     "47b73562b0f4a9ffaca16d7f2adadfee",
     "ce049e631414a5a7a7742e2a63e2c05a",
     "25819fbb6cebf3f78cc27b8f7d731cfa",
-    "fa2bf718343ac1941ee83cd0eba57869"
+    "fa2bf718343ac1941ee83cd0eba57869",
+    "2d6fff53385857b8f014b5cf4bb66ff1"
   ],
   "signals": [
     {
@@ -1217,8 +1238,8 @@
     }
   ],
   "model": {
-    "avg_pump_mcap": 164727.55555555556,
-    "avg_pump_liquidity": 31502.444444444445,
+    "avg_pump_mcap": 162992.3,
+    "avg_pump_liquidity": 31213.817,
     "avg_pump_volume": 2222831.7485714285,
     "avg_pump_age": 34472.72461223493,
     "best_hours": {
@@ -1227,16 +1248,17 @@
       "7": 1,
       "8": 1,
       "11": 1,
-      "14": 2
+      "14": 2,
+      "16": 1
     },
     "total_signals": 15,
     "correct_signals": 1,
-    "accuracy": 7.7,
+    "accuracy": 6.7,
     "threshold": 0.7,
-    "avg_pump_volume_h1": 134129.00666666668,
-    "avg_pump_buys_h1": 1443.888888888889,
-    "avg_pump_price_change_5m": 36.11,
-    "avg_pump_age_at_signal": 27648.55779172092,
+    "avg_pump_volume_h1": 162787.05800000002,
+    "avg_pump_buys_h1": 1926.6,
+    "avg_pump_price_change_5m": 35.025,
+    "avg_pump_age_at_signal": 25250.16754863281,
     "signal_age_min": 1645.9136904296874,
     "signal_age_max": 3600
   }
