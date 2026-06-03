@@ -4,7 +4,7 @@ import logging
 from datetime import datetime, timezone
 from telegram import ReplyKeyboardMarkup, KeyboardButton, Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
-from learner import score_coin, learn_pump, learn_dump, record_signal, update_signal_result, get_stats, get_daily_report, is_duplicate
+from learner import score_coin, learn_pump, learn_dump, record_signal, update_signal_result, get_stats, get_daily_report, is_duplicate, get_signal_age_window, verify_pump, get_launch_age
 from github_sync import sync_to_github, restore_from_github
 
 BOT_TOKEN = "8799728887:AAEk1R_H7ApAotjaM1B_XvhUScVAyyHhjtU"
@@ -16,8 +16,6 @@ MIN_LIQUIDITY = 3000
 MIN_VOLUME = 500
 MIN_MCAP = 5000
 MAX_MCAP = 1000000
-MIN_AGE_SECONDS = 300
-MAX_AGE_SECONDS = 1800
 HISTORY_MAX_AGE = 86400
 GITHUB_SYNC_INTERVAL = 21600
 
@@ -52,61 +50,14 @@ def format_number(n):
     except:
         return "$0"
 
-def get_pair_age(pair):
-    try:
-        created_at = pair.get("pairCreatedAt")
-        if created_at:
-            now_ms = datetime.now(timezone.utc).timestamp() * 1000
-            return (now_ms - int(created_at)) / 1000
-    except:
-        pass
-    return None
-
-def check_rug_risk(pair):
-    risks = []
-    try:
-        price_change_5m = float(pair.get("priceChange", {}).get("m5", 0) or 0)
-        liquidity = float(pair.get("liquidity", {}).get("usd", 0) or 0)
-        txns = pair.get("txns", {}).get("m5", {})
-        sells = int(txns.get("sells", 0))
-        buys = int(txns.get("buys", 0))
-        if price_change_5m < -30:
-            risks.append("⚠️ দাম ৩০%+ পড়েছে")
-        if liquidity < 2000:
-            risks.append("⚠️ লিকুইডিটি খুব কম")
-        if sells > buys * 3 and sells > 10:
-            risks.append("⚠️ Sell pressure বেশি")
-    except:
-        pass
-    return risks
-
-def passes_realtime_filter(pair):
-    try:
-        liquidity = float(pair.get("liquidity", {}).get("usd", 0) or 0)
-        volume = float(pair.get("volume", {}).get("h24", 0) or 0)
-        mcap = float(pair.get("fdv", 0) or 0)
-        age = get_pair_age(pair)
-        if liquidity < MIN_LIQUIDITY:
-            return False, "লিকুইডিটি কম"
-        if volume < MIN_VOLUME:
-            return False, "ভলিউম কম"
-        if mcap < MIN_MCAP or mcap > MAX_MCAP:
-            return False, "MCap রেঞ্জের বাইরে"
-        if age is None:
-            return False, "বয়স জানা যায়নি"
-        if age < MIN_AGE_SECONDS:
-            return False, f"খুব নতুন ({int(age)}s)"
-        if age > MAX_AGE_SECONDS:
-            return False, f"খুব পুরনো ({int(age/60)}m)"
-        return True, "ঠিক আছে"
-    except:
-        return False, "এরর"
+def gmgn_link(address):
+    return f"https://gmgn.ai/sol/token/{address}"
 
 def passes_history_filter(pair):
     try:
         liquidity = float(pair.get("liquidity", {}).get("usd", 0) or 0)
         mcap = float(pair.get("fdv", 0) or 0)
-        age = get_pair_age(pair)
+        age = get_launch_age(pair)
         if liquidity < 3000:
             return False
         if mcap < 5000:
@@ -116,6 +67,28 @@ def passes_history_filter(pair):
         return True
     except:
         return False
+
+def passes_realtime_filter(pair, age_min, age_max):
+    try:
+        liquidity = float(pair.get("liquidity", {}).get("usd", 0) or 0)
+        volume = float(pair.get("volume", {}).get("h24", 0) or 0)
+        mcap = float(pair.get("fdv", 0) or 0)
+        age = get_launch_age(pair)
+        if liquidity < MIN_LIQUIDITY:
+            return False, "লিকুইডিটি কম"
+        if volume < MIN_VOLUME:
+            return False, "ভলিউম কম"
+        if mcap < MIN_MCAP or mcap > MAX_MCAP:
+            return False, "MCap রেঞ্জের বাইরে"
+        if age is None:
+            return False, "বয়স অজানা"
+        if age < age_min:
+            return False, f"খুব নতুন ({int(age/60)}m)"
+        if age > age_max:
+            return False, f"খুব পুরনো ({int(age/60)}m)"
+        return True, "ঠিক আছে"
+    except:
+        return False, "এরর"
 
 async def fetch_new_solana_pairs(session):
     try:
@@ -168,42 +141,46 @@ async def history_scan_loop(bot, session):
             logger.info("📚 হিস্ট্রি স্ক্যান শুরু...")
             boosted = await fetch_boosted_pairs(session)
             new_tokens = await fetch_new_solana_pairs(session)
-            all_tokens = {}
+            all_addrs = {}
             for t in boosted + new_tokens:
                 addr = t.get("tokenAddress") or t.get("address")
                 if addr:
-                    all_tokens[addr] = t
+                    all_addrs[addr] = t
             learned_pump = 0
             learned_dump = 0
-            for addr in list(all_tokens.keys())[:40]:
+            for addr in list(all_addrs.keys())[:40]:
                 if is_duplicate(addr):
                     continue
                 await asyncio.sleep(2)
                 pair = await fetch_pair_data(session, addr)
                 if not pair or not passes_history_filter(pair):
                     continue
-                age = get_pair_age(pair)
-                price_change_1h = float(pair.get("priceChange", {}).get("h1", 0) or 0)
-                price_change_6h = float(pair.get("priceChange", {}).get("h6", 0) or 0)
-                price_change_24h = float(pair.get("priceChange", {}).get("h24", 0) or 0)
-                best_multi = max(
-                    1 + price_change_1h / 100,
-                    1 + price_change_6h / 100,
-                    1 + price_change_24h / 100
-                )
+                verified, actual_multi = verify_pump(pair)
                 coin_info = {
                     "name": pair.get("baseToken", {}).get("name", "Unknown"),
                     "symbol": pair.get("baseToken", {}).get("symbol", "???"),
                 }
-                if best_multi >= PUMP_MULTIPLIER:
-                    ok, msg = learn_pump(coin_info, pair, best_multi, addr, manual=False)
+                age = get_launch_age(pair)
+                age_min_s = int(age/60) if age else 0
+                if verified:
+                    ok, msg = learn_pump(coin_info, pair, actual_multi, addr, manual=False)
                     if ok:
                         learned_pump += 1
-                        logger.info(f"📚 পাম্প শেখা: {coin_info['symbol']} {best_multi:.1f}x")
-                elif age and age > 3600 and best_multi < 1.5:
-                    ok, msg = learn_dump(coin_info, pair, addr, manual=False)
-                    if ok:
-                        learned_dump += 1
+                        link = gmgn_link(addr)
+                        await send_msg(bot,
+                            f"📚 <b>পাম্প কয়েন শেখা হয়েছে!</b>\n"
+                            f"🏷️ <b>{coin_info['name']}</b> (${coin_info['symbol']})\n"
+                            f"📈 পাম্প: <b>{actual_multi}x</b>\n"
+                            f"⏱️ বয়স: <b>{age_min_s}m</b>\n"
+                            f"💰 MCap: <b>{format_number(pair.get('fdv', 0))}</b>\n"
+                            f"🔗 <a href='{link}'>GMGN</a>"
+                        )
+                elif age and age > 3600:
+                    h24 = float(pair.get("priceChange", {}).get("h24", 0) or 0)
+                    if h24 < 100:
+                        ok, msg = learn_dump(coin_info, pair, addr, manual=False)
+                        if ok:
+                            learned_dump += 1
             if learned_pump > 0 or learned_dump > 0:
                 sync_to_github(f"হিস্ট্রি: পাম্প {learned_pump} ডাম্প {learned_dump}")
                 logger.info(f"হিস্ট্রি শেষ: পাম্প {learned_pump} ডাম্প {learned_dump}")
@@ -218,11 +195,9 @@ async def realtime_scan_loop(bot, session):
             if not bot_active:
                 await asyncio.sleep(30)
                 continue
+            age_min_s, age_max_s = get_signal_age_window()
             new_tokens = await fetch_new_solana_pairs(session)
-            added = 0
-            for t in new_tokens:
-                if added >= 15:
-                    break
+            for t in new_tokens[:15]:
                 if len(tracked_coins) >= 200:
                     oldest = min(tracked_coins, key=lambda x: tracked_coins[x].get("first_seen", 0))
                     del tracked_coins[oldest]
@@ -233,7 +208,7 @@ async def realtime_scan_loop(bot, session):
                 pair = await fetch_pair_data(session, addr)
                 if not pair:
                     continue
-                ok, reason = passes_realtime_filter(pair)
+                ok, reason = passes_realtime_filter(pair, age_min_s, age_max_s)
                 if not ok:
                     continue
                 price = float(pair.get("priceUsd", 0) or 0)
@@ -242,10 +217,8 @@ async def realtime_scan_loop(bot, session):
                         "initial_price": price,
                         "name": pair.get("baseToken", {}).get("name", "Unknown"),
                         "symbol": pair.get("baseToken", {}).get("symbol", "???"),
-                        "pair_created_at": pair.get("pairCreatedAt"),
                         "first_seen": datetime.now(timezone.utc).timestamp()
                     }
-                    added += 1
 
             for addr, coin_info in list(tracked_coins.items()):
                 if addr in pump_coins or addr in dump_coins:
@@ -254,7 +227,9 @@ async def realtime_scan_loop(bot, session):
                 pair = await fetch_pair_data(session, addr)
                 if not pair:
                     continue
-                age = get_pair_age(pair)
+                age = get_launch_age(pair)
+                if age is None:
+                    continue
                 current_price = float(pair.get("priceUsd", 0) or 0)
                 initial_price = coin_info.get("initial_price", 0)
                 if initial_price <= 0 or current_price <= 0:
@@ -262,50 +237,49 @@ async def realtime_scan_loop(bot, session):
                 multiplier = current_price / initial_price
                 mcap = float(pair.get("fdv", 0) or 0)
                 liquidity = float(pair.get("liquidity", {}).get("usd", 0) or 0)
-                dex_url = pair.get("url", f"https://dexscreener.com/solana/{addr}")
                 name = coin_info.get("name", "Unknown")
                 symbol = coin_info.get("symbol", "???")
+                link = gmgn_link(addr)
+                age_min_text = int(age / 60)
 
-                if age and age > MAX_AGE_SECONDS:
-                    if multiplier >= PUMP_MULTIPLIER:
-                        pump_coins[addr] = {"symbol": symbol, "multiplier": multiplier}
-                        learn_pump(coin_info, pair, multiplier, addr, manual=False)
+                if age > age_max_s:
+                    verified, actual_multi = verify_pump(pair)
+                    if verified:
+                        pump_coins[addr] = coin_info
+                        learn_pump(coin_info, pair, actual_multi, addr, manual=False)
                         await send_msg(bot,
-                            f"🚀 <b>পাম্প কয়েন!</b>\n━━━━━━━━━━━━━━━━\n"
+                            f"🚀 <b>পাম্প কয়েন!</b>\n"
                             f"🏷️ <b>{name}</b> (${symbol})\n"
-                            f"📈 পাম্প: <b>{multiplier:.2f}x</b>\n"
+                            f"📈 পাম্প: <b>{actual_multi}x</b>\n"
                             f"💰 MCap: <b>{format_number(mcap)}</b>\n"
                             f"💧 লিকুইডিটি: <b>{format_number(liquidity)}</b>\n"
+                            f"⏱️ বয়স: <b>{age_min_text}m</b>\n"
                             f"🧠 <i>বট শিখেছে!</i>\n"
-                            f"🔗 <a href='{dex_url}'>DexScreener</a>"
+                            f"🔗 <a href='{link}'>GMGN</a>"
                         )
-                        sync_to_github(f"পাম্প: {symbol} {multiplier:.1f}x")
+                        sync_to_github(f"পাম্প: {symbol} {actual_multi}x")
                     else:
                         dump_coins[addr] = coin_info
                         learn_dump(coin_info, pair, addr, manual=False)
                     continue
 
-                if addr not in alerted_coins and 1.1 <= multiplier <= 2.5:
-                    ai_score, reason = score_coin(pair, coin_info)
+                if addr not in alerted_coins and age >= age_min_s:
+                    ai_score, reason = score_coin(pair, coin_info, age)
                     if ai_score >= current_threshold:
-                        risks = check_rug_risk(pair)
                         confidence_pct = int(ai_score * 100)
                         confidence_bar = "🟢" * int(confidence_pct/20) + "⚪" * (5 - int(confidence_pct/20))
-                        risk_text = "\n".join(risks) if risks else "✅ রিস্ক নেই"
                         await send_msg(bot,
-                            f"⚡ <b>আর্লি সিগনাল!</b>\n━━━━━━━━━━━━━━━━\n"
+                            f"⚡ <b>আর্লি সিগনাল!</b>\n"
+                            f"━━━━━━━━━━━━━━━━\n"
                             f"🏷️ <b>{name}</b> (${symbol})\n"
                             f"🎯 কনফিডেন্স: {confidence_bar} <b>{confidence_pct}%</b>\n"
-                            f"🧠 কারণ: <i>{reason}</i>\n"
-                            f"📈 মাল্টি: <b>{multiplier:.2f}x</b>\n"
+                            f"🧠 <i>{reason}</i>\n"
                             f"💵 দাম: <b>{current_price:.8f}</b>\n"
                             f"💰 MCap: <b>{format_number(mcap)}</b>\n"
                             f"💧 লিকুইডিটি: <b>{format_number(liquidity)}</b>\n"
-                            f"⏱️ বয়স: <b>{int((age or 0)/60)}m</b>\n"
+                            f"⏱️ বয়স: <b>{age_min_text}m</b>\n"
                             f"━━━━━━━━━━━━━━━━\n"
-                            f"🛡️ রিস্ক: {risk_text}\n"
-                            f"⚠️ <i>DYOR করুন!</i>\n"
-                            f"🔗 <a href='{dex_url}'>DexScreener</a>"
+                            f"🔗 <a href='{link}'>GMGN</a>"
                         )
                         record_signal(addr, symbol, ai_score, current_price, mcap)
                         signal_tracking[addr] = {
@@ -315,13 +289,14 @@ async def realtime_scan_loop(bot, session):
                             "checked": False
                         }
                         alerted_coins.add(addr)
+                        logger.info(f"⚡ সিগনাল: {symbol} স্কোর: {ai_score}")
 
             await check_signal_results(session, bot)
             sync_counter += 1
             if sync_counter >= GITHUB_SYNC_INTERVAL // SCAN_INTERVAL:
                 sync_to_github()
                 sync_counter = 0
-            logger.info(f"ট্র্যাক: {len(tracked_coins)} | পাম্প: {len(pump_coins)} | ডাম্প: {len(dump_coins)}")
+            logger.info(f"ট্র্যাক: {len(tracked_coins)} | পাম্প: {len(pump_coins)} | সিগনাল: {len(alerted_coins)}")
         except Exception as e:
             logger.error(f"রিয়েলটাইম এরর: {e}")
         await asyncio.sleep(SCAN_INTERVAL)
@@ -346,7 +321,7 @@ async def check_signal_results(session, bot):
             f"{emoji} <b>সিগনাল ফলাফল!</b>\n"
             f"🏷️ ${sig_info['symbol']}\n"
             f"📈 ফলাফল: <b>{multiplier:.2f}x</b>\n"
-            f"⏱️ ৩০ মিনিট পরের রেজাল্ট"
+            f"⏱️ ৩০ মিনিট পর"
         )
         signal_tracking[addr]["checked"] = True
         await asyncio.sleep(1)
@@ -366,7 +341,7 @@ async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "📚 কমান্ড:\n"
         "/pump ADDRESS — পাম্প শেখান\n"
         "/dump ADDRESS — ডাম্প শেখান\n"
-        "/threshold 50 — থ্রেশোল্ড সেট করুন (১-১০০)",
+        "/threshold 50 — থ্রেশোল্ড সেট (১-১০০)",
         parse_mode="HTML", reply_markup=main_keyboard()
     )
 
@@ -375,7 +350,7 @@ async def cmd_threshold(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not context.args:
         await update.message.reply_text(
             f"⚙️ বর্তমান থ্রেশোল্ড: <b>{int(current_threshold*100)}%</b>\n"
-            f"পরিবর্তন করতে: /threshold 50",
+            f"পরিবর্তন: /threshold 50",
             parse_mode="HTML"
         )
         return
@@ -386,13 +361,11 @@ async def cmd_threshold(update: Update, context: ContextTypes.DEFAULT_TYPE):
             return
         current_threshold = val / 100
         await update.message.reply_text(
-            f"✅ থ্রেশোল্ড আপডেট: <b>{val}%</b>\n"
-            f"এখন থেকে {val}%+ কনফিডেন্সে সিগনাল দেবে।",
+            f"✅ থ্রেশোল্ড আপডেট: <b>{val}%</b>",
             parse_mode="HTML"
         )
-        logger.info(f"থ্রেশোল্ড পরিবর্তন: {val}%")
     except:
-        await update.message.reply_text("❌ সংখ্যা দিন। যেমন: /threshold 50")
+        await update.message.reply_text("❌ যেমন: /threshold 50")
 
 async def cmd_pump(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not context.args:
@@ -400,22 +373,54 @@ async def cmd_pump(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     address = context.args[0].strip()
     if is_duplicate(address):
-        await update.message.reply_text("⚠️ এই কয়েন ইতিমধ্যে শেখা আছে! ডুপ্লিকেট।")
+        await update.message.reply_text("⚠️ ডুপ্লিকেট! ইতিমধ্যে শেখা আছে।")
         return
     await update.message.reply_text("⏳ ডেটা আনছি...")
     async with aiohttp.ClientSession() as session:
         pair = await fetch_pair_data(session, address)
     if not pair:
-        await update.message.reply_text("❌ কয়েনের ডেটা পাওয়া যায়নি।")
+        await update.message.reply_text("❌ ডেটা পাওয়া যায়নি।")
         return
     name = pair.get("baseToken", {}).get("name", "Unknown")
     symbol = pair.get("baseToken", {}).get("symbol", "???")
     coin_info = {"name": name, "symbol": symbol}
-    price_change_24h = float(pair.get("priceChange", {}).get("h24", 0) or 0)
-    multiplier = max(1 + (price_change_24h / 100), PUMP_MULTIPLIER)
-    ok, msg = learn_pump(coin_info, pair, multiplier, address, manual=True)
+    verified, actual_multi = verify_pump(pair)
+    if not verified:
+        await update.message.reply_text(
+            f"⚠️ <b>{name}</b> (${symbol})\n"
+            f"৩x ভেরিফাই হয়নি (max: {actual_multi}x)\n"
+            f"তবুও শেখাতে চাইলে /forcepump {address}",
+            parse_mode="HTML"
+        )
+        return
+    ok, msg = learn_pump(coin_info, pair, actual_multi, address, manual=True)
     if ok:
         sync_to_github(f"ম্যানুয়াল পাম্প: {symbol}")
+    await update.message.reply_text(
+        f"{'✅' if ok else '❌'} <b>{name}</b> (${symbol})\n{msg}",
+        parse_mode="HTML"
+    )
+
+async def cmd_forcepump(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not context.args:
+        await update.message.reply_text("❌ ব্যবহার: /forcepump TOKEN_ADDRESS")
+        return
+    address = context.args[0].strip()
+    if is_duplicate(address):
+        await update.message.reply_text("⚠️ ডুপ্লিকেট!")
+        return
+    await update.message.reply_text("⏳ ডেটা আনছি...")
+    async with aiohttp.ClientSession() as session:
+        pair = await fetch_pair_data(session, address)
+    if not pair:
+        await update.message.reply_text("❌ ডেটা পাওয়া যায়নি।")
+        return
+    name = pair.get("baseToken", {}).get("name", "Unknown")
+    symbol = pair.get("baseToken", {}).get("symbol", "???")
+    coin_info = {"name": name, "symbol": symbol}
+    ok, msg = learn_pump(coin_info, pair, 3.0, address, manual=True)
+    if ok:
+        sync_to_github(f"ফোর্স পাম্প: {symbol}")
     await update.message.reply_text(
         f"{'✅' if ok else '❌'} <b>{name}</b> (${symbol})\n{msg}",
         parse_mode="HTML"
@@ -427,13 +432,13 @@ async def cmd_dump(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     address = context.args[0].strip()
     if is_duplicate(address):
-        await update.message.reply_text("⚠️ এই কয়েন ইতিমধ্যে শেখা আছে! ডুপ্লিকেট।")
+        await update.message.reply_text("⚠️ ডুপ্লিকেট!")
         return
     await update.message.reply_text("⏳ ডেটা আনছি...")
     async with aiohttp.ClientSession() as session:
         pair = await fetch_pair_data(session, address)
     if not pair:
-        await update.message.reply_text("❌ কয়েনের ডেটা পাওয়া যায়নি।")
+        await update.message.reply_text("❌ ডেটা পাওয়া যায়নি।")
         return
     name = pair.get("baseToken", {}).get("name", "Unknown")
     symbol = pair.get("baseToken", {}).get("symbol", "???")
@@ -456,11 +461,11 @@ async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"📊 <b>বটের অবস্থা: {status_text}</b>\n"
             f"🔍 ট্র্যাক: <b>{len(tracked_coins)}</b>\n"
             f"🚀 পাম্প: <b>{len(pump_coins)}</b>\n"
-            f"🔴 ডাম্প: <b>{len(dump_coins)}</b>\n"
             f"⚡ সিগনাল: <b>{len(alerted_coins)}</b>\n"
             f"🧠 পাম্প প্যাটার্ন: <b>{stats['pump_patterns']}</b> (ম্যানুয়াল: {stats['manual_pumps']})\n"
             f"📉 ডাম্প প্যাটার্ন: <b>{stats['dump_patterns']}</b> (ম্যানুয়াল: {stats['manual_dumps']})\n"
             f"🎯 থ্রেশোল্ড: <b>{int(current_threshold*100)}%</b>\n"
+            f"⏳ সিগনাল এইজ: <b>{stats['signal_age_min']}m - {stats['signal_age_max']}m</b>\n"
             f"🔐 ট্রেইনড: <b>{stats['trained_addresses']}</b>",
             parse_mode="HTML"
         )
@@ -470,10 +475,9 @@ async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"📈 <b>পারফরম্যান্স</b>\n"
             f"⚡ মোট সিগনাল: <b>{stats['total_signals']}</b>\n"
             f"✅ চেক হয়েছে: <b>{stats['checked_signals']}</b>\n"
-            f"🏆 সফল: <b>{stats['successful_signals']}</b>\n"
+            f"🏆 সফল (2x+): <b>{stats['successful_signals']}</b>\n"
             f"🎯 একুরেসি: <b>{stats['accuracy']}%</b>\n"
-            f"⏰ সেরা সময়: <b>{stats['best_hour']}:00 UTC</b>\n"
-            f"💰 গড় পাম্প MCap: <b>{format_number(stats['avg_pump_mcap'])}</b>",
+            f"⏰ সেরা সময়: <b>{stats['best_hour']}:00 UTC</b>",
             parse_mode="HTML"
         )
     elif text == "🏆 ট্রেন":
@@ -487,17 +491,18 @@ async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"🎯 থ্রেশোল্ড: <b>{int(current_threshold*100)}%</b>\n"
             f"📊 একুরেসি: <b>{stats['accuracy']}%</b>\n"
             f"{'✅ মডেল রেডি!' if stats['pump_patterns'] >= 5 else '⏳ আরো ডেটা দরকার...'}\n\n"
-            f"📚 কমান্ড:\n/pump ADDRESS\n/dump ADDRESS\n/threshold 50",
+            f"📚 /pump ADDRESS\n/dump ADDRESS\n/threshold 50",
             parse_mode="HTML"
         )
     elif text == "⚙️ সেটিংস":
+        stats = get_stats()
         await update.message.reply_text(
             f"⚙️ <b>সেটিংস</b>\n"
             f"📈 পাম্প থ্রেশোল্ড: {PUMP_MULTIPLIER}x\n"
             f"🎯 AI থ্রেশোল্ড: {int(current_threshold*100)}%\n"
             f"⏱️ রিয়েলটাইম স্ক্যান: প্রতি {SCAN_INTERVAL}s\n"
             f"📚 হিস্ট্রি স্ক্যান: প্রতি ১ ঘণ্টা\n"
-            f"⏳ রিয়েলটাইম এইজ: {MIN_AGE_SECONDS//60}m - {MAX_AGE_SECONDS//60}m\n"
+            f"⏳ সিগনাল এইজ: {stats['signal_age_min']}m - {stats['signal_age_max']}m (AI নির্ধারিত)\n"
             f"📅 হিস্ট্রি এইজ: ২৪ ঘণ্টার মধ্যে\n"
             f"💧 মিন লিকুইডিটি: {format_number(MIN_LIQUIDITY)}\n"
             f"💰 MCap: {format_number(MIN_MCAP)} - {format_number(MAX_MCAP)}",
@@ -505,12 +510,10 @@ async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
     elif text == "✅ অন":
         bot_active = True
-        await update.message.reply_text("✅ বট চালু হয়েছে! স্ক্যান শুরু হবে।")
-        logger.info("বট চালু করা হয়েছে")
+        await update.message.reply_text("✅ বট চালু হয়েছে!")
     elif text == "❌ অফ":
         bot_active = False
-        await update.message.reply_text("❌ বট বন্ধ হয়েছে। স্ক্যান বন্ধ আছে।")
-        logger.info("বট বন্ধ করা হয়েছে")
+        await update.message.reply_text("❌ বট বন্ধ হয়েছে! স্ক্যান বন্ধ।")
 
 async def send_daily_report(bot):
     while True:
@@ -522,7 +525,7 @@ async def send_daily_report(bot):
             await send_msg(bot,
                 f"📋 <b>দৈনিক রিপোর্ট</b>\n"
                 f"━━━━━━━━━━━━━━━━\n"
-                f"📅 তারিখ: <b>{report['date']}</b>\n"
+                f"📅 {report['date']}\n"
                 f"⚡ সিগনাল: <b>{report['signals_sent']}</b>\n"
                 f"🚀 পাম্প শেখা: <b>{report['pumps_learned']}</b>\n"
                 f"✅ সফল: <b>{report['successful']}/{report['checked']}</b>\n"
@@ -536,6 +539,7 @@ def main():
     app.add_handler(CommandHandler("start", cmd_start))
     app.add_handler(CommandHandler("pump", cmd_pump))
     app.add_handler(CommandHandler("dump", cmd_dump))
+    app.add_handler(CommandHandler("forcepump", cmd_forcepump))
     app.add_handler(CommandHandler("threshold", cmd_threshold))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_buttons))
     loop = asyncio.get_event_loop()

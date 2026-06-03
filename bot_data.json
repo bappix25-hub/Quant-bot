@@ -153,6 +153,26 @@
       "final_multiplier": 4.3,
       "manual": false,
       "timestamp": "2026-06-03T11:02:18.839993+00:00"
+    },
+    {
+      "mcap": 22013.0,
+      "liquidity": 14319.6,
+      "volume_h1": 16859.42,
+      "volume_m5": 12705.01,
+      "age_seconds": 3779.4060458984377,
+      "price_change_5m": 301.0,
+      "price_change_1h": 818.0,
+      "hour_of_day": 14,
+      "buys_m5": 132,
+      "sells_m5": 74,
+      "buys_h1": 237,
+      "sells_h1": 146,
+      "symbol": "$TRUMP",
+      "name": "WE LOVE TRUMP",
+      "address": "7FBK8TLkr5snFGdah28j6gcBp4mAiDtJCqXew8sidio",
+      "final_multiplier": 9.18,
+      "manual": false,
+      "timestamp": "2026-06-03T14:13:12.406452+00:00"
     }
   ],
   "dump_patterns": [
@@ -680,6 +700,88 @@
       "final_multiplier": 0,
       "manual": false,
       "timestamp": "2026-06-03T11:02:38.125929+00:00"
+    },
+    {
+      "mcap": 41215.0,
+      "liquidity": 15084.43,
+      "volume_h24": 162619.55,
+      "volume_h1": 162619.55,
+      "volume_m5": 15079.84,
+      "age_seconds": 1862.8627561035157,
+      "price_change_5m": -4.62,
+      "price_change_1h": 32.67,
+      "price_change_6h": 32.67,
+      "hour_of_day": 11,
+      "buys_m5": 206,
+      "sells_m5": 167,
+      "buys_h1": 2349,
+      "sells_h1": 1718,
+      "symbol": "FISHKILLER",
+      "address": "J336W3MsnYwyUZCk4ihsuoJAECfyCAA18ECanHjGpump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-03T11:21:59.863023+00:00"
+    },
+    {
+      "mcap": 86850.0,
+      "liquidity": 22021.67,
+      "volume_h24": 267237.11,
+      "volume_h1": 267237.11,
+      "volume_m5": 47585.61,
+      "age_seconds": 1871.2670349121095,
+      "price_change_5m": -3.06,
+      "price_change_1h": 179.0,
+      "price_change_6h": 179.0,
+      "hour_of_day": 11,
+      "buys_m5": 233,
+      "sells_m5": 240,
+      "buys_h1": 1811,
+      "sells_h1": 1557,
+      "symbol": "NPCC",
+      "address": "FqVwXPbaBpweja1uRQoyRbwbhfgdEe8bFAWoN2GZpump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-03T11:51:36.267218+00:00"
+    },
+    {
+      "mcap": 112730.0,
+      "liquidity": 25192.43,
+      "volume_h24": 345585.03,
+      "volume_h1": 345585.03,
+      "volume_m5": 36287.44,
+      "age_seconds": 1856.9712299804687,
+      "price_change_5m": 14.86,
+      "price_change_1h": 260.0,
+      "price_change_6h": 260.0,
+      "hour_of_day": 12,
+      "buys_m5": 491,
+      "sells_m5": 357,
+      "buys_h1": 4806,
+      "sells_h1": 3690,
+      "symbol": "CHUD",
+      "address": "45FNZPPtdc1hrfT9fskaj12SFzucvFjneE5euHpppump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-03T12:00:00.971296+00:00"
+    },
+    {
+      "mcap": 16011.0,
+      "liquidity": 9550.79,
+      "volume_h1": 66604.65,
+      "volume_m5": 752.22,
+      "age_seconds": 5767.203104003906,
+      "price_change_5m": -14.33,
+      "price_change_1h": -67.09,
+      "hour_of_day": 14,
+      "buys_m5": 34,
+      "sells_m5": 23,
+      "buys_h1": 1674,
+      "sells_h1": 1308,
+      "symbol": "Lee",
+      "address": "7bD6cTtdHPd6BeqFrMUFXBYSDqXniPUsh1C5BHxVpump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-03T14:13:52.203267+00:00"
     }
   ],
   "trained_addresses": [
@@ -714,7 +816,12 @@
     "6f30cded52952c2a0b57ae9748807e03",
     "9a076e219c6fe0c24771d4b72591e3d5",
     "1b231726e3826cbf7a8c4180b30f4fd8",
-    "0edb544c9330bd06236f0d8a80de3482"
+    "0edb544c9330bd06236f0d8a80de3482",
+    "1e14b940a28f4d4e49a2b2e4507b28a6",
+    "3e85d7171805216bbaaf47aa37892943",
+    "48d38c4014fe32b16269b089bbdfbdb3",
+    "f0582c3f2b23a875c9f5cad373051023",
+    "48dcdecc40f9fcfb0ffb9028c140172a"
   ],
   "signals": [
     {
@@ -774,13 +881,33 @@
       "price_at_signal": 4.535e-05,
       "mcap_at_signal": 45349.0,
       "timestamp": "2026-06-03T10:57:57.109950+00:00",
+      "result_multiplier": 0.78,
+      "result_checked": true
+    },
+    {
+      "address": "45FNZPPtdc1hrfT9fskaj12SFzucvFjneE5euHpppump",
+      "symbol": "CHUD",
+      "score": 0.7,
+      "price_at_signal": 7.66e-05,
+      "mcap_at_signal": 76609.0,
+      "timestamp": "2026-06-03T11:37:32.804316+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "FqVwXPbaBpweja1uRQoyRbwbhfgdEe8bFAWoN2GZpump",
+      "symbol": "NPCC",
+      "score": 0.7,
+      "price_at_signal": 8.302e-05,
+      "mcap_at_signal": 83026.0,
+      "timestamp": "2026-06-03T11:40:21.156417+00:00",
       "result_multiplier": null,
       "result_checked": false
     }
   ],
   "model": {
-    "avg_pump_mcap": 189280.42857142858,
-    "avg_pump_liquidity": 34480.44285714286,
+    "avg_pump_mcap": 168372.0,
+    "avg_pump_liquidity": 31960.3375,
     "avg_pump_volume": 2222831.7485714285,
     "avg_pump_age": 34472.72461223493,
     "best_hours": {
@@ -788,11 +915,18 @@
       "6": 1,
       "7": 1,
       "8": 1,
-      "11": 1
+      "11": 1,
+      "14": 1
     },
-    "total_signals": 6,
+    "total_signals": 8,
     "correct_signals": 0,
     "accuracy": 0.0,
-    "threshold": 0.44999999999999996
+    "threshold": 0.5499999999999999,
+    "avg_pump_volume_h1": 91342.2525,
+    "avg_pump_buys_h1": 1077.625,
+    "avg_pump_price_change_5m": 39.03875,
+    "avg_pump_age_at_signal": 30636.05979144287,
+    "signal_age_min": 1645.9136904296874,
+    "signal_age_max": 3600
   }
 }
