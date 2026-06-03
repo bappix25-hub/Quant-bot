@@ -313,6 +313,26 @@
       "final_multiplier": 8.57,
       "manual": false,
       "timestamp": "2026-06-03T18:05:57.716063+00:00"
+    },
+    {
+      "mcap": 124899.0,
+      "liquidity": 25779.58,
+      "volume_h1": 188328.76,
+      "volume_m5": 57156.24,
+      "age_seconds": 832.13962890625,
+      "price_change_5m": 10.85,
+      "price_change_1h": 301.0,
+      "hour_of_day": 18,
+      "buys_m5": 416,
+      "sells_m5": 343,
+      "buys_h1": 1578,
+      "sells_h1": 1172,
+      "symbol": "SOLARSYS",
+      "name": "solar system",
+      "address": "8VbA3EYY2vdX887GvfAJWYPdFt38inC9YLhq6Shdpump",
+      "final_multiplier": 4.01,
+      "manual": false,
+      "timestamp": "2026-06-03T18:18:15.139726+00:00"
     }
   ],
   "dump_patterns": [
@@ -1245,6 +1265,25 @@
       "final_multiplier": 0,
       "manual": false,
       "timestamp": "2026-06-03T17:57:01.428589+00:00"
+    },
+    {
+      "mcap": 16245.0,
+      "liquidity": 9190.91,
+      "volume_h1": 15258.16,
+      "volume_m5": 1641.91,
+      "age_seconds": 6803.797080078125,
+      "price_change_5m": -37.07,
+      "price_change_1h": -49.39,
+      "hour_of_day": 18,
+      "buys_m5": 10,
+      "sells_m5": 27,
+      "buys_h1": 185,
+      "sells_h1": 194,
+      "symbol": "Doomer",
+      "address": "9a9dH6khKV3LDgpWPNXcqYV599bfyhtjw6mQTEbpump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-03T18:18:35.797121+00:00"
     }
   ],
   "trained_addresses": [
@@ -1308,7 +1347,9 @@
     "55c48d651aa0d7d727581411c07557d9",
     "64a8a848fd4606f446b5234076b11902",
     "ac95147315cf01e1ba87f2ae8e439d2f",
-    "84957c8752707ead6b67c76724add891"
+    "84957c8752707ead6b67c76724add891",
+    "f056666a2f200d2c9d66f0c0dffd13a5",
+    "28f34cdf06f4afdb60c63fff0862d70b"
   ],
   "signals": [
     {
@@ -1528,8 +1569,8 @@
       "price_at_signal": 0.0001562,
       "mcap_at_signal": 156243.0,
       "timestamp": "2026-06-03T17:33:35.174437+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 1.16,
+      "result_checked": true
     },
     {
       "address": "8RRojEU8nGWoCh5N11LLK2GJBNRUzPoH4rUz8ibCpump",
@@ -1538,8 +1579,8 @@
       "price_at_signal": 0.0001419,
       "mcap_at_signal": 141988.0,
       "timestamp": "2026-06-03T17:33:39.874773+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 1.83,
+      "result_checked": true
     },
     {
       "address": "4pHEUtFcTp55P3NPW1nMHS4B1AVvuLnwRztYGSngpump",
@@ -1548,13 +1589,23 @@
       "price_at_signal": 4.782e-06,
       "mcap_at_signal": 4783.0,
       "timestamp": "2026-06-03T17:46:31.354773+00:00",
+      "result_multiplier": 0.79,
+      "result_checked": true
+    },
+    {
+      "address": "44VWThjQPf1j4BpVWXPZUute4fF4QqEQLmt4cKHrpump",
+      "symbol": "Panini",
+      "score": 1.0,
+      "price_at_signal": 4.77e-05,
+      "mcap_at_signal": 47673.0,
+      "timestamp": "2026-06-03T18:08:42.025994+00:00",
       "result_multiplier": null,
       "result_checked": false
     }
   ],
   "model": {
-    "avg_pump_mcap": 171582.33333333334,
-    "avg_pump_liquidity": 31733.097999999998,
+    "avg_pump_mcap": 168664.625,
+    "avg_pump_liquidity": 31361.003125,
     "avg_pump_volume": 2222831.7485714285,
     "avg_pump_age": 34472.72461223493,
     "best_hours": {
@@ -1566,17 +1617,17 @@
       "14": 2,
       "16": 1,
       "17": 3,
-      "18": 2
+      "18": 3
     },
-    "total_signals": 24,
+    "total_signals": 25,
     "correct_signals": 3,
-    "accuracy": 12.5,
+    "accuracy": 12.0,
     "threshold": 0.7,
-    "avg_pump_volume_h1": 252343.98866666667,
-    "avg_pump_buys_h1": 2347.733333333333,
-    "avg_pump_price_change_5m": 28.708000000000002,
-    "avg_pump_age_at_signal": 18111.546736100263,
-    "signal_age_min": 1645.9136904296874,
+    "avg_pump_volume_h1": 248343.036875,
+    "avg_pump_buys_h1": 2299.625,
+    "avg_pump_price_change_5m": 27.591875,
+    "avg_pump_age_at_signal": 17031.583791900634,
+    "signal_age_min": 416.069814453125,
     "signal_age_max": 3600
   }
 }
