@@ -469,6 +469,69 @@
       "final_multiplier": 0,
       "manual": false,
       "timestamp": "2026-06-03T08:59:18.706106+00:00"
+    },
+    {
+      "mcap": 34422.0,
+      "liquidity": 13626.99,
+      "volume_h24": 89903.67,
+      "volume_h1": 89903.67,
+      "volume_m5": 2537.3,
+      "age_seconds": 2106.7060729980467,
+      "price_change_5m": -4.97,
+      "price_change_1h": 11.61,
+      "price_change_6h": 11.61,
+      "hour_of_day": 9,
+      "buys_m5": 84,
+      "sells_m5": 49,
+      "buys_h1": 1365,
+      "sells_h1": 882,
+      "symbol": "MCBANK",
+      "address": "BSgYkXBo3pd3SoNHMK2F5gAaWZJbuD4Me6JExdQBpump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-03T09:37:18.706153+00:00"
+    },
+    {
+      "mcap": 52687.0,
+      "liquidity": 16896.97,
+      "volume_h24": 144861.83,
+      "volume_h1": 144861.83,
+      "volume_m5": 9358.08,
+      "age_seconds": 1827.3518779296876,
+      "price_change_5m": 16.8,
+      "price_change_1h": 70.75,
+      "price_change_6h": 70.75,
+      "hour_of_day": 9,
+      "buys_m5": 198,
+      "sells_m5": 97,
+      "buys_h1": 2933,
+      "sells_h1": 1612,
+      "symbol": "Dead",
+      "address": "H7q1EWdUNLir69MPaoT8qhK1fqhsMzKeBfWTExKppump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-03T09:40:17.351943+00:00"
+    },
+    {
+      "mcap": 29153.0,
+      "liquidity": 12510.35,
+      "volume_h24": 74175.15,
+      "volume_h1": 36847.11,
+      "volume_m5": 730.74,
+      "age_seconds": 4102.572284912109,
+      "price_change_5m": 5.2,
+      "price_change_1h": -22.53,
+      "price_change_6h": -5.46,
+      "hour_of_day": 10,
+      "buys_m5": 12,
+      "sells_m5": 8,
+      "buys_h1": 571,
+      "sells_h1": 462,
+      "symbol": "FINE",
+      "address": "757jFkG6Y65ghwubn921XL4kQKXZ4vAgU1nhfTEKtMwo",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-03T10:00:02.572356+00:00"
     }
   ],
   "trained_addresses": [
@@ -493,7 +556,10 @@
     "a2e6092cfbde63ffae9d9c367950f21b",
     "2e64cd0013a276491433299b6af7067e",
     "877c9651e3740e79a366fb30942754d9",
-    "eeca5f3317ae110bbb00f0e26970d58c"
+    "eeca5f3317ae110bbb00f0e26970d58c",
+    "23bb61af1d662d4f59ca1536b8771377",
+    "9bef5ec13b76569d3f4603332d23aaf9",
+    "a021c4f12b45daf375f35160f4602ee1"
   ],
   "signals": [
     {
@@ -525,6 +591,16 @@
       "timestamp": "2026-06-03T07:07:37.056892+00:00",
       "result_multiplier": 0.6,
       "result_checked": true
+    },
+    {
+      "address": "H7q1EWdUNLir69MPaoT8qhK1fqhsMzKeBfWTExKppump",
+      "symbol": "Dead",
+      "score": 0.85,
+      "price_at_signal": 3.989e-05,
+      "mcap_at_signal": 39900.0,
+      "timestamp": "2026-06-03T09:26:20.423487+00:00",
+      "result_multiplier": 0.67,
+      "result_checked": true
     }
   ],
   "model": {
@@ -538,7 +614,7 @@
       "7": 1,
       "8": 1
     },
-    "total_signals": 3,
+    "total_signals": 4,
     "correct_signals": 0,
     "accuracy": 0.0,
     "threshold": 0.35
