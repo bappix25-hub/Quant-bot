@@ -355,3 +355,125 @@ def get_daily_report():
         "successful": len(successful),
         "best_signal": best
     }
+
+def score_launch(launch_data):
+    data = load_data()
+    model = data["model"]
+    launches = data["launch_patterns"]
+    if len(launches) < 3:
+        score = 0.0
+        reasons = []
+        buys = launch_data.get("buy_count", 0)
+        unique = launch_data.get("unique_wallets", 0)
+        volume = launch_data.get("volume", 0)
+        buy_sell = launch_data.get("buy_sell_ratio", 1)
+        if buys > 10:
+            score += 0.3
+            reasons.append("Buy count ✅")
+        if unique > 5:
+            score += 0.3
+            reasons.append("Unique wallets ✅")
+        if volume > 1:
+            score += 0.2
+            reasons.append("Volume ✅")
+        if buy_sell > 2:
+            score += 0.2
+            reasons.append("Buy pressure ✅")
+        return round(min(score, 1.0), 2), "⏳ শিখছি | " + " | ".join(reasons)
+    score = 0.0
+    reasons = []
+    avg_buys = model.get("avg_launch_buys_5min", 0)
+    avg_wallets = model.get("avg_launch_unique_wallets", 0)
+    avg_volume = model.get("avg_launch_volume_5min", 0)
+    buys = launch_data.get("buy_count", 0)
+    unique = launch_data.get("unique_wallets", 0)
+    volume = launch_data.get("volume", 0)
+    buy_sell = launch_data.get("buy_sell_ratio", 1)
+    if avg_buys > 0 and buys >= avg_buys * 0.7:
+        score += 0.25
+        reasons.append("Buy count ✅")
+    if avg_wallets > 0 and unique >= avg_wallets * 0.7:
+        score += 0.25
+        reasons.append("Unique wallets ✅")
+    if avg_volume > 0 and volume >= avg_volume * 0.5:
+        score += 0.2
+        reasons.append("Volume ✅")
+    if buy_sell > 2:
+        score += 0.2
+        reasons.append("Buy pressure ✅")
+    hour = str(datetime.now(timezone.utc).hour)
+    best_hours = model.get("best_hours", {})
+    if best_hours:
+        max_count = max(best_hours.values())
+        if hour in best_hours and best_hours[hour] >= max_count * 0.6:
+            score += 0.1
+            reasons.append("সেরা সময় ✅")
+    return round(min(score, 1.0), 2), " | ".join(reasons) if reasons else "প্যাটার্ন দুর্বল"
+
+def extract_launch_pattern(transactions):
+    try:
+        if not transactions:
+            return None
+        buy_count = 0
+        sell_count = 0
+        total_volume = 0
+        unique_wallets = set()
+        for tx in transactions[:20]:
+            tx_type = tx.get("type", "")
+            source = tx.get("source", "")
+            transfers = tx.get("tokenTransfers", [])
+            for transfer in transfers:
+                amount = float(transfer.get("tokenAmount", 0) or 0)
+                wallet = transfer.get("fromUserAccount", "")
+                if wallet:
+                    unique_wallets.add(wallet)
+                total_volume += amount
+            if tx_type == "SWAP":
+                if source == "PUMP_FUN":
+                    buy_count += 1
+                else:
+                    sell_count += 1
+        return {
+            "buy_count_early": buy_count,
+            "sell_count_early": sell_count,
+            "unique_wallets_early": len(unique_wallets),
+            "total_volume_early": total_volume,
+            "buy_sell_ratio": buy_count / max(sell_count, 1),
+            "hour_of_day": datetime.now(timezone.utc).hour,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }
+    except:
+        return None
+
+def learn_pump_with_launch(coin_info, pair, final_multiplier, launch_pattern, address=None, manual=False):
+    data = load_data()
+    if address and is_duplicate(address):
+        return False, "ডুপ্লিকেট!"
+    if not manual:
+        verified, actual_multi = verify_pump(pair)
+        if not verified:
+            return False, f"৩x ভেরিফাই হয়নি ({actual_multi}x)"
+        final_multiplier = actual_multi
+    age = get_launch_age(pair)
+    pattern = extract_pattern(pair, age)
+    if not pattern:
+        return False, "ডেটা নেই"
+    pattern["symbol"] = coin_info.get("symbol", "???")
+    pattern["name"] = coin_info.get("name", "Unknown")
+    pattern["address"] = address or ""
+    pattern["final_multiplier"] = final_multiplier
+    pattern["manual"] = manual
+    pattern["timestamp"] = datetime.now(timezone.utc).isoformat()
+    data["pump_patterns"].append(pattern)
+    data["pump_patterns"] = data["pump_patterns"][-500:]
+    if launch_pattern:
+        launch_pattern["symbol"] = coin_info.get("symbol", "???")
+        launch_pattern["address"] = address or ""
+        launch_pattern["final_multiplier"] = final_multiplier
+        data["launch_patterns"].append(launch_pattern)
+        data["launch_patterns"] = data["launch_patterns"][-500:]
+    if address:
+        _mark_trained(data, address)
+    _update_model(data)
+    save_data(data)
+    return True, f"✅ পাম্প শেখা! {final_multiplier}x | মোট: {len(data['pump_patterns'])}"
