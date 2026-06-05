@@ -8,6 +8,7 @@ DATA_FILE = os.path.expanduser("~/bot_data.json")
 DEFAULT_DATA = {
     "pump_patterns": [],
     "dump_patterns": [],
+    "launch_patterns": [],
     "trained_addresses": [],
     "signals": [],
     "model": {
@@ -15,15 +16,11 @@ DEFAULT_DATA = {
         "avg_pump_liquidity": 0,
         "avg_pump_volume_h1": 0,
         "avg_pump_buys_h1": 0,
-        "avg_pump_price_change_5m": 0,
-        "avg_pump_age_at_signal": 0,
         "best_hours": {},
         "total_signals": 0,
         "correct_signals": 0,
         "accuracy": 0.0,
-        "threshold": 0.35,
-        "signal_age_min": 5,
-        "signal_age_max": 30
+        "threshold": 0.35
     }
 }
 
@@ -60,7 +57,6 @@ def _mark_trained(data, address):
         data["trained_addresses"].append(h)
 
 def get_launch_age(pair):
-    """pairCreatedAt থেকে সঠিক বয়স"""
     try:
         created_at = pair.get("pairCreatedAt")
         if created_at:
@@ -71,7 +67,6 @@ def get_launch_age(pair):
     return None
 
 def verify_pump(pair):
-    """সত্যিই ৩x+ মাইগ্রেশনের পর পাম্প হয়েছে কিনা যাচাই"""
     try:
         h1 = float(pair.get("priceChange", {}).get("h1", 0) or 0)
         h6 = float(pair.get("priceChange", {}).get("h6", 0) or 0)
@@ -106,16 +101,16 @@ def extract_pattern(pair, age_seconds=None):
 def learn_pump(coin_info, pair, final_multiplier, address=None, manual=False):
     data = load_data()
     if address and is_duplicate(address):
-        return False, "ইতিমধ্যে শেখা আছে! ডুপ্লিকেট।"
+        return False, "ডুপ্লিকেট!"
     if not manual:
         verified, actual_multi = verify_pump(pair)
         if not verified:
-            return False, f"৩x ভেরিফাই হয়নি (max: {actual_multi}x)"
+            return False, f"৩x ভেরিফাই হয়নি ({actual_multi}x)"
         final_multiplier = actual_multi
     age = get_launch_age(pair)
     pattern = extract_pattern(pair, age)
     if not pattern:
-        return False, "ডেটা পাওয়া যায়নি"
+        return False, "ডেটা নেই"
     pattern["symbol"] = coin_info.get("symbol", "???")
     pattern["name"] = coin_info.get("name", "Unknown")
     pattern["address"] = address or ""
@@ -128,16 +123,16 @@ def learn_pump(coin_info, pair, final_multiplier, address=None, manual=False):
         _mark_trained(data, address)
     _update_model(data)
     save_data(data)
-    return True, f"✅ পাম্প শেখা হয়েছে! {final_multiplier}x | মোট: {len(data['pump_patterns'])}"
+    return True, f"✅ পাম্প শেখা! {final_multiplier}x | মোট: {len(data['pump_patterns'])}"
 
 def learn_dump(coin_info, pair, address=None, manual=False):
     data = load_data()
     if address and is_duplicate(address):
-        return False, "ইতিমধ্যে শেখা আছে! ডুপ্লিকেট।"
+        return False, "ডুপ্লিকেট!"
     age = get_launch_age(pair)
     pattern = extract_pattern(pair, age)
     if not pattern:
-        return False, "ডেটা পাওয়া যায়নি"
+        return False, "ডেটা নেই"
     pattern["symbol"] = coin_info.get("symbol", "???")
     pattern["address"] = address or ""
     pattern["final_multiplier"] = 0
@@ -148,23 +143,17 @@ def learn_dump(coin_info, pair, address=None, manual=False):
     if address:
         _mark_trained(data, address)
     save_data(data)
-    return True, f"✅ ডাম্প শেখা হয়েছে! মোট: {len(data['dump_patterns'])}"
+    return True, f"✅ ডাম্প শেখা! মোট: {len(data['dump_patterns'])}"
 
 def _update_model(data):
     pumps = data["pump_patterns"]
-    if len(pumps) < 1:
+    if not pumps:
         return
     model = data["model"]
     model["avg_pump_mcap"] = sum(p["mcap"] for p in pumps) / len(pumps)
     model["avg_pump_liquidity"] = sum(p["liquidity"] for p in pumps) / len(pumps)
     model["avg_pump_volume_h1"] = sum(p.get("volume_h1", 0) for p in pumps) / len(pumps)
     model["avg_pump_buys_h1"] = sum(p.get("buys_h1", 0) for p in pumps) / len(pumps)
-    model["avg_pump_price_change_5m"] = sum(p.get("price_change_5m", 0) for p in pumps) / len(pumps)
-    ages = [p["age_seconds"] for p in pumps if p.get("age_seconds", 0) > 0]
-    if ages:
-        model["avg_pump_age_at_signal"] = sum(ages) / len(ages)
-        model["signal_age_min"] = max(60, min(ages) * 0.5)
-        model["signal_age_max"] = min(3600, max(ages) * 1.5)
     hour_counts = {}
     for p in pumps:
         h = str(p.get("hour_of_day", 0))
@@ -190,29 +179,26 @@ def score_coin(pair, coin_info, age_seconds=None):
     pattern = extract_pattern(pair, age_seconds)
     if not pattern:
         return 0.0, "ডেটা নেই"
-
-    if len(pumps) < 1:
+    if len(pumps) < 3:
         score = 0.0
         reasons = []
-        if pattern["price_change_5m"] > 5:
+        if pattern["price_change_5m"] > 10:
             score += 0.3
             reasons.append("৫m মোমেন্টাম ✅")
         buys = pattern["buys_m5"]
         sells = pattern["sells_m5"]
-        if buys + sells > 0 and buys / (buys + sells) > 0.6:
+        if buys + sells > 0 and buys / (buys + sells) > 0.65:
             score += 0.3
             reasons.append("Buy pressure ✅")
-        if pattern["volume_m5"] > 300:
+        if pattern["volume_m5"] > 500:
             score += 0.2
             reasons.append("Volume spike ✅")
-        if pattern["liquidity"] > 5000:
+        if pattern["liquidity"] > 8000:
             score += 0.2
             reasons.append("লিকুইডিটি ✅")
         return round(min(score, 1.0), 2), "⏳ শিখছি | " + " | ".join(reasons)
-
     score = 0.0
     reasons = []
-
     avg_mcap = model["avg_pump_mcap"]
     if avg_mcap > 0:
         ratio = pattern["mcap"] / avg_mcap
@@ -221,42 +207,28 @@ def score_coin(pair, coin_info, age_seconds=None):
             reasons.append("MCap ✅")
         else:
             score -= 0.1
-
     avg_liq = model["avg_pump_liquidity"]
-    if avg_liq > 0:
-        ratio = pattern["liquidity"] / avg_liq
-        if 0.1 <= ratio <= 5.0:
-            score += 0.15
-            reasons.append("লিকুইডিটি ✅")
-
-    avg_vol = model["avg_pump_volume_h1"]
-    if avg_vol > 0:
-        ratio = pattern["volume_h1"] / avg_vol
-        if 0.1 <= ratio <= 5.0:
-            score += 0.15
-            reasons.append("ভলিউম ✅")
-
-    avg_buys = model["avg_pump_buys_h1"]
-    if avg_buys > 0 and pattern["buys_h1"] >= avg_buys * 0.5:
-        score += 0.1
-        reasons.append("Buy count ✅")
-
-    if pattern["price_change_5m"] > 5:
+    if avg_liq > 0 and pattern["liquidity"] / avg_liq >= 0.2:
         score += 0.15
+        reasons.append("লিকুইডিটি ✅")
+    avg_vol = model["avg_pump_volume_h1"]
+    if avg_vol > 0 and pattern["volume_h1"] / avg_vol >= 0.2:
+        score += 0.15
+        reasons.append("ভলিউম ✅")
+    if pattern["price_change_5m"] > 10:
+        score += 0.2
         reasons.append("৫m মোমেন্টাম ✅")
-    elif pattern["price_change_5m"] < -15:
-        score -= 0.15
-
+    elif pattern["price_change_5m"] < -20:
+        score -= 0.2
     buys = pattern["buys_m5"]
     sells = pattern["sells_m5"]
     if buys + sells > 0:
         buy_ratio = buys / (buys + sells)
-        if buy_ratio > 0.55:
+        if buy_ratio > 0.65:
             score += 0.15
             reasons.append("Buy pressure ✅")
         elif buy_ratio < 0.3:
-            score -= 0.1
-
+            score -= 0.15
     hour = str(pattern["hour_of_day"])
     best_hours = model.get("best_hours", {})
     if best_hours:
@@ -264,21 +236,14 @@ def score_coin(pair, coin_info, age_seconds=None):
         if hour in best_hours and best_hours[hour] >= max_count * 0.6:
             score += 0.1
             reasons.append("সেরা সময় ✅")
-
     dump_matches = sum(1 for dp in dumps[-100:]
         if dp["mcap"] > 0 and pattern["mcap"] > 0
-        and abs(dp["mcap"] - pattern["mcap"]) / pattern["mcap"] < 0.25)
-    if dump_matches > 10:
-        score -= 0.25
+        and abs(dp["mcap"] - pattern["mcap"]) / pattern["mcap"] < 0.2)
+    if dump_matches > 8:
+        score -= 0.3
         reasons.append("⚠️ ডাম্প প্যাটার্ন")
-
     score = max(0.0, min(1.0, score))
     return round(score, 2), " | ".join(reasons) if reasons else "প্যাটার্ন দুর্বল"
-
-def get_signal_age_window():
-    data = load_data()
-    model = data["model"]
-    return model.get("signal_age_min", 300), model.get("signal_age_max", 1800)
 
 def record_signal(address, symbol, score, price_at_signal, mcap_at_signal):
     data = load_data()
@@ -321,11 +286,10 @@ def get_stats():
     best_hour = max(best_hours, key=best_hours.get) if best_hours else "N/A"
     manual_pumps = sum(1 for p in data["pump_patterns"] if p.get("manual"))
     manual_dumps = sum(1 for p in data["dump_patterns"] if p.get("manual"))
-    age_min = model.get("signal_age_min", 300)
-    age_max = model.get("signal_age_max", 1800)
     return {
         "pump_patterns": len(data["pump_patterns"]),
         "dump_patterns": len(data["dump_patterns"]),
+        "launch_patterns": len(data.get("launch_patterns", [])),
         "manual_pumps": manual_pumps,
         "manual_dumps": manual_dumps,
         "total_signals": len(data["signals"]),
@@ -334,9 +298,7 @@ def get_stats():
         "accuracy": model.get("accuracy", 0.0),
         "threshold": model.get("threshold", 0.35),
         "best_hour": best_hour,
-        "trained_addresses": len(data.get("trained_addresses", [])),
-        "signal_age_min": int(age_min // 60),
-        "signal_age_max": int(age_max // 60)
+        "trained_addresses": len(data.get("trained_addresses", []))
     }
 
 def get_daily_report():
@@ -355,125 +317,3 @@ def get_daily_report():
         "successful": len(successful),
         "best_signal": best
     }
-
-def score_launch(launch_data):
-    data = load_data()
-    model = data["model"]
-    launches = data["launch_patterns"]
-    if len(launches) < 3:
-        score = 0.0
-        reasons = []
-        buys = launch_data.get("buy_count", 0)
-        unique = launch_data.get("unique_wallets", 0)
-        volume = launch_data.get("volume", 0)
-        buy_sell = launch_data.get("buy_sell_ratio", 1)
-        if buys > 10:
-            score += 0.3
-            reasons.append("Buy count ✅")
-        if unique > 5:
-            score += 0.3
-            reasons.append("Unique wallets ✅")
-        if volume > 1:
-            score += 0.2
-            reasons.append("Volume ✅")
-        if buy_sell > 2:
-            score += 0.2
-            reasons.append("Buy pressure ✅")
-        return round(min(score, 1.0), 2), "⏳ শিখছি | " + " | ".join(reasons)
-    score = 0.0
-    reasons = []
-    avg_buys = model.get("avg_launch_buys_5min", 0)
-    avg_wallets = model.get("avg_launch_unique_wallets", 0)
-    avg_volume = model.get("avg_launch_volume_5min", 0)
-    buys = launch_data.get("buy_count", 0)
-    unique = launch_data.get("unique_wallets", 0)
-    volume = launch_data.get("volume", 0)
-    buy_sell = launch_data.get("buy_sell_ratio", 1)
-    if avg_buys > 0 and buys >= avg_buys * 0.7:
-        score += 0.25
-        reasons.append("Buy count ✅")
-    if avg_wallets > 0 and unique >= avg_wallets * 0.7:
-        score += 0.25
-        reasons.append("Unique wallets ✅")
-    if avg_volume > 0 and volume >= avg_volume * 0.5:
-        score += 0.2
-        reasons.append("Volume ✅")
-    if buy_sell > 2:
-        score += 0.2
-        reasons.append("Buy pressure ✅")
-    hour = str(datetime.now(timezone.utc).hour)
-    best_hours = model.get("best_hours", {})
-    if best_hours:
-        max_count = max(best_hours.values())
-        if hour in best_hours and best_hours[hour] >= max_count * 0.6:
-            score += 0.1
-            reasons.append("সেরা সময় ✅")
-    return round(min(score, 1.0), 2), " | ".join(reasons) if reasons else "প্যাটার্ন দুর্বল"
-
-def extract_launch_pattern(transactions):
-    try:
-        if not transactions:
-            return None
-        buy_count = 0
-        sell_count = 0
-        total_volume = 0
-        unique_wallets = set()
-        for tx in transactions[:20]:
-            tx_type = tx.get("type", "")
-            source = tx.get("source", "")
-            transfers = tx.get("tokenTransfers", [])
-            for transfer in transfers:
-                amount = float(transfer.get("tokenAmount", 0) or 0)
-                wallet = transfer.get("fromUserAccount", "")
-                if wallet:
-                    unique_wallets.add(wallet)
-                total_volume += amount
-            if tx_type == "SWAP":
-                if source == "PUMP_FUN":
-                    buy_count += 1
-                else:
-                    sell_count += 1
-        return {
-            "buy_count_early": buy_count,
-            "sell_count_early": sell_count,
-            "unique_wallets_early": len(unique_wallets),
-            "total_volume_early": total_volume,
-            "buy_sell_ratio": buy_count / max(sell_count, 1),
-            "hour_of_day": datetime.now(timezone.utc).hour,
-            "timestamp": datetime.now(timezone.utc).isoformat()
-        }
-    except:
-        return None
-
-def learn_pump_with_launch(coin_info, pair, final_multiplier, launch_pattern, address=None, manual=False):
-    data = load_data()
-    if address and is_duplicate(address):
-        return False, "ডুপ্লিকেট!"
-    if not manual:
-        verified, actual_multi = verify_pump(pair)
-        if not verified:
-            return False, f"৩x ভেরিফাই হয়নি ({actual_multi}x)"
-        final_multiplier = actual_multi
-    age = get_launch_age(pair)
-    pattern = extract_pattern(pair, age)
-    if not pattern:
-        return False, "ডেটা নেই"
-    pattern["symbol"] = coin_info.get("symbol", "???")
-    pattern["name"] = coin_info.get("name", "Unknown")
-    pattern["address"] = address or ""
-    pattern["final_multiplier"] = final_multiplier
-    pattern["manual"] = manual
-    pattern["timestamp"] = datetime.now(timezone.utc).isoformat()
-    data["pump_patterns"].append(pattern)
-    data["pump_patterns"] = data["pump_patterns"][-500:]
-    if launch_pattern:
-        launch_pattern["symbol"] = coin_info.get("symbol", "???")
-        launch_pattern["address"] = address or ""
-        launch_pattern["final_multiplier"] = final_multiplier
-        data["launch_patterns"].append(launch_pattern)
-        data["launch_patterns"] = data["launch_patterns"][-500:]
-    if address:
-        _mark_trained(data, address)
-    _update_model(data)
-    save_data(data)
-    return True, f"✅ পাম্প শেখা! {final_multiplier}x | মোট: {len(data['pump_patterns'])}"
