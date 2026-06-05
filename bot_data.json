@@ -99,6 +99,26 @@
       "final_multiplier": 3.98,
       "manual": false,
       "timestamp": "2026-06-05T15:00:01.015315+00:00"
+    },
+    {
+      "mcap": 202608.0,
+      "liquidity": 30619.76,
+      "volume_h1": 59414.2,
+      "volume_m5": 4317.42,
+      "age_seconds": 3175.9536809082033,
+      "price_change_5m": 12.02,
+      "price_change_1h": 650.0,
+      "hour_of_day": 15,
+      "buys_m5": 35,
+      "sells_m5": 19,
+      "buys_h1": 539,
+      "sells_h1": 386,
+      "symbol": "GOLDENGOAL",
+      "name": "Golden Goal",
+      "address": "GU527smM71ht8aCA8ouShfXhahVq6crz51FMbfZ8pump",
+      "final_multiplier": 7.5,
+      "manual": false,
+      "timestamp": "2026-06-05T15:02:52.953751+00:00"
     }
   ],
   "dump_patterns": [
@@ -209,7 +229,8 @@
     "f6440791845872a1b8f8bacc169f988c",
     "d0f3e5977dd0f57c2bb7a00820e13f1e",
     "dfd9d3c21ca2c60b3aa63a40c8eb69bf",
-    "1e2a04a484d40aebd3e65f3580983fbe"
+    "1e2a04a484d40aebd3e65f3580983fbe",
+    "b97e293a1caa5ad681bb136b257baede"
   ],
   "signals": [
     {
@@ -299,8 +320,8 @@
       "price_at_signal": 1.872e-05,
       "mcap_at_signal": 18726.0,
       "timestamp": "2026-06-05T14:28:06.521334+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 0.47,
+      "result_checked": true
     },
     {
       "address": "EFzb6LXag5pZvkBYhT4n9LWGr5tD9upivcf9i8dGpump",
@@ -311,20 +332,50 @@
       "timestamp": "2026-06-05T14:41:32.915650+00:00",
       "result_multiplier": null,
       "result_checked": false
+    },
+    {
+      "address": "3Cf6eLE7VCuWbrtnRUkNpgQmpgWHaooq5c27s184pump",
+      "symbol": "STOCKS",
+      "score": 0.35,
+      "price_at_signal": 5.957e-05,
+      "mcap_at_signal": 59575.0,
+      "timestamp": "2026-06-05T15:00:13.955693+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "4CneEEm2QbuXeemXzpDaTctydnX7fqWRHj8WeGfdpump",
+      "symbol": "DOOMER",
+      "score": 0.7,
+      "price_at_signal": 2.395e-05,
+      "mcap_at_signal": 23959.0,
+      "timestamp": "2026-06-05T15:02:50.562074+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "4CneEEm2QbuXeemXzpDaTctydnX7fqWRHj8WeGfdpump",
+      "symbol": "DOOMER",
+      "score": 0.7,
+      "price_at_signal": 2.395e-05,
+      "mcap_at_signal": 23959.0,
+      "timestamp": "2026-06-05T15:02:50.912238+00:00",
+      "result_multiplier": null,
+      "result_checked": false
     }
   ],
   "model": {
-    "avg_pump_mcap": 193941.0,
-    "avg_pump_liquidity": 23623.6,
-    "avg_pump_volume_h1": 100041.338,
-    "avg_pump_buys_h1": 906.4,
+    "avg_pump_mcap": 195385.5,
+    "avg_pump_liquidity": 24789.626666666667,
+    "avg_pump_volume_h1": 93270.14833333333,
+    "avg_pump_buys_h1": 845.1666666666666,
     "best_hours": {
       "9": 1,
       "13": 1,
       "14": 2,
-      "15": 1
+      "15": 2
     },
-    "total_signals": 10,
+    "total_signals": 13,
     "correct_signals": 0,
     "accuracy": 0.0,
     "threshold": 0.7
