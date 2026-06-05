@@ -259,6 +259,16 @@
       "timestamp": "2026-06-05T16:16:15.478565+00:00",
       "result_multiplier": null,
       "result_checked": false
+    },
+    {
+      "address": "Cns7EuCZM3pMnkndXQXSyL7bkVvFtee9fpbURopapump",
+      "symbol": "LIFE",
+      "score": 0.5,
+      "price_at_signal": 5.859e-05,
+      "mcap_at_signal": 58594.0,
+      "timestamp": "2026-06-05T16:33:31.362701+00:00",
+      "result_multiplier": null,
+      "result_checked": false
     }
   ],
   "model": {
@@ -271,7 +281,7 @@
       "13": 1,
       "15": 1
     },
-    "total_signals": 7,
+    "total_signals": 8,
     "correct_signals": 0,
     "accuracy": 0.0,
     "threshold": 0.44999999999999996
