@@ -411,8 +411,8 @@
       "price_at_signal": 4.229e-05,
       "mcap_at_signal": 42295.0,
       "timestamp": "2026-06-05T17:26:38.449348+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 0.06,
+      "result_checked": true
     },
     {
       "address": "FKXSLBzh2rYWW8Ne99PPGkCC8Cvy59ZjfwBDcX5Gpump",
@@ -421,8 +421,8 @@
       "price_at_signal": 1.095e-05,
       "mcap_at_signal": 10958.0,
       "timestamp": "2026-06-05T17:26:40.538677+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 1.14,
+      "result_checked": true
     },
     {
       "address": "7gW8pDR1amcmkTvtogEEU5kkWc9JZJmo3dGAhjN5pump",
