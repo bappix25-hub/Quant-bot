@@ -21,24 +21,24 @@
       "timestamp": "2026-06-05T09:08:27.648249+00:00"
     },
     {
-      "mcap": 10459.0,
-      "liquidity": 9138.11,
-      "volume_h1": 17605.58,
-      "volume_m5": 6804.72,
-      "age_seconds": 2092.372303955078,
-      "price_change_5m": -2.2,
-      "price_change_1h": 424.0,
+      "mcap": 91650.0,
+      "liquidity": 20558.97,
+      "volume_h1": 37777.73,
+      "volume_m5": 9947.17,
+      "age_seconds": 1149.0190170898438,
+      "price_change_5m": 112.0,
+      "price_change_1h": 232.0,
       "hour_of_day": 13,
-      "buys_m5": 121,
-      "sells_m5": 105,
-      "buys_h1": 441,
-      "sells_h1": 231,
-      "symbol": "$TROLL",
-      "name": "NEW TROLL",
-      "address": "MXdZr6ZrTaaC66vSiboeHMuPZSUjeRB29KrkFVqTAbo",
-      "final_multiplier": 5.24,
+      "buys_m5": 145,
+      "sells_m5": 89,
+      "buys_h1": 572,
+      "sells_h1": 409,
+      "symbol": "MINE",
+      "name": "MineSwap",
+      "address": "3to2HzpTG49t1saZCtTgUMRTkXg9MaPEP1Rdyvnwpump",
+      "final_multiplier": 3.32,
       "manual": false,
-      "timestamp": "2026-06-05T13:45:14.372420+00:00"
+      "timestamp": "2026-06-05T13:56:01.019121+00:00"
     }
   ],
   "dump_patterns": [
@@ -66,7 +66,7 @@
   "trained_addresses": [
     "fb04d9bc1ad12e3d642772e83873f2eb",
     "c5e210a5a2391d073959ef3f335bee36",
-    "cc4773f9f5f02c6cea9b9d73ae7e4351"
+    "8cb25b2a36e2e5b87fcf5612aa21b410"
   ],
   "signals": [
     {
@@ -88,50 +88,20 @@
       "timestamp": "2026-06-05T13:37:20.785793+00:00",
       "result_multiplier": null,
       "result_checked": false
-    },
-    {
-      "address": "Hycw666CXZrGUU6BWww8yC3LR3GPVMH36gUJtNC1pump",
-      "symbol": "\ud478\ubc14\uc624",
-      "score": 0.7,
-      "price_at_signal": 4.768e-05,
-      "mcap_at_signal": 47682.0,
-      "timestamp": "2026-06-05T13:37:20.815438+00:00",
-      "result_multiplier": null,
-      "result_checked": false
-    },
-    {
-      "address": "3to2HzpTG49t1saZCtTgUMRTkXg9MaPEP1Rdyvnwpump",
-      "symbol": "MINE",
-      "score": 0.7,
-      "price_at_signal": 4.5e-05,
-      "mcap_at_signal": 45004.0,
-      "timestamp": "2026-06-05T13:42:30.545243+00:00",
-      "result_multiplier": null,
-      "result_checked": false
-    },
-    {
-      "address": "3to2HzpTG49t1saZCtTgUMRTkXg9MaPEP1Rdyvnwpump",
-      "symbol": "MINE",
-      "score": 0.7,
-      "price_at_signal": 4.5e-05,
-      "mcap_at_signal": 45004.0,
-      "timestamp": "2026-06-05T13:42:30.573679+00:00",
-      "result_multiplier": null,
-      "result_checked": false
     }
   ],
   "model": {
-    "avg_pump_mcap": 388056.0,
-    "avg_pump_liquidity": 35740.33,
-    "avg_pump_volume_h1": 129660.39499999999,
-    "avg_pump_buys_h1": 1007.5,
+    "avg_pump_mcap": 428651.5,
+    "avg_pump_liquidity": 41450.76,
+    "avg_pump_volume_h1": 139746.47,
+    "avg_pump_buys_h1": 1073.0,
     "best_hours": {
       "9": 1,
       "13": 1
     },
-    "total_signals": 5,
+    "total_signals": 2,
     "correct_signals": 0,
     "accuracy": 0.0,
-    "threshold": 0.39999999999999997
+    "threshold": 0.35
   }
-}}
+}
