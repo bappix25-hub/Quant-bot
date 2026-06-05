@@ -119,6 +119,26 @@
       "final_multiplier": 12.13,
       "manual": false,
       "timestamp": "2026-06-05T10:09:22.732079+00:00"
+    },
+    {
+      "mcap": 82570.0,
+      "liquidity": 19940.55,
+      "volume_h1": 132101.26,
+      "volume_m5": 9547.36,
+      "age_seconds": 3534.045469970703,
+      "price_change_5m": 21.14,
+      "price_change_1h": 207.0,
+      "hour_of_day": 11,
+      "buys_m5": 121,
+      "sells_m5": 109,
+      "buys_h1": 1981,
+      "sells_h1": 1550,
+      "symbol": "GARRETT",
+      "name": "The Big Short",
+      "address": "GCQXDSHVTrjoXta1kUoupeQSEPeh8DtfGeRne3h8pump",
+      "final_multiplier": 3.07,
+      "manual": false,
+      "timestamp": "2026-06-05T11:45:12.045577+00:00"
     }
   ],
   "dump_patterns": [
@@ -270,7 +290,8 @@
     "6315848be394adf627261612432f2fae",
     "4e7e61855b23d7423b95ac4916d76400",
     "2655ff8ff442ac627ef074d05740ebf5",
-    "74ef604dd184970d192f8250c8293f97"
+    "74ef604dd184970d192f8250c8293f97",
+    "d5930ce6c016ee70da62e8fd51feabc9"
   ],
   "signals": [
     {
@@ -292,20 +313,71 @@
       "timestamp": "2026-06-05T09:23:48.757537+00:00",
       "result_multiplier": 0.14,
       "result_checked": true
+    },
+    {
+      "address": "GCQXDSHVTrjoXta1kUoupeQSEPeh8DtfGeRne3h8pump",
+      "symbol": "GARRETT",
+      "score": 0.4,
+      "price_at_signal": 3.537e-05,
+      "mcap_at_signal": 35376.0,
+      "timestamp": "2026-06-05T10:46:56.457190+00:00",
+      "result_multiplier": 1.73,
+      "result_checked": true
+    },
+    {
+      "address": "6y3LpjT5cpUE9GFK1WsFtmSGSG9piF3d4z2MoEupump",
+      "symbol": "Ruger",
+      "score": 0.7,
+      "price_at_signal": 4.875e-05,
+      "mcap_at_signal": 48754.0,
+      "timestamp": "2026-06-05T10:58:29.152987+00:00",
+      "result_multiplier": 0.73,
+      "result_checked": true
+    },
+    {
+      "address": "6y3LpjT5cpUE9GFK1WsFtmSGSG9piF3d4z2MoEupump",
+      "symbol": "Ruger",
+      "score": 0.7,
+      "price_at_signal": 4.842e-05,
+      "mcap_at_signal": 48429.0,
+      "timestamp": "2026-06-05T11:06:05.528255+00:00",
+      "result_multiplier": 0.73,
+      "result_checked": true
+    },
+    {
+      "address": "GCQXDSHVTrjoXta1kUoupeQSEPeh8DtfGeRne3h8pump",
+      "symbol": "GARRETT",
+      "score": 0.7,
+      "price_at_signal": 5.01e-05,
+      "mcap_at_signal": 50105.0,
+      "timestamp": "2026-06-05T11:10:42.804521+00:00",
+      "result_multiplier": 1.22,
+      "result_checked": true
+    },
+    {
+      "address": "6yxLF2HpbzQehJZrpZS6MiAktSdc9NmDQ1sSWJyYpump",
+      "symbol": "SOLBEANS",
+      "score": 0.4,
+      "price_at_signal": 4.301e-06,
+      "mcap_at_signal": 4302.0,
+      "timestamp": "2026-06-05T11:35:48.592661+00:00",
+      "result_multiplier": null,
+      "result_checked": false
     }
   ],
   "model": {
-    "avg_pump_mcap": 358547.3333333333,
-    "avg_pump_liquidity": 43533.793333333335,
-    "avg_pump_volume_h1": 174161.24666666667,
-    "avg_pump_buys_h1": 1404.5,
+    "avg_pump_mcap": 319122.0,
+    "avg_pump_liquidity": 40163.33,
+    "avg_pump_volume_h1": 168152.67714285714,
+    "avg_pump_buys_h1": 1486.857142857143,
     "best_hours": {
       "9": 4,
-      "10": 2
+      "10": 2,
+      "11": 1
     },
-    "total_signals": 2,
+    "total_signals": 7,
     "correct_signals": 0,
     "accuracy": 0.0,
-    "threshold": 0.35
+    "threshold": 0.49999999999999994
   }
 }
