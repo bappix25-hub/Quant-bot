@@ -139,6 +139,26 @@
       "final_multiplier": 7.62,
       "manual": false,
       "timestamp": "2026-06-05T17:45:16.963115+00:00"
+    },
+    {
+      "mcap": 12191.0,
+      "liquidity": 9833.63,
+      "volume_h1": 19083.45,
+      "volume_m5": 10396.72,
+      "age_seconds": 2094.098176025391,
+      "price_change_5m": 44.33,
+      "price_change_1h": 516.0,
+      "hour_of_day": 18,
+      "buys_m5": 168,
+      "sells_m5": 152,
+      "buys_h1": 400,
+      "sells_h1": 247,
+      "symbol": "$GOB",
+      "name": "GOBLIN MODE",
+      "address": "ARupEWzGtbJhx7Q1SZ7sgb97CVztHnzbuYGLtPi1kok",
+      "final_multiplier": 6.16,
+      "manual": false,
+      "timestamp": "2026-06-05T18:03:11.098234+00:00"
     }
   ],
   "dump_patterns": [
@@ -267,11 +287,12 @@
     "53b855e16d66af74fbae12aa4bc730b6",
     "c6ed5c067240ad0d748032a28c6b13e4",
     "f6440791845872a1b8f8bacc169f988c",
-    "6fd3421eee73a4aa8b3f8d61abbc3a91",
+    "6fd3421eee73a4aa8b3f8d61abbc3a91",,
     "c3058377a98778a73dd4ee18b1bfc21a",
     "3c8bf87fd60dd3a1b71e9cd25124313e",
     "c9c7cc16832de1a38d5d50124302521f",
-    "ff15e9f3c2701da4fb73e56ed6a920da"
+    "ff15e9f3c2701da4fb73e56ed6a920da",
+    "65674c184c92dbe0b0e22b514e6fcae8"
   ],
   "signals": [
     {
@@ -436,16 +457,17 @@
     }
   ],
   "model": {
-    "avg_pump_mcap": 228116.42857142858,
-    "avg_pump_liquidity": 30289.355714285713,
-    "avg_pump_volume_h1": 205132.58142857143,
-    "avg_pump_buys_h1": 2785.4285714285716,
+    "avg_pump_mcap": 201125.75,
+    "avg_pump_liquidity": 27732.39,
+    "avg_pump_volume_h1": 181876.44,
+    "avg_pump_buys_h1": 2487.25,
     "best_hours": {
       "9": 1,
       "13": 1,
       "15": 1,
       "16": 2,
-      "17": 2
+      "17": 2,
+      "18": 1
     },
     "total_signals": 16,
     "correct_signals": 0,
