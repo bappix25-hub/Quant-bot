@@ -119,6 +119,26 @@
       "final_multiplier": 3.14,
       "manual": false,
       "timestamp": "2026-06-05T17:45:10.801060+00:00"
+    },
+    {
+      "mcap": 300158.0,
+      "liquidity": 38286.47,
+      "volume_h1": 395932.45,
+      "volume_m5": 33653.48,
+      "age_seconds": 2588.9630681152344,
+      "price_change_5m": 14.65,
+      "price_change_1h": 662.0,
+      "hour_of_day": 17,
+      "buys_m5": 1117,
+      "sells_m5": 181,
+      "buys_h1": 10562,
+      "sells_h1": 2221,
+      "symbol": "1 turd",
+      "name": "1 turdcoin",
+      "address": "3pYC53BDaF1fW5gzzKdDSCAoZrQftdbrEKH4BwQSpump",
+      "final_multiplier": 7.62,
+      "manual": false,
+      "timestamp": "2026-06-05T17:45:16.963115+00:00"
     }
   ],
   "dump_patterns": [
@@ -250,7 +270,8 @@
     "6fd3421eee73a4aa8b3f8d61abbc3a91",
     "c3058377a98778a73dd4ee18b1bfc21a",
     "3c8bf87fd60dd3a1b71e9cd25124313e",
-    "c9c7cc16832de1a38d5d50124302521f"
+    "c9c7cc16832de1a38d5d50124302521f",
+    "ff15e9f3c2701da4fb73e56ed6a920da"
   ],
   "signals": [
     {
@@ -415,16 +436,16 @@
     }
   ],
   "model": {
-    "avg_pump_mcap": 216109.5,
-    "avg_pump_liquidity": 28956.503333333338,
-    "avg_pump_volume_h1": 173332.60333333333,
-    "avg_pump_buys_h1": 1489.3333333333333,
+    "avg_pump_mcap": 228116.42857142858,
+    "avg_pump_liquidity": 30289.355714285713,
+    "avg_pump_volume_h1": 205132.58142857143,
+    "avg_pump_buys_h1": 2785.4285714285716,
     "best_hours": {
       "9": 1,
       "13": 1,
       "15": 1,
       "16": 2,
-      "17": 1
+      "17": 2
     },
     "total_signals": 16,
     "correct_signals": 0,
