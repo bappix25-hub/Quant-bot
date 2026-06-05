@@ -79,6 +79,46 @@
       "final_multiplier": 3.3,
       "manual": false,
       "timestamp": "2026-06-05T09:14:26.274140+00:00"
+    },
+    {
+      "mcap": 213223.0,
+      "liquidity": 49308.33,
+      "volume_h1": 26403.67,
+      "volume_m5": 1318.09,
+      "age_seconds": 83780.95860205078,
+      "price_change_5m": 6.35,
+      "price_change_1h": 31.09,
+      "hour_of_day": 10,
+      "buys_m5": 31,
+      "sells_m5": 9,
+      "buys_h1": 329,
+      "sells_h1": 202,
+      "symbol": "peg",
+      "name": "peg",
+      "address": "3GDrBbgzMfokcYChDqBZijXS3ppwhEEmosFQbgbPpump",
+      "final_multiplier": 3.62,
+      "manual": false,
+      "timestamp": "2026-06-05T10:09:17.958982+00:00"
+    },
+    {
+      "mcap": 198647.0,
+      "liquidity": 33963.5,
+      "volume_h1": 194269.24,
+      "volume_m5": 10542.93,
+      "age_seconds": 27322.73198388672,
+      "price_change_5m": -3.33,
+      "price_change_1h": 113.0,
+      "hour_of_day": 10,
+      "buys_m5": 131,
+      "sells_m5": 77,
+      "buys_h1": 1547,
+      "sells_h1": 1279,
+      "symbol": "ZCRASH",
+      "name": "zCrash",
+      "address": "CeYDoTwBmHkAxoEGj7ViJJ4aPCa24yx7byKoJ4eupump",
+      "final_multiplier": 12.13,
+      "manual": false,
+      "timestamp": "2026-06-05T10:09:22.732079+00:00"
     }
   ],
   "dump_patterns": [
@@ -176,6 +216,44 @@
       "final_multiplier": 0,
       "manual": false,
       "timestamp": "2026-06-05T09:12:27.652080+00:00"
+    },
+    {
+      "mcap": 18060.0,
+      "liquidity": 9440.31,
+      "volume_h1": 105804.67,
+      "volume_m5": 3617.5,
+      "age_seconds": 4929.1609609375,
+      "price_change_5m": -9.81,
+      "price_change_1h": -47.18,
+      "hour_of_day": 10,
+      "buys_m5": 78,
+      "sells_m5": 48,
+      "buys_h1": 2035,
+      "sells_h1": 1577,
+      "symbol": "\u30eb\u30ca",
+      "address": "915QCGQkz1EKfky4qMySDizFXfxkz7U4UDeqyATTpump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-05T10:09:59.161315+00:00"
+    },
+    {
+      "mcap": 14526.0,
+      "liquidity": 8460.19,
+      "volume_h1": 302232.2,
+      "volume_m5": 2129.82,
+      "age_seconds": 3636.8282299804687,
+      "price_change_5m": 41.78,
+      "price_change_1h": -50.6,
+      "hour_of_day": 10,
+      "buys_m5": 46,
+      "sells_m5": 42,
+      "buys_h1": 5663,
+      "sells_h1": 4584,
+      "symbol": "Garrett",
+      "address": "392ZTvYfqAjmSqtuZ9qtNBTd5CVMB7ciY3tZFk6spump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-05T10:10:10.828376+00:00"
     }
   ],
   "launch_patterns": [],
@@ -188,18 +266,44 @@
     "c5e210a5a2391d073959ef3f335bee36",
     "d0f3e5977dd0f57c2bb7a00820e13f1e",
     "0b56a39f3933ffd28f95a62088ed4355",
-    "ee377d8e76c37ef8bb21befaa575cac4"
+    "ee377d8e76c37ef8bb21befaa575cac4",
+    "6315848be394adf627261612432f2fae",
+    "4e7e61855b23d7423b95ac4916d76400",
+    "2655ff8ff442ac627ef074d05740ebf5",
+    "74ef604dd184970d192f8250c8293f97"
   ],
-  "signals": [],
-  "model": {
-    "avg_pump_mcap": 434853.5,
-    "avg_pump_liquidity": 44482.7325,
-    "avg_pump_volume_h1": 206073.6425,
-    "avg_pump_buys_h1": 1637.75,
-    "best_hours": {
-      "9": 4
+  "signals": [
+    {
+      "address": "392ZTvYfqAjmSqtuZ9qtNBTd5CVMB7ciY3tZFk6spump",
+      "symbol": "Garrett",
+      "score": 0.8,
+      "price_at_signal": 4.973e-05,
+      "mcap_at_signal": 49734.0,
+      "timestamp": "2026-06-05T09:23:09.311102+00:00",
+      "result_multiplier": 0.17,
+      "result_checked": true
     },
-    "total_signals": 0,
+    {
+      "address": "392ZTvYfqAjmSqtuZ9qtNBTd5CVMB7ciY3tZFk6spump",
+      "symbol": "Garrett",
+      "score": 0.8,
+      "price_at_signal": 5.876e-05,
+      "mcap_at_signal": 58763.0,
+      "timestamp": "2026-06-05T09:23:48.757537+00:00",
+      "result_multiplier": 0.14,
+      "result_checked": true
+    }
+  ],
+  "model": {
+    "avg_pump_mcap": 358547.3333333333,
+    "avg_pump_liquidity": 43533.793333333335,
+    "avg_pump_volume_h1": 174161.24666666667,
+    "avg_pump_buys_h1": 1404.5,
+    "best_hours": {
+      "9": 4,
+      "10": 2
+    },
+    "total_signals": 2,
     "correct_signals": 0,
     "accuracy": 0.0,
     "threshold": 0.35
