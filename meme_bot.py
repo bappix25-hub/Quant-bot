@@ -419,6 +419,8 @@ async def check_signal_results(session, bot):
         await asyncio.sleep(1)
 
 async def scan_loop(bot):
+    global migration_queue
+    migration_queue = asyncio.Queue()
     async with aiohttp.ClientSession() as session:
         restore_from_github()
         await asyncio.gather(
