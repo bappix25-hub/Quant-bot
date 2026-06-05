@@ -119,6 +119,26 @@
       "final_multiplier": 7.5,
       "manual": false,
       "timestamp": "2026-06-05T15:02:52.953751+00:00"
+    },
+    {
+      "mcap": 110099.0,
+      "liquidity": 33966.17,
+      "volume_h1": 237898.79,
+      "volume_m5": 7562.66,
+      "age_seconds": 4766.592083007812,
+      "price_change_5m": 2.3,
+      "price_change_1h": 204.0,
+      "hour_of_day": 15,
+      "buys_m5": 143,
+      "sells_m5": 52,
+      "buys_h1": 3094,
+      "sells_h1": 2127,
+      "symbol": "APU",
+      "name": "APU",
+      "address": "24Kko3VWwMKtkB9CVct2ZAZgJzb2R2iNrYxCpTYFpump",
+      "final_multiplier": 3.04,
+      "manual": false,
+      "timestamp": "2026-06-05T15:15:58.592469+00:00"
     }
   ],
   "dump_patterns": [
@@ -216,6 +236,25 @@
       "final_multiplier": 0,
       "manual": false,
       "timestamp": "2026-06-05T14:14:40.795612+00:00"
+    },
+    {
+      "mcap": 2698.0,
+      "liquidity": 4683.91,
+      "volume_h1": 95282.67,
+      "volume_m5": 0.0,
+      "age_seconds": 7484.52928491211,
+      "price_change_5m": 0.0,
+      "price_change_1h": -93.62,
+      "hour_of_day": 15,
+      "buys_m5": 0,
+      "sells_m5": 0,
+      "buys_h1": 617,
+      "sells_h1": 344,
+      "symbol": "$TROLL",
+      "address": "MXdZr6ZrTaaC66vSiboeHMuPZSUjeRB29KrkFVqTAbo",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-05T15:15:06.529395+00:00"
     }
   ],
   "launch_patterns": [],
@@ -230,7 +269,9 @@
     "d0f3e5977dd0f57c2bb7a00820e13f1e",
     "dfd9d3c21ca2c60b3aa63a40c8eb69bf",
     "1e2a04a484d40aebd3e65f3580983fbe",
-    "b97e293a1caa5ad681bb136b257baede"
+    "b97e293a1caa5ad681bb136b257baede",
+    "cc4773f9f5f02c6cea9b9d73ae7e4351",
+    "35b90e498aac13d5c83aca50d1b2e60f"
   ],
   "signals": [
     {
@@ -330,8 +371,8 @@
       "price_at_signal": 3.61e-05,
       "mcap_at_signal": 36110.0,
       "timestamp": "2026-06-05T14:41:32.915650+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 0.05,
+      "result_checked": true
     },
     {
       "address": "3Cf6eLE7VCuWbrtnRUkNpgQmpgWHaooq5c27s184pump",
@@ -362,22 +403,32 @@
       "timestamp": "2026-06-05T15:02:50.912238+00:00",
       "result_multiplier": null,
       "result_checked": false
+    },
+    {
+      "address": "7KfL1JE3efTFwwesweRoJ8VYsmb6MSQAQy5u79LZ2Nig",
+      "symbol": "NEC",
+      "score": 0.5,
+      "price_at_signal": 1.592e-05,
+      "mcap_at_signal": 15924.0,
+      "timestamp": "2026-06-05T15:13:23.989108+00:00",
+      "result_multiplier": null,
+      "result_checked": false
     }
   ],
   "model": {
-    "avg_pump_mcap": 195385.5,
-    "avg_pump_liquidity": 24789.626666666667,
-    "avg_pump_volume_h1": 93270.14833333333,
-    "avg_pump_buys_h1": 845.1666666666666,
+    "avg_pump_mcap": 183201.7142857143,
+    "avg_pump_liquidity": 26100.56142857143,
+    "avg_pump_volume_h1": 113931.38285714285,
+    "avg_pump_buys_h1": 1166.4285714285713,
     "best_hours": {
       "9": 1,
       "13": 1,
       "14": 2,
-      "15": 2
+      "15": 3
     },
-    "total_signals": 13,
+    "total_signals": 14,
     "correct_signals": 0,
     "accuracy": 0.0,
     "threshold": 0.7
   }
-}
+}}
