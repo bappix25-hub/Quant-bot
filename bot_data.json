@@ -59,6 +59,26 @@
       "final_multiplier": 3.09,
       "manual": false,
       "timestamp": "2026-06-05T14:04:11.912926+00:00"
+    },
+    {
+      "mcap": 15668.0,
+      "liquidity": 8583.06,
+      "volume_h1": 22083.43,
+      "volume_m5": 1841.94,
+      "age_seconds": 6338.763976074219,
+      "price_change_5m": -8.47,
+      "price_change_1h": 200.0,
+      "hour_of_day": 14,
+      "buys_m5": 28,
+      "sells_m5": 20,
+      "buys_h1": 484,
+      "sells_h1": 285,
+      "symbol": "ZEC",
+      "name": "zcash",
+      "address": "ES9r82P9zGRGkwfLeY52QT5UMrBzdhzg4sVwTMK6pump",
+      "final_multiplier": 3.0,
+      "manual": false,
+      "timestamp": "2026-06-05T14:49:19.764070+00:00"
     }
   ],
   "dump_patterns": [
@@ -167,7 +187,8 @@
     "53b855e16d66af74fbae12aa4bc730b6",
     "c6ed5c067240ad0d748032a28c6b13e4",
     "f6440791845872a1b8f8bacc169f988c",
-    "d0f3e5977dd0f57c2bb7a00820e13f1e"
+    "d0f3e5977dd0f57c2bb7a00820e13f1e",
+    "dfd9d3c21ca2c60b3aa63a40c8eb69bf"
   ],
   "signals": [
     {
@@ -197,8 +218,8 @@
       "price_at_signal": 1.318e-05,
       "mcap_at_signal": 13181.0,
       "timestamp": "2026-06-05T13:58:46.525674+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 0.99,
+      "result_checked": true
     },
     {
       "address": "DnioTcuzJ3MtapFLpp3nWPvf4t5TqgacvU2rVTM9pump",
@@ -207,8 +228,8 @@
       "price_at_signal": 4.215e-05,
       "mcap_at_signal": 42155.0,
       "timestamp": "2026-06-05T13:58:53.451009+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 0.33,
+      "result_checked": true
     },
     {
       "address": "DnioTcuzJ3MtapFLpp3nWPvf4t5TqgacvU2rVTM9pump",
@@ -217,8 +238,8 @@
       "price_at_signal": 4.215e-05,
       "mcap_at_signal": 42155.0,
       "timestamp": "2026-06-05T13:58:53.473655+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 0.33,
+      "result_checked": true
     },
     {
       "address": "24Kko3VWwMKtkB9CVct2ZAZgJzb2R2iNrYxCpTYFpump",
@@ -227,8 +248,8 @@
       "price_at_signal": 8.198e-05,
       "mcap_at_signal": 81982.0,
       "timestamp": "2026-06-05T13:58:56.151095+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 1.87,
+      "result_checked": true
     },
     {
       "address": "24Kko3VWwMKtkB9CVct2ZAZgJzb2R2iNrYxCpTYFpump",
@@ -237,8 +258,8 @@
       "price_at_signal": 8.198e-05,
       "mcap_at_signal": 81982.0,
       "timestamp": "2026-06-05T13:58:56.154460+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 1.87,
+      "result_checked": true
     },
     {
       "address": "GA5dbWfEd4QpFfpDAhuyhatCavGqq4m8MoaCskxhpump",
@@ -247,23 +268,43 @@
       "price_at_signal": 6.2e-05,
       "mcap_at_signal": 62009.0,
       "timestamp": "2026-06-05T14:01:31.535316+00:00",
+      "result_multiplier": 0.02,
+      "result_checked": true
+    },
+    {
+      "address": "D2QZPgZaHbVHzppREhWP9LKTqMxSBE3xBwz9fEZ8W7X4",
+      "symbol": "EEVEE",
+      "score": 0.35,
+      "price_at_signal": 1.872e-05,
+      "mcap_at_signal": 18726.0,
+      "timestamp": "2026-06-05T14:28:06.521334+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "EFzb6LXag5pZvkBYhT4n9LWGr5tD9upivcf9i8dGpump",
+      "symbol": "BASED",
+      "score": 0.65,
+      "price_at_signal": 3.61e-05,
+      "mcap_at_signal": 36110.0,
+      "timestamp": "2026-06-05T14:41:32.915650+00:00",
       "result_multiplier": null,
       "result_checked": false
     }
   ],
   "model": {
-    "avg_pump_mcap": 315375.3333333333,
-    "avg_pump_liquidity": 34497.01,
-    "avg_pump_volume_h1": 157615.89333333334,
-    "avg_pump_buys_h1": 1318.0,
+    "avg_pump_mcap": 240448.5,
+    "avg_pump_liquidity": 28018.5225,
+    "avg_pump_volume_h1": 123732.7775,
+    "avg_pump_buys_h1": 1109.5,
     "best_hours": {
       "9": 1,
       "13": 1,
-      "14": 1
+      "14": 2
     },
-    "total_signals": 8,
+    "total_signals": 10,
     "correct_signals": 0,
     "accuracy": 0.0,
-    "threshold": 0.44999999999999996
+    "threshold": 0.7
   }
 }
