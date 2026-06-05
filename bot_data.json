@@ -79,6 +79,26 @@
       "final_multiplier": 3.0,
       "manual": false,
       "timestamp": "2026-06-05T14:49:19.764070+00:00"
+    },
+    {
+      "mcap": 7911.0,
+      "liquidity": 6043.91,
+      "volume_h1": 5275.58,
+      "volume_m5": 4380.87,
+      "age_seconds": 5173.015162109375,
+      "price_change_5m": 432.0,
+      "price_change_1h": 298.0,
+      "hour_of_day": 15,
+      "buys_m5": 70,
+      "sells_m5": 32,
+      "buys_h1": 94,
+      "sells_h1": 80,
+      "symbol": "\u798f\u5b9d",
+      "name": "Fu Bao",
+      "address": "C3x6wHmu4kJ1HrLj2ueUzHndTS7cQTDvBbAUDetGpump",
+      "final_multiplier": 3.98,
+      "manual": false,
+      "timestamp": "2026-06-05T15:00:01.015315+00:00"
     }
   ],
   "dump_patterns": [
@@ -188,7 +208,8 @@
     "c6ed5c067240ad0d748032a28c6b13e4",
     "f6440791845872a1b8f8bacc169f988c",
     "d0f3e5977dd0f57c2bb7a00820e13f1e",
-    "dfd9d3c21ca2c60b3aa63a40c8eb69bf"
+    "dfd9d3c21ca2c60b3aa63a40c8eb69bf",
+    "1e2a04a484d40aebd3e65f3580983fbe"
   ],
   "signals": [
     {
@@ -293,14 +314,15 @@
     }
   ],
   "model": {
-    "avg_pump_mcap": 240448.5,
-    "avg_pump_liquidity": 28018.5225,
-    "avg_pump_volume_h1": 123732.7775,
-    "avg_pump_buys_h1": 1109.5,
+    "avg_pump_mcap": 193941.0,
+    "avg_pump_liquidity": 23623.6,
+    "avg_pump_volume_h1": 100041.338,
+    "avg_pump_buys_h1": 906.4,
     "best_hours": {
       "9": 1,
       "13": 1,
-      "14": 2
+      "14": 2,
+      "15": 1
     },
     "total_signals": 10,
     "correct_signals": 0,
