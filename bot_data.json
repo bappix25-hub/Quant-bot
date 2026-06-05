@@ -79,6 +79,26 @@
       "final_multiplier": 3.95,
       "manual": false,
       "timestamp": "2026-06-05T16:48:01.987086+00:00"
+    },
+    {
+      "mcap": 94353.0,
+      "liquidity": 21946.03,
+      "volume_h1": 436718.05,
+      "volume_m5": 75746.67,
+      "age_seconds": 1860.3493649902343,
+      "price_change_5m": 94.62,
+      "price_change_1h": 242.0,
+      "hour_of_day": 16,
+      "buys_m5": 419,
+      "sells_m5": 420,
+      "buys_h1": 3259,
+      "sells_h1": 2968,
+      "symbol": "LIFE",
+      "name": "Save the Life",
+      "address": "Cns7EuCZM3pMnkndXQXSyL7bkVvFtee9fpbURopapump",
+      "final_multiplier": 3.42,
+      "manual": false,
+      "timestamp": "2026-06-05T16:51:09.349466+00:00"
     }
   ],
   "dump_patterns": [
@@ -208,7 +228,8 @@
     "c6ed5c067240ad0d748032a28c6b13e4",
     "f6440791845872a1b8f8bacc169f988c",
     "6fd3421eee73a4aa8b3f8d61abbc3a91",
-    "c3058377a98778a73dd4ee18b1bfc21a"
+    "c3058377a98778a73dd4ee18b1bfc21a",
+    "3c8bf87fd60dd3a1b71e9cd25124313e"
   ],
   "signals": [
     {
@@ -313,19 +334,19 @@
     }
   ],
   "model": {
-    "avg_pump_mcap": 279625.5,
-    "avg_pump_liquidity": 33008.7875,
-    "avg_pump_volume_h1": 130662.075,
-    "avg_pump_buys_h1": 1117.0,
+    "avg_pump_mcap": 242571.0,
+    "avg_pump_liquidity": 30796.235999999997,
+    "avg_pump_volume_h1": 191873.27,
+    "avg_pump_buys_h1": 1545.4,
     "best_hours": {
       "9": 1,
       "13": 1,
       "15": 1,
-      "16": 1
+      "16": 2
     },
     "total_signals": 10,
     "correct_signals": 0,
     "accuracy": 0.0,
-    "threshold": 0.5499999999999999
+    "threshold": 0.6
   }
 }
