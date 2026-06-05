@@ -1,1 +1,125 @@
-{"pump_patterns":[],"dump_patterns":[],"launch_patterns":[],"trained_addresses":[],"signals":[],"model":{"avg_pump_mcap":0,"avg_pump_liquidity":0,"avg_pump_volume_h1":0,"avg_pump_buys_h1":0,"avg_pump_price_change_5m":0,"avg_launch_buys_5min":0,"avg_launch_volume_5min":0,"avg_launch_unique_wallets":0,"best_hours":{},"total_signals":0,"correct_signals":0,"accuracy":0.0,"threshold":0.35,"signal_age_min":60,"signal_age_max":300}}
+{
+  "pump_patterns": [
+    {
+      "mcap": 765653.0,
+      "liquidity": 62342.55,
+      "volume_h1": 241715.21,
+      "volume_m5": 17182.94,
+      "age_seconds": 12696.648150878906,
+      "price_change_5m": 11.94,
+      "price_change_1h": 54.33,
+      "hour_of_day": 9,
+      "buys_m5": 127,
+      "sells_m5": 48,
+      "buys_h1": 1574,
+      "sells_h1": 626,
+      "symbol": "POKEHUB",
+      "name": "PokeHub",
+      "address": "2gp9TZWCfNwHFFW6uzZs9f3PixTKtaH3EhLCFFpopump",
+      "final_multiplier": 23.74,
+      "manual": false,
+      "timestamp": "2026-06-05T09:08:27.648249+00:00"
+    },
+    {
+      "mcap": 233402.0,
+      "liquidity": 35988.07,
+      "volume_h1": 292396.33,
+      "volume_m5": 14838.67,
+      "age_seconds": 27432.15606298828,
+      "price_change_5m": -18.77,
+      "price_change_1h": -51.22,
+      "hour_of_day": 9,
+      "buys_m5": 115,
+      "sells_m5": 74,
+      "buys_h1": 1890,
+      "sells_h1": 1088,
+      "symbol": "SOLDONTRUG",
+      "name": "SOLANA DONT RUG",
+      "address": "9L1tgYt2XpSvdQTfCS1oRKrvRpekvrumXbNJjAZHpump",
+      "final_multiplier": 7.74,
+      "manual": false,
+      "timestamp": "2026-06-05T09:08:42.167313+00:00"
+    }
+  ],
+  "dump_patterns": [
+    {
+      "mcap": 15115.0,
+      "liquidity": 8510.9,
+      "volume_h1": 5861.75,
+      "volume_m5": 23.92,
+      "age_seconds": 12936.123968994141,
+      "price_change_5m": -2.59,
+      "price_change_1h": -12.86,
+      "hour_of_day": 9,
+      "buys_m5": 1,
+      "sells_m5": 4,
+      "buys_h1": 138,
+      "sells_h1": 136,
+      "symbol": "CLUB",
+      "address": "HgsQB5TwsHeCuyqLEwvAMf8dVWNfg3vAdY5STsWTpump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-05T09:08:35.123996+00:00"
+    },
+    {
+      "mcap": 8125.0,
+      "liquidity": 6314.39,
+      "volume_h1": 774.02,
+      "volume_m5": 36.56,
+      "age_seconds": 24668.941858154296,
+      "price_change_5m": 1.47,
+      "price_change_1h": -13.71,
+      "hour_of_day": 9,
+      "buys_m5": 5,
+      "sells_m5": 2,
+      "buys_h1": 28,
+      "sells_h1": 27,
+      "symbol": "FREAKBOB",
+      "address": "9oG8qxxYukHjgdujkkHzcKeBmeLFCRFd6Fpguqi5pump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-05T09:08:53.941896+00:00"
+    },
+    {
+      "mcap": 2845.0,
+      "liquidity": 3640.54,
+      "volume_h1": 0.17,
+      "volume_m5": 0.0,
+      "age_seconds": 22210.247395996095,
+      "price_change_5m": 0.0,
+      "price_change_1h": -0.82,
+      "hour_of_day": 9,
+      "buys_m5": 0,
+      "sells_m5": 0,
+      "buys_h1": 0,
+      "sells_h1": 1,
+      "symbol": "incorgnito",
+      "address": "GWJHZuEenhACTjvWsSpPqbzVn6dABNo1bNBQeXXZpump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-05T09:08:56.247450+00:00"
+    }
+  ],
+  "launch_patterns": [],
+  "trained_addresses": [
+    "fb04d9bc1ad12e3d642772e83873f2eb",
+    "f6440791845872a1b8f8bacc169f988c",
+    "f48c0324917edfb5fb24ceb63ae604b2",
+    "6c97b209f8c07dae6150bf4f2a208c5a",
+    "ffc8dde2285d6559bdf7a4ec40cae120"
+  ],
+  "signals": [],
+  "model": {
+    "avg_pump_mcap": 499527.5,
+    "avg_pump_liquidity": 49165.31,
+    "avg_pump_volume_h1": 267055.77,
+    "avg_pump_buys_h1": 1732.0,
+    "best_hours": {
+      "9": 2
+    },
+    "total_signals": 0,
+    "correct_signals": 0,
+    "accuracy": 0.0,
+    "threshold": 0.35
+  }
+}

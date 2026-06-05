@@ -559,7 +559,7 @@ async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"🏆 <b>লার্নিং স্ট্যাটাস</b>\n"
             f"🧠 পাম্প প্যাটার্ন: <b>{stats['pump_patterns']}</b>\n"
             f"📉 ডাম্প প্যাটার্ন: <b>{stats['dump_patterns']}</b>\n"
-            f"✍️ ম্যানুয়াল পাম্প: <b>{stats['manual_pumps']}}</b>\n"
+            f"✍️ ম্যানুয়াল পাম্প: <b>{stats['manual_pumps']}</b>\n"
             f"🎯 থ্রেশোল্ড: <b>{int(current_threshold*100)}%</b>\n"
             f"📊 একুরেসি: <b>{stats['accuracy']}%</b>\n"
             f"{'✅ মডেল রেডি!' if stats['pump_patterns'] >= 5 else '⏳ আরো ডেটা দরকার...'}\n\n"
