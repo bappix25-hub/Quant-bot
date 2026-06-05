@@ -59,6 +59,26 @@
       "final_multiplier": 5.69,
       "manual": false,
       "timestamp": "2026-06-05T15:20:06.781269+00:00"
+    },
+    {
+      "mcap": 107448.0,
+      "liquidity": 22547.88,
+      "volume_h1": 175446.37,
+      "volume_m5": 53961.6,
+      "age_seconds": 828.9869670410156,
+      "price_change_5m": 1.98,
+      "price_change_1h": 295.0,
+      "hour_of_day": 16,
+      "buys_m5": 457,
+      "sells_m5": 274,
+      "buys_h1": 1731,
+      "sells_h1": 941,
+      "symbol": "GOONALOT",
+      "name": "Sir Goonalot",
+      "address": "EiKAQFqWqxzUVLgrTYsgG9nJznDRiTEYnUYpk8ropump",
+      "final_multiplier": 3.95,
+      "manual": false,
+      "timestamp": "2026-06-05T16:48:01.987086+00:00"
     }
   ],
   "dump_patterns": [
@@ -187,7 +207,8 @@
     "53b855e16d66af74fbae12aa4bc730b6",
     "c6ed5c067240ad0d748032a28c6b13e4",
     "f6440791845872a1b8f8bacc169f988c",
-    "6fd3421eee73a4aa8b3f8d61abbc3a91"
+    "6fd3421eee73a4aa8b3f8d61abbc3a91",
+    "c3058377a98778a73dd4ee18b1bfc21a"
   ],
   "signals": [
     {
@@ -247,8 +268,8 @@
       "price_at_signal": 3.436e-05,
       "mcap_at_signal": 34360.0,
       "timestamp": "2026-06-05T16:13:31.252705+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 0.94,
+      "result_checked": true
     },
     {
       "address": "HhA6DTiycJUPxP2ieVC3R1sGzrwsL9jyrVqyRoH4pump",
@@ -257,8 +278,8 @@
       "price_at_signal": 3.808e-05,
       "mcap_at_signal": 38090.0,
       "timestamp": "2026-06-05T16:16:15.478565+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 0.85,
+      "result_checked": true
     },
     {
       "address": "Cns7EuCZM3pMnkndXQXSyL7bkVvFtee9fpbURopapump",
@@ -269,21 +290,42 @@
       "timestamp": "2026-06-05T16:33:31.362701+00:00",
       "result_multiplier": null,
       "result_checked": false
+    },
+    {
+      "address": "5Sgx4R6W2e7ZH2toZ2J5x9zYmEAsrZg4ay4Bk7Jtpump",
+      "symbol": "Platner",
+      "score": 0.55,
+      "price_at_signal": 3.497e-05,
+      "mcap_at_signal": 34971.0,
+      "timestamp": "2026-06-05T16:39:08.021355+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "Cns7EuCZM3pMnkndXQXSyL7bkVvFtee9fpbURopapump",
+      "symbol": "LIFE",
+      "score": 0.7,
+      "price_at_signal": 4.277e-05,
+      "mcap_at_signal": 42773.0,
+      "timestamp": "2026-06-05T16:44:58.867869+00:00",
+      "result_multiplier": null,
+      "result_checked": false
     }
   ],
   "model": {
-    "avg_pump_mcap": 337018.0,
-    "avg_pump_liquidity": 36495.75666666667,
-    "avg_pump_volume_h1": 115733.97666666667,
-    "avg_pump_buys_h1": 912.3333333333334,
+    "avg_pump_mcap": 279625.5,
+    "avg_pump_liquidity": 33008.7875,
+    "avg_pump_volume_h1": 130662.075,
+    "avg_pump_buys_h1": 1117.0,
     "best_hours": {
       "9": 1,
       "13": 1,
-      "15": 1
+      "15": 1,
+      "16": 1
     },
-    "total_signals": 8,
+    "total_signals": 10,
     "correct_signals": 0,
     "accuracy": 0.0,
-    "threshold": 0.44999999999999996
+    "threshold": 0.5499999999999999
   }
 }
