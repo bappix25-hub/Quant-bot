@@ -177,6 +177,25 @@
       "final_multiplier": 0,
       "manual": false,
       "timestamp": "2026-06-05T13:12:55.197766+00:00"
+    },
+    {
+      "mcap": 4184.0,
+      "liquidity": 4506.09,
+      "volume_h1": 193045.75,
+      "volume_m5": 400.45,
+      "age_seconds": 3645.7995720214844,
+      "price_change_5m": 1.76,
+      "price_change_1h": -81.07,
+      "hour_of_day": 13,
+      "buys_m5": 9,
+      "sells_m5": 13,
+      "buys_h1": 3781,
+      "sells_h1": 2961,
+      "symbol": "Cucumber",
+      "address": "3yBSdmS9kd9p627jvg77Tyrk7kh68GfYNiZYWtovpump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-05T13:19:03.799681+00:00"
     }
   ],
   "launch_patterns": [],
@@ -189,7 +208,8 @@
     "f8d9dd6ab842932ab30ff7143ad1b6e4",
     "ea4fd37e6148cef352ed75e841c9c347",
     "8e2bb244425f64ef52ffd88c9b2060de",
-    "f6440791845872a1b8f8bacc169f988c"
+    "f6440791845872a1b8f8bacc169f988c",
+    "7fa053a05a4c3a5c5e7b78986b617416"
   ],
   "signals": [
     {
