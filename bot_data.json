@@ -158,6 +158,25 @@
       "final_multiplier": 0,
       "manual": false,
       "timestamp": "2026-06-05T12:12:34.947695+00:00"
+    },
+    {
+      "mcap": 11706.0,
+      "liquidity": 7528.81,
+      "volume_h1": 3378.96,
+      "volume_m5": 538.39,
+      "age_seconds": 27596.197607910155,
+      "price_change_5m": -13.23,
+      "price_change_1h": -20.99,
+      "hour_of_day": 13,
+      "buys_m5": 4,
+      "sells_m5": 6,
+      "buys_h1": 46,
+      "sells_h1": 47,
+      "symbol": "CLUB",
+      "address": "HgsQB5TwsHeCuyqLEwvAMf8dVWNfg3vAdY5STsWTpump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-05T13:12:55.197766+00:00"
     }
   ],
   "launch_patterns": [],
@@ -169,9 +188,121 @@
     "2c2a286b76bf5b94d6ae74d16f173e65",
     "f8d9dd6ab842932ab30ff7143ad1b6e4",
     "ea4fd37e6148cef352ed75e841c9c347",
-    "8e2bb244425f64ef52ffd88c9b2060de"
+    "8e2bb244425f64ef52ffd88c9b2060de",
+    "f6440791845872a1b8f8bacc169f988c"
   ],
-  "signals": [],
+  "signals": [
+    {
+      "address": "2Lu68ABTAKUFgDRhv9wkdM52vx86oJsMezKW6zJupump",
+      "symbol": "\u767d\u6bdb\u80a1\u795e",
+      "score": 0.35,
+      "price_at_signal": 1.645e-05,
+      "mcap_at_signal": 16456.0,
+      "timestamp": "2026-06-05T12:20:48.159159+00:00",
+      "result_multiplier": 0.51,
+      "result_checked": true
+    },
+    {
+      "address": "3yBSdmS9kd9p627jvg77Tyrk7kh68GfYNiZYWtovpump",
+      "symbol": "Cucumber",
+      "score": 0.35,
+      "price_at_signal": 2.899e-05,
+      "mcap_at_signal": 28998.0,
+      "timestamp": "2026-06-05T12:20:49.784336+00:00",
+      "result_multiplier": 0.2,
+      "result_checked": true
+    },
+    {
+      "address": "3yBSdmS9kd9p627jvg77Tyrk7kh68GfYNiZYWtovpump",
+      "symbol": "Cucumber",
+      "score": 0.8,
+      "price_at_signal": 5.52e-05,
+      "mcap_at_signal": 55205.0,
+      "timestamp": "2026-06-05T12:30:10.984174+00:00",
+      "result_multiplier": 0.1,
+      "result_checked": true
+    },
+    {
+      "address": "Bk8AmNcJjf5tQy3JyVEwsFVXe6BCaYtiYnDRb38ppump",
+      "symbol": "Roach",
+      "score": 0.35,
+      "price_at_signal": 3.322e-05,
+      "mcap_at_signal": 33221.0,
+      "timestamp": "2026-06-05T12:37:12.008533+00:00",
+      "result_multiplier": 0.94,
+      "result_checked": true
+    },
+    {
+      "address": "6PJ6aLVQV7bxs2LAe3vrWY9eMDrhAzy66XETeCPfpump",
+      "symbol": "ZEC",
+      "score": 0.5,
+      "price_at_signal": 3.428e-05,
+      "mcap_at_signal": 34284.0,
+      "timestamp": "2026-06-05T12:52:45.382551+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "EAjHM5NpwFHJ8ZrCQ4UstKKiXXasx8ib2Tz4jgippump",
+      "symbol": "TRULL",
+      "score": 0.35,
+      "price_at_signal": 5.777e-05,
+      "mcap_at_signal": 57771.0,
+      "timestamp": "2026-06-05T13:00:10.103631+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "Bk8AmNcJjf5tQy3JyVEwsFVXe6BCaYtiYnDRb38ppump",
+      "symbol": "Roach",
+      "score": 0.7,
+      "price_at_signal": 5.718e-05,
+      "mcap_at_signal": 57184.0,
+      "timestamp": "2026-06-05T13:02:37.885021+00:00",
+      "result_multiplier": 0.55,
+      "result_checked": true
+    },
+    {
+      "address": "EAjHM5NpwFHJ8ZrCQ4UstKKiXXasx8ib2Tz4jgippump",
+      "symbol": "TRULL",
+      "score": 0.7,
+      "price_at_signal": 6.134e-05,
+      "mcap_at_signal": 61349.0,
+      "timestamp": "2026-06-05T13:02:40.580828+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "GKnKFDq4Cx89KjepzUE7QxJU6okjkRazVfQwfxs2pump",
+      "symbol": "MORI",
+      "score": 0.7,
+      "price_at_signal": 5.77e-05,
+      "mcap_at_signal": 57709.0,
+      "timestamp": "2026-06-05T13:05:11.257419+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "GKnKFDq4Cx89KjepzUE7QxJU6okjkRazVfQwfxs2pump",
+      "symbol": "MORI",
+      "score": 0.7,
+      "price_at_signal": 5.77e-05,
+      "mcap_at_signal": 57709.0,
+      "timestamp": "2026-06-05T13:05:11.259176+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "ES9r82P9zGRGkwfLeY52QT5UMrBzdhzg4sVwTMK6pump",
+      "symbol": "ZEC",
+      "score": 0.4,
+      "price_at_signal": 4.7e-05,
+      "mcap_at_signal": 47004.0,
+      "timestamp": "2026-06-05T13:12:31.534478+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    }
+  ],
   "model": {
     "avg_pump_mcap": 498727.0,
     "avg_pump_liquidity": 51672.098,
@@ -181,9 +312,9 @@
       "9": 1,
       "12": 4
     },
-    "total_signals": 0,
+    "total_signals": 11,
     "correct_signals": 0,
     "accuracy": 0.0,
-    "threshold": 0.35
+    "threshold": 0.49999999999999994
   }
 }
