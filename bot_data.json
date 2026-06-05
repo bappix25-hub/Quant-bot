@@ -156,6 +156,25 @@
       "final_multiplier": 0,
       "manual": false,
       "timestamp": "2026-06-05T15:20:45.816216+00:00"
+    },
+    {
+      "mcap": 37616.0,
+      "liquidity": 13231.23,
+      "volume_h1": 7568.33,
+      "volume_m5": 118.88,
+      "age_seconds": 53120.679956054686,
+      "price_change_5m": -0.66,
+      "price_change_1h": 33.72,
+      "hour_of_day": 16,
+      "buys_m5": 1,
+      "sells_m5": 4,
+      "buys_h1": 105,
+      "sells_h1": 84,
+      "symbol": "UFC250",
+      "address": "GXieFxZFPVYuw3NJTfr4zRooeRgYPN9ssAkEn5MBpump",
+      "final_multiplier": 0,
+      "manual": false,
+      "timestamp": "2026-06-05T16:16:08.680066+00:00"
     }
   ],
   "launch_patterns": [],
@@ -167,7 +186,8 @@
     "cc4773f9f5f02c6cea9b9d73ae7e4351",
     "53b855e16d66af74fbae12aa4bc730b6",
     "c6ed5c067240ad0d748032a28c6b13e4",
-    "f6440791845872a1b8f8bacc169f988c"
+    "f6440791845872a1b8f8bacc169f988c",
+    "6fd3421eee73a4aa8b3f8d61abbc3a91"
   ],
   "signals": [
     {
@@ -197,8 +217,8 @@
       "price_at_signal": 1.898e-05,
       "mcap_at_signal": 18983.0,
       "timestamp": "2026-06-05T15:16:10.748397+00:00",
-      "result_multiplier": null,
-      "result_checked": false
+      "result_multiplier": 0.14,
+      "result_checked": true
     },
     {
       "address": "ANoazcpyRzX7oR7pEZVTC5UQrD7NKuJ6FfKHuJAZpump",
@@ -207,6 +227,36 @@
       "price_at_signal": 2.629e-05,
       "mcap_at_signal": 26293.0,
       "timestamp": "2026-06-05T15:18:53.921039+00:00",
+      "result_multiplier": 0.25,
+      "result_checked": true
+    },
+    {
+      "address": "ANoazcpyRzX7oR7pEZVTC5UQrD7NKuJ6FfKHuJAZpump",
+      "symbol": "TAYLOR",
+      "score": 0.8,
+      "price_at_signal": 3.78e-05,
+      "mcap_at_signal": 37806.0,
+      "timestamp": "2026-06-05T15:27:11.747740+00:00",
+      "result_multiplier": 0.17,
+      "result_checked": true
+    },
+    {
+      "address": "HhA6DTiycJUPxP2ieVC3R1sGzrwsL9jyrVqyRoH4pump",
+      "symbol": "Destiny ",
+      "score": 0.55,
+      "price_at_signal": 3.436e-05,
+      "mcap_at_signal": 34360.0,
+      "timestamp": "2026-06-05T16:13:31.252705+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "HhA6DTiycJUPxP2ieVC3R1sGzrwsL9jyrVqyRoH4pump",
+      "symbol": "Destiny ",
+      "score": 0.7,
+      "price_at_signal": 3.808e-05,
+      "mcap_at_signal": 38090.0,
+      "timestamp": "2026-06-05T16:16:15.478565+00:00",
       "result_multiplier": null,
       "result_checked": false
     }
@@ -221,9 +271,9 @@
       "13": 1,
       "15": 1
     },
-    "total_signals": 4,
+    "total_signals": 7,
     "correct_signals": 0,
     "accuracy": 0.0,
-    "threshold": 0.35
+    "threshold": 0.44999999999999996
   }
 }
