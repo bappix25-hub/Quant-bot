@@ -119,6 +119,26 @@
       "final_multiplier": 3.01,
       "manual": false,
       "timestamp": "2026-06-24T22:09:16.178534+00:00"
+    },
+    {
+      "mcap": 77900.0,
+      "liquidity": 19641.84,
+      "volume_h1": 119811.75,
+      "volume_m5": 5147.73,
+      "age_seconds": 3724.3923349609377,
+      "price_change_5m": 7.04,
+      "price_change_1h": 317.0,
+      "hour_of_day": 22,
+      "buys_m5": 52,
+      "sells_m5": 43,
+      "buys_h1": 1617,
+      "sells_h1": 1413,
+      "symbol": "Louis ",
+      "name": "Justice for Louis Herv\u00e9",
+      "address": "6ZDiSZ8DkRM5Grhbm8tbJ6x52DdeQtK8gRRJQsfSpump",
+      "final_multiplier": 4.17,
+      "manual": false,
+      "timestamp": "2026-06-24T22:11:28.392448+00:00"
     }
   ],
   "dump_patterns": [
@@ -230,7 +250,8 @@
     "c6ed5c067240ad0d748032a28c6b13e4",
     "f6440791845872a1b8f8bacc169f988c",
     "33798357c18b51f44779583ef12b3a21",
-    "27b546637513808d95227c63a9d7ebd8"
+    "27b546637513808d95227c63a9d7ebd8",
+    "9cd60ac43b343788b7d82e2cfac67d33"
   ],
   "signals": [
     {
@@ -365,19 +386,19 @@
     }
   ],
   "model": {
-    "avg_pump_mcap": 218403.66666666666,
-    "avg_pump_liquidity": 28852.076666666664,
-    "avg_pump_volume_h1": 89280.485,
-    "avg_pump_buys_h1": 914.8333333333334,
+    "avg_pump_mcap": 198331.7142857143,
+    "avg_pump_liquidity": 27536.32857142857,
+    "avg_pump_volume_h1": 93642.0942857143,
+    "avg_pump_buys_h1": 1015.1428571428571,
     "best_hours": {
       "9": 1,
       "13": 1,
       "18": 2,
-      "22": 2
+      "22": 3
     },
     "total_signals": 13,
     "correct_signals": 0,
     "accuracy": 0.0,
-    "threshold": 0.49999999999999994
+    "threshold": 0.5499999999999999
   }
 }
