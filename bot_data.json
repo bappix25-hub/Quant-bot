@@ -383,6 +383,26 @@
       "timestamp": "2026-06-24T22:09:13.491595+00:00",
       "result_multiplier": null,
       "result_checked": false
+    },
+    {
+      "address": "NpqoucNKKJ62PwikH4NBvTm3R7mgREXoTtv7nJSGLUE",
+      "symbol": "GLUE",
+      "score": 0.45,
+      "price_at_signal": 2.231e-05,
+      "mcap_at_signal": 22315.0,
+      "timestamp": "2026-06-24T22:13:47.804037+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "NpqoucNKKJ62PwikH4NBvTm3R7mgREXoTtv7nJSGLUE",
+      "symbol": "GLUE",
+      "score": 0.45,
+      "price_at_signal": 2.074e-05,
+      "mcap_at_signal": 20741.0,
+      "timestamp": "2026-06-24T22:28:43.053882+00:00",
+      "result_multiplier": null,
+      "result_checked": false
     }
   ],
   "model": {
@@ -396,7 +416,7 @@
       "18": 2,
       "22": 3
     },
-    "total_signals": 13,
+    "total_signals": 15,
     "correct_signals": 0,
     "accuracy": 0.0,
     "threshold": 0.5499999999999999
