@@ -79,6 +79,26 @@
       "final_multiplier": 7.75,
       "manual": false,
       "timestamp": "2026-06-05T18:18:22.220473+00:00"
+    },
+    {
+      "mcap": 98137.0,
+      "liquidity": 23522.76,
+      "volume_h1": 21079.34,
+      "volume_m5": 2786.25,
+      "age_seconds": 55979.30200610351,
+      "price_change_5m": -2.99,
+      "price_change_1h": -23.95,
+      "hour_of_day": 22,
+      "buys_m5": 15,
+      "sells_m5": 15,
+      "buys_h1": 234,
+      "sells_h1": 183,
+      "symbol": "WIREBUS",
+      "name": "Wirebus",
+      "address": "4BftRTrkgTjQL7ybTmuu7bRrN8cM6gX9aN25Kbfqpump",
+      "final_multiplier": 3.4,
+      "manual": false,
+      "timestamp": "2026-06-24T22:02:23.302042+00:00"
     }
   ],
   "dump_patterns": [
@@ -188,7 +208,8 @@
     "b97e293a1caa5ad681bb136b257baede",
     "cc4773f9f5f02c6cea9b9d73ae7e4351",
     "c6ed5c067240ad0d748032a28c6b13e4",
-    "f6440791845872a1b8f8bacc169f988c"
+    "f6440791845872a1b8f8bacc169f988c",
+    "33798357c18b51f44779583ef12b3a21"
   ],
   "signals": [
     {
@@ -228,23 +249,94 @@
       "price_at_signal": 8.06e-06,
       "mcap_at_signal": 8061.0,
       "timestamp": "2026-06-05T18:17:52.155831+00:00",
+      "result_multiplier": 0.5,
+      "result_checked": true
+    },
+    {
+      "address": "EX35U2oz36Gcvz5AL5HkUq2zvdeZvszpXrw1HMRTmZEC",
+      "symbol": "ZPUMP",
+      "score": 0.5,
+      "price_at_signal": 2.233e-05,
+      "mcap_at_signal": 22339.0,
+      "timestamp": "2026-06-05T18:46:53.133466+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "9hhHaeYSPvHwCoH3DZDiUXaP9AE9Z7MYgTGwpQF5pump",
+      "symbol": "HUNTERIUS",
+      "score": 0.95,
+      "price_at_signal": 9.151e-05,
+      "mcap_at_signal": 91511.0,
+      "timestamp": "2026-06-05T18:49:56.288753+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "9hhHaeYSPvHwCoH3DZDiUXaP9AE9Z7MYgTGwpQF5pump",
+      "symbol": "HUNTERIUS",
+      "score": 0.95,
+      "price_at_signal": 9.151e-05,
+      "mcap_at_signal": 91511.0,
+      "timestamp": "2026-06-05T18:49:56.317862+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "GXMLnq9qKNB8NzoqBZgH1PDjfPMWsZ6DejkX8qk2pump",
+      "symbol": "bitbank",
+      "score": 0.6,
+      "price_at_signal": 3.015e-05,
+      "mcap_at_signal": 30156.0,
+      "timestamp": "2026-06-05T18:52:51.565433+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "GXMLnq9qKNB8NzoqBZgH1PDjfPMWsZ6DejkX8qk2pump",
+      "symbol": "bitbank",
+      "score": 0.95,
+      "price_at_signal": 3.879e-05,
+      "mcap_at_signal": 38798.0,
+      "timestamp": "2026-06-05T18:55:44.013437+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "6ZDiSZ8DkRM5Grhbm8tbJ6x52DdeQtK8gRRJQsfSpump",
+      "symbol": "Louis ",
+      "score": 0.5,
+      "price_at_signal": 7.3e-05,
+      "mcap_at_signal": 73001.0,
+      "timestamp": "2026-06-24T22:02:30.573751+00:00",
+      "result_multiplier": null,
+      "result_checked": false
+    },
+    {
+      "address": "9XWvURbG8mdPziejQQ8xGtqZy5A4aRwqcJ714DeYpump",
+      "symbol": "BOTTOM",
+      "score": 0.5,
+      "price_at_signal": 2.581e-05,
+      "mcap_at_signal": 25816.0,
+      "timestamp": "2026-06-24T22:02:33.964224+00:00",
       "result_multiplier": null,
       "result_checked": false
     }
   ],
   "model": {
-    "avg_pump_mcap": 295662.0,
-    "avg_pump_liquidity": 34406.985,
-    "avg_pump_volume_h1": 117987.23,
-    "avg_pump_buys_h1": 1158.5,
+    "avg_pump_mcap": 256157.0,
+    "avg_pump_liquidity": 32230.140000000003,
+    "avg_pump_volume_h1": 98605.652,
+    "avg_pump_buys_h1": 973.6,
     "best_hours": {
       "9": 1,
       "13": 1,
-      "18": 2
+      "18": 2,
+      "22": 1
     },
-    "total_signals": 4,
+    "total_signals": 11,
     "correct_signals": 0,
     "accuracy": 0.0,
-    "threshold": 0.35
+    "threshold": 0.44999999999999996
   }
 }

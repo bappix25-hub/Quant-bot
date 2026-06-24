@@ -23,7 +23,8 @@ SCAN_INTERVAL = 120
 MIN_LIQUIDITY = 5000
 MIN_MCAP = 10000
 MAX_MCAP = 500000
-HISTORY_MAX_AGE = 86400
+PAPER_TRADE_SOL = 0.1
+SIGNAL_CHECK_HOURS = 6
 GITHUB_SYNC_INTERVAL = 21600
 
 logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
@@ -35,14 +36,15 @@ dump_coins = {}
 alerted_coins = set()
 signal_tracking = {}
 blacklisted = set()
-migration_queue = asyncio.Queue()
+launch_tracking = {}
+paper_trades = {}
 bot_active = True
 current_threshold = 0.35
 
 def main_keyboard():
     keyboard = [
         [KeyboardButton("📊 স্ট্যাটাস"), KeyboardButton("📈 পারফরম্যান্স")],
-        [KeyboardButton("🏆 ট্রেন"), KeyboardButton("⚙️ সেটিংস")],
+        [KeyboardButton("🏆 ট্রেন"), KeyboardButton("💰 পেপার ট্রেড")],
         [KeyboardButton("✅ অন"), KeyboardButton("❌ অফ")]
     ]
     return ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
@@ -62,7 +64,13 @@ def format_number(n):
 def gmgn_link(address):
     return f"https://gmgn.ai/sol/token/{address}"
 
-async def check_rugcheck(session, address, symbol="?"):
+def calculate_tp(pump_patterns):
+    if not pump_patterns:
+        return 2.0
+    avg = sum(p.get("final_multiplier", 2.0) for p in pump_patterns[-20:]) / len(pump_patterns[-20:])
+    return round(min(avg * 0.6, 5.0), 2)
+
+async def check_honeypot(session, address):
     try:
         url = f"{RUGCHECK_URL}/tokens/{address}/report/summary"
         async with session.get(url, timeout=aiohttp.ClientTimeout(total=10)) as resp:
@@ -71,11 +79,11 @@ async def check_rugcheck(session, address, symbol="?"):
                 risks = data.get("risks", [])
                 lp_locked = data.get("lpLockedPct", 0)
                 risk_names = [r.get("name", "") for r in risks if isinstance(r, dict)]
-                is_risky = any(r in [
+                is_honeypot = any(r in [
                     "Freeze Authority still enabled",
                     "Mint Authority still enabled"
                 ] for r in risk_names)
-                return {"risks": risk_names, "lp_locked": lp_locked, "is_risky": is_risky}
+                return {"is_honeypot": is_honeypot, "lp_locked": lp_locked, "risks": risk_names}
     except Exception as e:
         logger.error(f"Rugcheck error: {e}")
     return None
@@ -90,8 +98,8 @@ async def fetch_pair_data(session, token_address):
                 if pairs:
                     pairs.sort(key=lambda x: float(x.get("liquidity", {}).get("usd", 0) or 0), reverse=True)
                     return pairs[0]
-    except Exception as e:
-        logger.error(f"Pair error: {e}")
+    except:
+        pass
     return None
 
 async def fetch_new_solana_pairs(session):
@@ -101,8 +109,8 @@ async def fetch_new_solana_pairs(session):
             if resp.status == 200:
                 data = await resp.json()
                 return [p for p in data if p.get("chainId") == "solana"]
-    except Exception as e:
-        logger.error(f"Fetch error: {e}")
+    except:
+        pass
     return []
 
 async def fetch_boosted_pairs(session):
@@ -112,8 +120,8 @@ async def fetch_boosted_pairs(session):
             if resp.status == 200:
                 data = await resp.json()
                 return [p for p in data if p.get("chainId") == "solana"]
-    except Exception as e:
-        logger.error(f"Boosted error: {e}")
+    except:
+        pass
     return []
 
 async def send_msg(bot, text):
@@ -122,8 +130,58 @@ async def send_msg(bot, text):
     except Exception as e:
         logger.error(f"Send error: {e}")
 
-async def pumpportal_loop(bot):
-    """PumpPortal WebSocket — migration ইভেন্ট ধরা"""
+def open_paper_trade(address, symbol, price, tp_multiplier):
+    if address in paper_trades:
+        return
+    paper_trades[address] = {
+        "symbol": symbol,
+        "buy_price": price,
+        "buy_sol": PAPER_TRADE_SOL,
+        "tp_price": price * tp_multiplier,
+        "tp_multiplier": tp_multiplier,
+        "open_time": datetime.now(timezone.utc).timestamp(),
+        "closed": False,
+        "result": None
+    }
+    logger.info(f"📝 Paper buy: {symbol} @ {price:.8f} TP: {tp_multiplier}x")
+
+async def check_paper_trades(session, bot):
+    from learner import load_data
+    data = load_data()
+    tp = calculate_tp(data.get("pump_patterns", []))
+    for addr, trade in list(paper_trades.items()):
+        if trade["closed"]:
+            continue
+        age = datetime.now(timezone.utc).timestamp() - trade["open_time"]
+        if age < 300:
+            continue
+        pair = await fetch_pair_data(session, addr)
+        if not pair:
+            continue
+        current_price = float(pair.get("priceUsd", 0) or 0)
+        if current_price <= 0:
+            continue
+        multiplier = current_price / trade["buy_price"] if trade["buy_price"] > 0 else 0
+        symbol = trade["symbol"]
+        tp_hit = current_price >= trade["tp_price"]
+        sl_hit = multiplier < 0.5
+        time_exit = age > SIGNAL_CHECK_HOURS * 3600
+        if tp_hit or sl_hit or time_exit:
+            pnl_sol = (multiplier - 1) * PAPER_TRADE_SOL
+            pnl_pct = (multiplier - 1) * 100
+            emoji = "✅" if multiplier >= 1.5 else "❌"
+            reason = "TP ✅" if tp_hit else ("SL ❌" if sl_hit else "সময় শেষ ⏰")
+            await send_msg(bot,
+                f"{emoji} <b>পেপার ট্রেড বন্ধ!</b>\n"
+                f"🏷️ ${symbol}\n"
+                f"📈 ফলাফল: <b>{multiplier:.2f}x</b>\n"
+                f"💰 P&L: <b>{pnl_sol:+.4f} SOL ({pnl_pct:+.1f}%)</b>\n"
+                f"🎯 কারণ: {reason}"
+            )
+            paper_trades[addr]["closed"] = True
+            paper_trades[addr]["result"] = multiplier
+
+async def pumpportal_loop(bot, session):
     while True:
         try:
             if not bot_active:
@@ -131,6 +189,7 @@ async def pumpportal_loop(bot):
                 continue
             logger.info("🔌 PumpPortal সংযুক্ত হচ্ছে...")
             async with websockets.connect(PUMPPORTAL_WS) as ws:
+                await ws.send(json.dumps({"method": "subscribeNewToken"}))
                 await ws.send(json.dumps({"method": "subscribeMigration"}))
                 logger.info("✅ PumpPortal সংযুক্ত!")
                 async for message in ws:
@@ -138,86 +197,178 @@ async def pumpportal_loop(bot):
                         break
                     try:
                         data = json.loads(message)
-                        if data.get("txType") == "migrate" or "mint" in data:
+                        if "mint" in data and "name" in data:
                             address = data.get("mint")
-                            if address:
-                                coin_info = {
-                                    "name": data.get("name", "Unknown"),
-                                    "symbol": data.get("symbol", "???")
-                                }
-                                await migration_queue.put((address, coin_info))
-                                logger.info(f"🚀 Migration: {coin_info['symbol']}")
+                            if address and address not in blacklisted:
+                                symbol = data.get("symbol", "???")
+                                name = data.get("name", "Unknown")
+                                market_cap = float(data.get("marketCapSol", 0) or 0)
+                                if address not in launch_tracking:
+                                    launch_tracking[address] = {
+                                        "name": name,
+                                        "symbol": symbol,
+                                        "market_cap_sol": market_cap,
+                                        "buy_count": 0,
+                                        "sell_count": 0,
+                                        "unique_wallets": set(),
+                                        "first_seen": datetime.now(timezone.utc).timestamp(),
+                                        "signaled": False
+                                    }
+                        elif "txType" in data:
+                            address = data.get("mint")
+                            tx_type = data.get("txType", "")
+                            if address and address in launch_tracking:
+                                if tx_type == "buy":
+                                    launch_tracking[address]["buy_count"] += 1
+                                    wallet = data.get("traderPublicKey", "")
+                                    if wallet:
+                                        launch_tracking[address]["unique_wallets"].add(wallet)
+                                    bonding_curve = float(data.get("bondingCurveKey", 0) or 0)
+                                    progress = float(data.get("progress", 0) or 0)
+                                    if 20 <= progress <= 80 and not launch_tracking[address].get("signaled"):
+                                        asyncio.create_task(check_early_signal(bot, session, address))
+                                elif tx_type == "sell":
+                                    launch_tracking[address]["sell_count"] += 1
+                                elif tx_type == "migrate":
+                                    asyncio.create_task(handle_migration(bot, session, address))
                     except Exception as e:
-                        logger.error(f"WS msg error: {e}")
+                        logger.error(f"WS error: {e}")
         except Exception as e:
             logger.error(f"PumpPortal error: {e}")
         await asyncio.sleep(10)
 
-async def migration_processor(bot, session):
-    """Migration queue প্রসেস করা"""
-    while True:
-        try:
-            address, coin_info = await migration_queue.get()
-            if address in blacklisted or address in tracked_coins:
-                continue
-            symbol = coin_info.get("symbol", "???")
-            await asyncio.sleep(5)
-            rug = await check_rugcheck(session, address, symbol)
-            if rug and rug["is_risky"]:
-                blacklisted.add(address)
-                logger.info(f"🚫 ব্ল্যাকলিস্ট: {symbol}")
-                continue
-            pair = await fetch_pair_data(session, address)
-            if not pair:
-                continue
-            liquidity = float(pair.get("liquidity", {}).get("usd", 0) or 0)
-            mcap = float(pair.get("fdv", 0) or 0)
-            if liquidity < MIN_LIQUIDITY or mcap < MIN_MCAP or mcap > MAX_MCAP:
-                logger.info(f"⚠️ ফিল্টার বাদ: {symbol} | liq={format_number(liquidity)} mcap={format_number(mcap)}")
-                continue
-            price = float(pair.get("priceUsd", 0) or 0)
-            if price > 0:
-                tracked_coins[address] = {
-                    "initial_price": price,
-                    "name": coin_info.get("name", "Unknown"),
-                    "symbol": symbol,
-                    "first_seen": datetime.now(timezone.utc).timestamp(),
-                    "lp_locked": rug["lp_locked"] if rug else 0,
-                    "source": "migration"
-                }
-                logger.info(f"✅ Migration ট্র্যাক: {symbol} | MCap: {format_number(mcap)}")
-                ai_score, reason = score_coin(pair, coin_info, 0)
-                if ai_score >= current_threshold and address not in alerted_coins:
-                    confidence_pct = int(ai_score * 100)
-                    confidence_bar = "🟢" * int(confidence_pct/20) + "⚪" * (5 - int(confidence_pct/20))
-                    link = gmgn_link(address)
-                    await send_msg(bot,
-                        f"⚡ <b>মাইগ্রেশন সিগনাল!</b>\n"
-                        f"━━━━━━━━━━━━━━━━\n"
-                        f"🏷️ <b>{coin_info['name']}</b> (${symbol})\n"
-                        f"🎯 কনফিডেন্স: {confidence_bar} <b>{confidence_pct}%</b>\n"
-                        f"🧠 <i>{reason}</i>\n"
-                        f"💵 দাম: <b>{price:.8f}</b>\n"
-                        f"💰 MCap: <b>{format_number(mcap)}</b>\n"
-                        f"💧 লিকুইডিটি: <b>{format_number(liquidity)}</b>\n"
-                        f"🔒 LP লক: <b>{rug['lp_locked'] if rug else 0}%</b>\n"
-                        f"━━━━━━━━━━━━━━━━\n"
-                        f"⚠️ <i>সদ্য মাইগ্রেট! DYOR করুন!</i>\n"
-                        f"🔗 <a href='{link}'>GMGN</a>"
-                    )
-                    record_signal(address, symbol, ai_score, price, mcap)
-                    signal_tracking[address] = {
-                        "symbol": symbol,
-                        "price_at_signal": price,
-                        "signal_time": datetime.now(timezone.utc).timestamp(),
-                        "checked": False
-                    }
-                    alerted_coins.add(address)
-        except Exception as e:
-            logger.error(f"Migration processor error: {e}")
+async def check_early_signal(bot, session, address):
+    if address not in launch_tracking:
+        return
+    info = launch_tracking[address]
+    if info.get("signaled") or address in alerted_coins:
+        return
+    symbol = info.get("symbol", "???")
+    name = info.get("name", "Unknown")
+    buy_count = info.get("buy_count", 0)
+    sell_count = info.get("sell_count", 0)
+    unique_wallets = len(info.get("unique_wallets", set()))
+    age = datetime.now(timezone.utc).timestamp() - info.get("first_seen", 0)
+    buy_sell_ratio = buy_count / max(sell_count, 1)
+    if buy_count < 5 or unique_wallets < 3:
+        return
+    rug = await check_honeypot(session, address)
+    if rug and rug["is_honeypot"]:
+        blacklisted.add(address)
+        launch_tracking[address]["signaled"] = True
+        logger.info(f"🚫 Honeypot: {symbol}")
+        return
+    from learner import load_data
+    data = load_data()
+    pump_patterns = data.get("pump_patterns", [])
+    tp = calculate_tp(pump_patterns)
+    score = 0.0
+    reasons = []
+    if buy_count >= 10:
+        score += 0.3
+        reasons.append("Buy count ✅")
+    if unique_wallets >= 5:
+        score += 0.25
+        reasons.append("Unique wallets ✅")
+    if buy_sell_ratio >= 3:
+        score += 0.25
+        reasons.append("Buy pressure ✅")
+    elif buy_sell_ratio >= 2:
+        score += 0.1
+    if len(pump_patterns) >= 5:
+        avg_buys = sum(p.get("buys_m5", 0) for p in pump_patterns[-10:]) / len(pump_patterns[-10:])
+        if buy_count >= avg_buys * 0.5:
+            score += 0.2
+            reasons.append("Pattern match ✅")
+    lp = rug["lp_locked"] if rug else 0
+    if score >= current_threshold:
+        confidence_pct = int(score * 100)
+        confidence_bar = "🟢" * int(confidence_pct/20) + "⚪" * (5 - int(confidence_pct/20))
+        link = gmgn_link(address)
+        await send_msg(bot,
+            f"🚀 <b>আর্লি সিগনাল! (Pre-Migration)</b>\n"
+            f"━━━━━━━━━━━━━━━━\n"
+            f"🏷️ <b>{name}</b> (${symbol})\n"
+            f"🎯 কনফিডেন্স: {confidence_bar} <b>{confidence_pct}%</b>\n"
+            f"🧠 <i>{' | '.join(reasons)}</i>\n"
+            f"📊 Buy: <b>{buy_count}</b> | Sell: <b>{sell_count}</b>\n"
+            f"👥 Wallets: <b>{unique_wallets}</b>\n"
+            f"⏱️ বয়স: <b>{int(age)}s</b>\n"
+            f"🔒 LP: <b>{lp}%</b>\n"
+            f"━━━━━━━━━━━━━━━━\n"
+            f"📝 Paper TP: <b>{tp}x</b>\n"
+            f"⚠️ <i>মাইগ্রেশনের আগে! DYOR!</i>\n"
+            f"🔗 <a href='{link}'>GMGN</a>"
+        )
+        record_signal(address, symbol, score, 0, 0)
+        launch_tracking[address]["signaled"] = True
+        alerted_coins.add(address)
+        logger.info(f"🚀 আর্লি সিগনাল: {symbol} score={score}")
+
+async def handle_migration(bot, session, address):
+    if address not in launch_tracking and address in blacklisted:
+        return
+    info = launch_tracking.get(address, {})
+    symbol = info.get("symbol", "???")
+    await asyncio.sleep(8)
+    pair = await fetch_pair_data(session, address)
+    if not pair:
+        return
+    liquidity = float(pair.get("liquidity", {}).get("usd", 0) or 0)
+    mcap = float(pair.get("fdv", 0) or 0)
+    price = float(pair.get("priceUsd", 0) or 0)
+    if liquidity < MIN_LIQUIDITY or mcap < MIN_MCAP or price <= 0:
+        return
+    if address not in tracked_coins:
+        tracked_coins[address] = {
+            "initial_price": price,
+            "name": info.get("name", pair.get("baseToken", {}).get("name", "Unknown")),
+            "symbol": symbol or pair.get("baseToken", {}).get("symbol", "???"),
+            "first_seen": datetime.now(timezone.utc).timestamp(),
+            "source": "migration"
+        }
+    if address not in alerted_coins:
+        from learner import load_data
+        data = load_data()
+        tp = calculate_tp(data.get("pump_patterns", []))
+        rug = await check_honeypot(session, address)
+        if rug and rug["is_honeypot"]:
+            blacklisted.add(address)
+            return
+        coin_info = tracked_coins[address]
+        ai_score, reason = score_coin(pair, coin_info, 0)
+        if ai_score >= current_threshold:
+            lp = rug["lp_locked"] if rug else 0
+            link = gmgn_link(address)
+            name = coin_info["name"]
+            sym = coin_info["symbol"]
+            confidence_pct = int(ai_score * 100)
+            confidence_bar = "🟢" * int(confidence_pct/20) + "⚪" * (5 - int(confidence_pct/20))
+            await send_msg(bot,
+                f"⚡ <b>মাইগ্রেশন সিগনাল!</b>\n"
+                f"━━━━━━━━━━━━━━━━\n"
+                f"🏷️ <b>{name}</b> (${sym})\n"
+                f"🎯 কনফিডেন্স: {confidence_bar} <b>{confidence_pct}%</b>\n"
+                f"🧠 <i>{reason}</i>\n"
+                f"💵 দাম: <b>{price:.8f}</b>\n"
+                f"💰 MCap: <b>{format_number(mcap)}</b>\n"
+                f"💧 লিকুইডিটি: <b>{format_number(liquidity)}</b>\n"
+                f"🔒 LP: <b>{lp}%</b>\n"
+                f"━━━━━━━━━━━━━━━━\n"
+                f"📝 Paper TP: <b>{tp}x</b>\n"
+                f"🔗 <a href='{link}'>GMGN</a>"
+            )
+            record_signal(address, sym, ai_score, price, mcap)
+            signal_tracking[address] = {
+                "symbol": sym,
+                "price_at_signal": price,
+                "signal_time": datetime.now(timezone.utc).timestamp(),
+                "checked": False
+            }
+            open_paper_trade(address, sym, price, tp)
+            alerted_coins.add(address)
 
 async def realtime_scan_loop(bot, session):
-    """ট্র্যাক করা কয়েন মনিটর করা"""
     sync_counter = 0
     while True:
         try:
@@ -238,7 +389,7 @@ async def realtime_scan_loop(bot, session):
                 age = get_launch_age(pair)
                 if liquidity < MIN_LIQUIDITY or mcap < MIN_MCAP or mcap > MAX_MCAP:
                     continue
-                if age and age > 3600:
+                if age and age > 7200:
                     continue
                 price = float(pair.get("priceUsd", 0) or 0)
                 if price > 0:
@@ -249,7 +400,6 @@ async def realtime_scan_loop(bot, session):
                         "first_seen": datetime.now(timezone.utc).timestamp(),
                         "source": "dexscreener"
                     }
-
             for addr, coin_info in list(tracked_coins.items()):
                 if addr in pump_coins or addr in dump_coins or addr in blacklisted:
                     continue
@@ -269,40 +419,38 @@ async def realtime_scan_loop(bot, session):
                 name = coin_info.get("name", "Unknown")
                 symbol = coin_info.get("symbol", "???")
                 link = gmgn_link(addr)
-
-                if liquidity < 500:
+                if liquidity < 300:
                     blacklisted.add(addr)
                     continue
-
                 verified, actual_multi = verify_pump(pair)
                 if verified:
                     pump_coins[addr] = coin_info
                     learn_pump(coin_info, pair, actual_multi, addr, manual=False)
+                    from learner import load_data
+                    d = load_data()
+                    tp = calculate_tp(d.get("pump_patterns", []))
                     await send_msg(bot,
                         f"🚀 <b>পাম্প কয়েন শেখা!</b>\n"
-                        f"━━━━━━━━━━━━━━━━\n"
                         f"🏷️ <b>{name}</b> (${symbol})\n"
-                        f"📈 পাম্প: <b>{actual_multi}x</b>\n"
-                        f"💰 MCap: <b>{format_number(mcap)}</b>\n"
-                        f"💧 লিকুইডিটি: <b>{format_number(liquidity)}</b>\n"
-                        f"⏱️ বয়স: <b>{int((age or 0)/60)}m</b>\n"
-                        f"🧠 <i>বট শিখেছে!</i>\n"
+                        f"📈 <b>{actual_multi}x</b> | ⏱️ {int((age or 0)/60)}m\n"
+                        f"💰 {format_number(mcap)}\n"
+                        f"🎯 নতুন TP: <b>{tp}x</b>\n"
                         f"🔗 <a href='{link}'>GMGN</a>"
                     )
                     sync_to_github(f"পাম্প: {symbol} {actual_multi}x")
                     continue
-
-                if age > HISTORY_MAX_AGE:
+                if age > 86400:
                     dump_coins[addr] = coin_info
                     learn_dump(coin_info, pair, addr, manual=False)
                     continue
-
-                if addr not in alerted_coins and age < 3600:
+                if addr not in alerted_coins and age < 7200:
                     ai_score, reason = score_coin(pair, coin_info, age)
                     if ai_score >= current_threshold:
+                        from learner import load_data
+                        d = load_data()
+                        tp = calculate_tp(d.get("pump_patterns", []))
                         confidence_pct = int(ai_score * 100)
                         confidence_bar = "🟢" * int(confidence_pct/20) + "⚪" * (5 - int(confidence_pct/20))
-                        lp = coin_info.get("lp_locked", 0)
                         await send_msg(bot,
                             f"⚡ <b>আর্লি সিগনাল!</b>\n"
                             f"━━━━━━━━━━━━━━━━\n"
@@ -311,10 +459,9 @@ async def realtime_scan_loop(bot, session):
                             f"🧠 <i>{reason}</i>\n"
                             f"💵 দাম: <b>{current_price:.8f}</b>\n"
                             f"💰 MCap: <b>{format_number(mcap)}</b>\n"
-                            f"💧 লিকুইডিটি: <b>{format_number(liquidity)}</b>\n"
                             f"⏱️ বয়স: <b>{int((age or 0)/60)}m</b>\n"
-                            f"🔒 LP লক: <b>{lp}%</b>\n"
                             f"━━━━━━━━━━━━━━━━\n"
+                            f"📝 Paper TP: <b>{tp}x</b>\n"
                             f"🔗 <a href='{link}'>GMGN</a>"
                         )
                         record_signal(addr, symbol, ai_score, current_price, mcap)
@@ -324,20 +471,20 @@ async def realtime_scan_loop(bot, session):
                             "signal_time": datetime.now(timezone.utc).timestamp(),
                             "checked": False
                         }
+                        open_paper_trade(addr, symbol, current_price, tp)
                         alerted_coins.add(addr)
-
+            await check_paper_trades(session, bot)
             await check_signal_results(session, bot)
             sync_counter += 1
             if sync_counter >= GITHUB_SYNC_INTERVAL // SCAN_INTERVAL:
                 sync_to_github()
                 sync_counter = 0
-            logger.info(f"ট্র্যাক: {len(tracked_coins)} | পাম্প: {len(pump_coins)} | সিগনাল: {len(alerted_coins)} | ব্ল্যাকলিস্ট: {len(blacklisted)}")
+            logger.info(f"ট্র্যাক: {len(tracked_coins)} | লঞ্চ: {len(launch_tracking)} | পাম্প: {len(pump_coins)} | সিগনাল: {len(alerted_coins)}")
         except Exception as e:
             logger.error(f"স্ক্যান এরর: {e}")
         await asyncio.sleep(SCAN_INTERVAL)
 
 async def history_scan_loop(bot, session):
-    """হিস্ট্রি স্ক্যান — পুরনো পাম্প কয়েন থেকে শেখা"""
     while True:
         try:
             if not bot_active:
@@ -352,7 +499,6 @@ async def history_scan_loop(bot, session):
                 if addr:
                     all_addrs[addr] = t
             learned_pump = 0
-            learned_dump = 0
             for addr in list(all_addrs.keys())[:30]:
                 if is_duplicate(addr):
                     continue
@@ -362,7 +508,10 @@ async def history_scan_loop(bot, session):
                     continue
                 liquidity = float(pair.get("liquidity", {}).get("usd", 0) or 0)
                 age = get_launch_age(pair)
-                if liquidity < 3000 or age is None or age > HISTORY_MAX_AGE:
+                if liquidity < 3000 or age is None or age > 86400:
+                    continue
+                rug = await check_honeypot(session, addr)
+                if rug and rug["is_honeypot"]:
                     continue
                 verified, actual_multi = verify_pump(pair)
                 coin_info = {
@@ -373,23 +522,20 @@ async def history_scan_loop(bot, session):
                     ok, msg = learn_pump(coin_info, pair, actual_multi, addr, manual=False)
                     if ok:
                         learned_pump += 1
+                        from learner import load_data
+                        d = load_data()
+                        tp = calculate_tp(d.get("pump_patterns", []))
                         link = gmgn_link(addr)
                         await send_msg(bot,
                             f"📚 <b>পাম্প শেখা!</b>\n"
                             f"🏷️ <b>{coin_info['name']}</b> (${coin_info['symbol']})\n"
                             f"📈 <b>{actual_multi}x</b> | ⏱️ {int((age or 0)/60)}m\n"
                             f"💰 {format_number(pair.get('fdv', 0))}\n"
+                            f"🎯 নতুন TP: <b>{tp}x</b>\n"
                             f"🔗 <a href='{link}'>GMGN</a>"
                         )
-                elif age and age > 3600:
-                    h24 = float(pair.get("priceChange", {}).get("h24", 0) or 0)
-                    if h24 < 50:
-                        ok, msg = learn_dump(coin_info, pair, addr, manual=False)
-                        if ok:
-                            learned_dump += 1
-            if learned_pump > 0 or learned_dump > 0:
-                sync_to_github(f"হিস্ট্রি: পাম্প {learned_pump} ডাম্প {learned_dump}")
-                logger.info(f"হিস্ট্রি শেষ: পাম্প {learned_pump} ডাম্প {learned_dump}")
+            if learned_pump > 0:
+                sync_to_github(f"হিস্ট্রি: {learned_pump} পাম্প")
         except Exception as e:
             logger.error(f"হিস্ট্রি এরর: {e}")
         await asyncio.sleep(3600)
@@ -399,19 +545,20 @@ async def check_signal_results(session, bot):
         if sig_info.get("checked"):
             continue
         age = datetime.now(timezone.utc).timestamp() - sig_info["signal_time"]
-        if age < 1800:
+        if age < SIGNAL_CHECK_HOURS * 3600:
             continue
         pair = await fetch_pair_data(session, addr)
         if not pair:
+            sig_info["checked"] = True
             continue
         current_price = float(pair.get("priceUsd", 0) or 0)
         if current_price <= 0:
             continue
         update_signal_result(addr, current_price)
         multiplier = current_price / sig_info["price_at_signal"] if sig_info["price_at_signal"] > 0 else 0
-        emoji = "✅" if multiplier >= 2.0 else "❌"
+        emoji = "✅" if multiplier >= 1.5 else "❌"
         await send_msg(bot,
-            f"{emoji} <b>সিগনাল ফলাফল!</b>\n"
+            f"{emoji} <b>সিগনাল ফলাফল! ({SIGNAL_CHECK_HOURS}h)</b>\n"
             f"🏷️ ${sig_info['symbol']}\n"
             f"📈 ফলাফল: <b>{multiplier:.2f}x</b>"
         )
@@ -419,13 +566,10 @@ async def check_signal_results(session, bot):
         await asyncio.sleep(1)
 
 async def scan_loop(bot):
-    global migration_queue
-    migration_queue = asyncio.Queue()
     async with aiohttp.ClientSession() as session:
         restore_from_github()
         await asyncio.gather(
-            pumpportal_loop(bot),
-            migration_processor(bot, session),
+            pumpportal_loop(bot, session),
             history_scan_loop(bot, session),
             realtime_scan_loop(bot, session)
         )
@@ -532,16 +676,17 @@ async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if text == "📊 স্ট্যাটাস":
         stats = get_stats()
         status_text = "🟢 চালু" if bot_active else "🔴 বন্ধ"
+        open_trades = sum(1 for t in paper_trades.values() if not t["closed"])
         await update.message.reply_text(
             f"📊 <b>বটের অবস্থা: {status_text}</b>\n"
-            f"🔍 ট্র্যাক: <b>{len(tracked_coins)}</b>\n"
+            f"🆕 লঞ্চ ট্র্যাক: <b>{len(launch_tracking)}</b>\n"
+            f"🔍 মাইগ্রেশন ট্র্যাক: <b>{len(tracked_coins)}</b>\n"
             f"🚀 পাম্প: <b>{len(pump_coins)}</b>\n"
             f"⚡ সিগনাল: <b>{len(alerted_coins)}</b>\n"
             f"🚫 ব্ল্যাকলিস্ট: <b>{len(blacklisted)}</b>\n"
-            f"🧠 পাম্প প্যাটার্ন: <b>{stats['pump_patterns']}</b> (ম্যানুয়াল: {stats['manual_pumps']})\n"
-            f"📉 ডাম্প প্যাটার্ন: <b>{stats['dump_patterns']}</b>\n"
-            f"🎯 থ্রেশোল্ড: <b>{int(current_threshold*100)}%</b>\n"
-            f"🔐 ট্রেইনড: <b>{stats['trained_addresses']}</b>",
+            f"📝 Paper trades (open): <b>{open_trades}</b>\n"
+            f"🧠 পাম্প প্যাটার্ন: <b>{stats['pump_patterns']}</b>\n"
+            f"🎯 থ্রেশোল্ড: <b>{int(current_threshold*100)}%</b>",
             parse_mode="HTML"
         )
     elif text == "📈 পারফরম্যান্স":
@@ -550,34 +695,38 @@ async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"📈 <b>পারফরম্যান্স</b>\n"
             f"⚡ মোট সিগনাল: <b>{stats['total_signals']}</b>\n"
             f"✅ চেক হয়েছে: <b>{stats['checked_signals']}</b>\n"
-            f"🏆 সফল (2x+): <b>{stats['successful_signals']}</b>\n"
+            f"🏆 সফল (1.5x+): <b>{stats['successful_signals']}</b>\n"
             f"🎯 একুরেসি: <b>{stats['accuracy']}%</b>\n"
             f"⏰ সেরা সময়: <b>{stats['best_hour']}:00 UTC</b>",
             parse_mode="HTML"
         )
     elif text == "🏆 ট্রেন":
         stats = get_stats()
+        from learner import load_data
+        d = load_data()
+        tp = calculate_tp(d.get("pump_patterns", []))
         await update.message.reply_text(
             f"🏆 <b>লার্নিং স্ট্যাটাস</b>\n"
             f"🧠 পাম্প প্যাটার্ন: <b>{stats['pump_patterns']}</b>\n"
             f"📉 ডাম্প প্যাটার্ন: <b>{stats['dump_patterns']}</b>\n"
-            f"✍️ ম্যানুয়াল পাম্প: <b>{stats['manual_pumps']}</b>\n"
-            f"🎯 থ্রেশোল্ড: <b>{int(current_threshold*100)}%</b>\n"
+            f"🎯 AI TP: <b>{tp}x</b>\n"
             f"📊 একুরেসি: <b>{stats['accuracy']}%</b>\n"
             f"{'✅ মডেল রেডি!' if stats['pump_patterns'] >= 5 else '⏳ আরো ডেটা দরকার...'}\n\n"
             f"/pump ADDRESS\n/dump ADDRESS\n/threshold 50",
             parse_mode="HTML"
         )
-    elif text == "⚙️ সেটিংস":
+    elif text == "💰 পেপার ট্রেড":
+        closed = [t for t in paper_trades.values() if t["closed"]]
+        open_t = [t for t in paper_trades.values() if not t["closed"]]
+        total_pnl = sum((t.get("result", 1) - 1) * PAPER_TRADE_SOL for t in closed if t.get("result"))
+        wins = sum(1 for t in closed if (t.get("result") or 0) >= 1.5)
         await update.message.reply_text(
-            f"⚙️ <b>সেটিংস</b>\n"
-            f"📈 পাম্প থ্রেশোল্ড: {PUMP_MULTIPLIER}x\n"
-            f"🎯 AI থ্রেশোল্ড: {int(current_threshold*100)}%\n"
-            f"🔌 PumpPortal: Migration WebSocket\n"
-            f"📚 হিস্ট্রি স্ক্যান: প্রতি ১ ঘণ্টা\n"
-            f"🛡️ Rugcheck: Freeze/Mint Authority\n"
-            f"💧 মিন লিকুইডিটি: {format_number(MIN_LIQUIDITY)}\n"
-            f"💰 MCap: {format_number(MIN_MCAP)} - {format_number(MAX_MCAP)}",
+            f"💰 <b>পেপার ট্রেড</b>\n"
+            f"📂 Open: <b>{len(open_t)}</b>\n"
+            f"✅ Closed: <b>{len(closed)}</b>\n"
+            f"🏆 Wins: <b>{wins}/{len(closed)}</b>\n"
+            f"💵 Total P&L: <b>{total_pnl:+.4f} SOL</b>\n"
+            f"📊 Win rate: <b>{int(wins/max(len(closed),1)*100)}%</b>",
             parse_mode="HTML"
         )
     elif text == "✅ অন":
@@ -592,6 +741,8 @@ async def send_daily_report(bot):
         now = datetime.now(timezone.utc)
         if now.hour == 18 and now.minute < 2:
             report = get_daily_report()
+            closed = [t for t in paper_trades.values() if t["closed"]]
+            total_pnl = sum((t.get("result", 1) - 1) * PAPER_TRADE_SOL for t in closed if t.get("result"))
             best = report.get("best_signal")
             best_text = f"${best['symbol']} → {best.get('result_multiplier', 0)}x" if best else "N/A"
             await send_msg(bot,
@@ -600,6 +751,7 @@ async def send_daily_report(bot):
                 f"⚡ সিগনাল: <b>{report['signals_sent']}</b>\n"
                 f"🚀 পাম্প শেখা: <b>{report['pumps_learned']}</b>\n"
                 f"✅ সফল: <b>{report['successful']}/{report['checked']}</b>\n"
+                f"💰 Paper P&L: <b>{total_pnl:+.4f} SOL</b>\n"
                 f"🏆 সেরা: <b>{best_text}</b>"
             )
             sync_to_github("দৈনিক রিপোর্ট")
